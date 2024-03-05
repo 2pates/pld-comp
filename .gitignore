@@ -41,4 +41,5 @@ tests/ifcc-test-output
 *.app
 *exe-gcc
 *exe-ifcc
+ifcc
 
