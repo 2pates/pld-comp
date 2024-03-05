@@ -1,8 +1,11 @@
 
 # generated folders
-compiler/build/*
-compiler/generated/*
-ifcc-test-output/*
+compiler/build
+compiler/generated
+tests/ifcc-test-output
+
+# code editor
+.vscode
 
 # Prerequisites
 *.d
@@ -36,4 +39,6 @@ ifcc-test-output/*
 *.exe
 *.out
 *.app
+*exe-gcc
+*exe-ifcc
 

@@ -3,7 +3,7 @@
 antlrcpp::Any CodeGenVisitor::visitProg(ifccParser::ProgContext *ctx) 
 {
     std::cout<< ".globl main\n" ;
-    std::cout<< " main: \n" ;
+    std::cout<< "main: \n" ;
 
     this->visit( ctx->return_stmt() );
     
@@ -21,3 +21,4 @@ antlrcpp::Any CodeGenVisitor::visitReturn_stmt(ifccParser::Return_stmtContext *c
 
     return 0;
 }
+
