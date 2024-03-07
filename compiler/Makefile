@@ -27,9 +27,9 @@ ifcc: $(OBJECTS)
 
 ##########################################
 # compile our hand-writen C++ code: main(), CodeGenVisitor, etc.
-build/%.o: %.cpp generated/ifccParser.cpp
+build/%.o: src/%.cpp generated/ifccParser.cpp
 	@mkdir -p build
-	$(CC) $(CCFLAGS) -MMD -o $@ $< 
+	$(CC) $(CCFLAGS) -MMD -o $@ $< -Iinclude -Igenerated
 
 ##########################################
 # compile all the antlr-generated C++

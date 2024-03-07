@@ -5,7 +5,7 @@
 #include <string>
 
 #include "antlr4-runtime.h"
-#include "generated/ifccBaseVisitor.h"
+#include "ifccBaseVisitor.h"
 
 class VariableInfo {
 public:

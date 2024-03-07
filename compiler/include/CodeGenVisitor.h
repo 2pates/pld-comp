@@ -1,7 +1,7 @@
 #pragma once
 
 #include "antlr4-runtime.h"
-#include "generated/ifccBaseVisitor.h"
+#include "ifccBaseVisitor.h"
 
 class CodeGenVisitor : public ifccBaseVisitor {
 public:
