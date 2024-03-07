@@ -2,7 +2,7 @@
 # Each student should have a config.mk corresponding to her system.
 # Examples are  ubuntu.mk, DI.mk, fedora.mk
 # Then config.mk should be in the .gitignore of your project
-include config.mk
+include config/config.mk
 
 CC=g++
 CCFLAGS=-g -c -std=c++17 -I$(ANTLRINC) -Wno-attributes# -Wno-defaulted-function-deleted -Wno-unknown-warning-option
@@ -23,7 +23,7 @@ OBJECTS=build/ifccBaseVisitor.o \
 
 ifcc: $(OBJECTS)
 	@mkdir -p build
-	$(CC) $(LDFLAGS) build/*.o $(ANTLRLIB) -o ifcc
+	$(CC) $(LDFLAGS) build/*.o $(ANTLRLIB) -o build/ifcc
 
 ##########################################
 # compile our hand-writen C++ code: main(), CodeGenVisitor, etc.
@@ -69,4 +69,4 @@ gui:
 # delete all machine-generated files
 clean:
 	rm -rf build generated
-	rm -f ifcc
+	rm -f build/ifcc
