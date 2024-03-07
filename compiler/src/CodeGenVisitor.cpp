@@ -8,14 +8,17 @@ antlrcpp::Any CodeGenVisitor::visitProg(ifccParser::ProgContext* ctx) {
         this->visit(instr);
     }
 
+    this->visit(ctx->return_stmt());
     std::cout << "    ret\n";
 
     return 0;
 }
 
 antlrcpp::Any CodeGenVisitor::visitInstruction(ifccParser::InstructionContext* ctx) {
-    this->visit(ctx->assignment_stmt());
-    this->visit(ctx->declare_stmt());
+    if (ctx->assignment_stmt() != nullptr)
+        this->visit(ctx->assignment_stmt());
+    if (ctx->declare_stmt() != nullptr)
+        this->visit(ctx->declare_stmt());
     return 0;
 }
 

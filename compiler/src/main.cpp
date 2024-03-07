@@ -9,6 +9,7 @@
 #include "ifccParser.h"
 
 #include "CodeGenVisitor.h"
+#include "SymbolGenVisitor.h"
 
 using namespace antlr4;
 using namespace std;
@@ -41,6 +42,9 @@ int main(int argn, const char** argv) {
         cerr << "error: syntax error during parsing" << endl;
         exit(1);
     }
+
+    SymbolGenVisitor s;
+    s.visit(tree);
 
     CodeGenVisitor v;
     v.visit(tree);

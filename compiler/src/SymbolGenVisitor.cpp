@@ -8,8 +8,12 @@ antlrcpp::Any SymbolGenVisitor::visitProg(ifccParser::ProgContext* ctx) {
 }
 
 antlrcpp::Any SymbolGenVisitor::visitInstruction(ifccParser::InstructionContext* ctx) {
-    this->visit(ctx->declare_stmt());
-    this->visit(ctx->assignment_stmt());
+    if (ctx->declare_stmt() != nullptr) {
+        this->visit(ctx->declare_stmt());
+    }
+    if (ctx->assignment_stmt() != nullptr) {
+        this->visit(ctx->assignment_stmt());
+    }
     return 0;
 }
 
@@ -21,14 +25,17 @@ antlrcpp::Any SymbolGenVisitor::visitDeclare_stmt(ifccParser::Declare_stmtContex
         std::string name = ctx->lvalue()->getText();
         variables.insert({name, var});
         current_index -= 4;
+        std::cout << "Declaration: " << ctx->TYPE()->getText() << " " << name << " (address " << var.address << ")" << std::endl;
     }
     return 0;
 }
 
 antlrcpp::Any SymbolGenVisitor::visitAssignment_stmt(ifccParser::Assignment_stmtContext* ctx) {
     if (variables.find(ctx->lvalue()->getText()) != variables.end()) {
+        std::cout << "Affectation: " << ctx->lvalue()->getText() << " = " << ctx->rvalue()->getText() << std::endl;
         return 0;
     }
+    std::cerr << "Error: undeclared variable " << ctx->lvalue()->getText() << std::endl;
     return -1; // undeclared variable affectation
 }
 
