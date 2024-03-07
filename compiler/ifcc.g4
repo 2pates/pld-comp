@@ -14,8 +14,8 @@ rvalue : CONST | VARNAME ;
 lvalue: VARNAME ;
 
 TYPE: 'int' ;
-VARNAME: [_a-zA-Z][_a-zA-Z0-9]* ;
 RETURN : 'return' ;
+VARNAME: [_a-zA-Z][_a-zA-Z0-9]*;
 CONST : [0-9]+ ;
 COMMENT : '/*' .*? '*/' -> skip ;
 DIRECTIVE : '#' .*? '\n' -> skip ;
