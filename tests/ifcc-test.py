@@ -75,7 +75,7 @@ if os.path.isdir('ifcc-test-output'):
     # cleanup previous output directory
     command('rm -rf ifcc-test-output')
 os.mkdir('ifcc-test-output')
-    
+
 ## Then we process the inputs arguments i.e. filenames or subtrees
 inputfilenames=[]
 for path in args.input:

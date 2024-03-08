@@ -70,3 +70,13 @@ gui:
 clean:
 	rm -rf build generated
 	rm -f build/ifcc
+	@make -s -C ../tests clean
+
+
+tests:
+	@make -s -C ../tests clean
+	@make -s -C ../tests all
+
+
+
+
