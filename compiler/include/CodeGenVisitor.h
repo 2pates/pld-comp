@@ -22,4 +22,6 @@ public:
 
     int push_stack(int source, int dest);
     int push_stack(std::string source, int dest, int size);
+
+    int mov(std::string source, std::string dest, int size);
 };

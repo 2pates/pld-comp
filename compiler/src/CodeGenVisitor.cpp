@@ -3,6 +3,8 @@
 antlrcpp::Any CodeGenVisitor::visitProg(ifccParser::ProgContext* ctx) {
     std::cout << ".globl main\n";
     std::cout << "main: \n";
+    std::cout << "pushq %rbp\n";      // Save the old base pointer
+    std::cout << "movq %rsp, %rbp\n"; // Set up a new base pointer
 
     for (auto instr : ctx->instruction()) {
         this->visit(instr);
@@ -26,6 +28,7 @@ antlrcpp::Any CodeGenVisitor::visitReturn_stmt(ifccParser::Return_stmtContext* c
     int retval = stoi(ctx->CONST()->getText());
 
     std::cout << "    movl $" << retval << ", %eax\n";
+    std::cout << "    leave\n";
 
     return 0;
 }
@@ -34,13 +37,17 @@ antlrcpp::Any CodeGenVisitor::visitDeclare_stmt(ifccParser::Declare_stmtContext*
 
 antlrcpp::Any CodeGenVisitor::visitAssignment_stmt(ifccParser::Assignment_stmtContext* ctx) {
     if (variables.find(ctx->lvalue()->getText()) != variables.end()) {
-        VariableInfo varInfo = variables.at(ctx->lvalue()->getText());
-        int address = varInfo.address;
-        int size = varInfo.size;
-        std::string name = visit(ctx->rvalue());
-        if (variables.find(name) != variables.end()) {
-            int r_addr = variables.at(name).address;
-            push_stack(r_addr, address);
+
+        int l_addr = variables.at(ctx->lvalue()->getText()).address;
+        int l_size = variables.at(ctx->lvalue()->getText()).size;
+        std::string r_name = visit(ctx->rvalue());
+        if (variables.find(r_name) != variables.end()) {
+            int r_addr = variables.at(r_name).address;
+            int r_size = variables.at(r_name).size;
+
+            mov(std::to_string(r_addr) + "(%rbp)", "%eax", r_size);
+            mov("%eax", std::to_string(l_addr) + "(%rbp)", l_size);
+
             return 0;
         } else {
             std::cerr << "Programmer error" << std::endl;
@@ -94,5 +101,24 @@ int CodeGenVisitor::push_stack(std::string source, int dest, int size) {
     std::cout << source << ", ";
     std::cout << dest << "(%rbp)"
               << "\n";
+    return 0;
+}
+
+int CodeGenVisitor::mov(std::string source, std::string dest, int size) {
+    switch (size) {
+        case 8:
+            std::cout << "    movq ";
+            break;
+        case 4:
+            std::cout << "    movl ";
+            break;
+        case 1:
+            std::cout << "    movb ";
+            break;
+        default:
+            break;
+    }
+    std::cout << source << ", ";
+    std::cout << dest << "\n";
     return 0;
 }
