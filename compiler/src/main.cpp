@@ -46,7 +46,7 @@ int main(int argn, const char** argv) {
     SymbolGenVisitor s;
     s.visit(tree);
 
-    CodeGenVisitor v;
+    CodeGenVisitor v(s.variables);
     v.visit(tree);
 
     return 0;
