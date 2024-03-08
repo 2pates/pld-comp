@@ -25,14 +25,15 @@ antlrcpp::Any SymbolGenVisitor::visitDeclare_stmt(ifccParser::Declare_stmtContex
         std::string name = ctx->lvalue()->getText();
         variables.insert({name, var});
         current_index -= 4;
-        std::cout << "Declaration: " << ctx->TYPE()->getText() << " " << name << " (address " << var.address << ")" << std::endl;
+        std::cerr << "Declaration: " << ctx->TYPE()->getText() << " " << name << " (address " << var.address << ")"
+                  << std::endl;
     }
     return 0;
 }
 
 antlrcpp::Any SymbolGenVisitor::visitAssignment_stmt(ifccParser::Assignment_stmtContext* ctx) {
     if (variables.find(ctx->lvalue()->getText()) != variables.end()) {
-        std::cout << "Affectation: " << ctx->lvalue()->getText() << " = " << ctx->rvalue()->getText() << std::endl;
+        std::cerr << "Affectation: " << ctx->lvalue()->getText() << " = " << ctx->rvalue()->getText() << std::endl;
         return 0;
     }
     std::cerr << "Error: undeclared variable " << ctx->lvalue()->getText() << std::endl;
