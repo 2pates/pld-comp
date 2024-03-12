@@ -4,6 +4,9 @@ compiler/build
 compiler/generated
 tests/ifcc-test-output
 
+# generated test file
+tests/test-output.txt
+
 # code editor
 .vscode
 
