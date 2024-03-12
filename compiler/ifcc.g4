@@ -10,7 +10,7 @@ assignment_stmt: lvalue '=' rvalue ';' ;
 declare_stmt: TYPE lvalue ';' ;
 return_stmt: RETURN CONST ';' ;
 
-rvalue : CONST | VARNAME ;
+rvalue : CONST | VARNAME | expr ;
 lvalue: VARNAME ;
 
 TYPE: 'int' ;
