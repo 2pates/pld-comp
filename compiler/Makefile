@@ -77,7 +77,8 @@ clean:
 tests:
 	@make -s -C ../tests clean
 	@make -s -C ../tests all | tee ../tests/test-ouput.txt
-	
+
+
 
 analyse:
 	@read -p "Enter a number: " num; \
@@ -90,8 +91,7 @@ analyse:
 
 
 check:
-	@make -s -C ../tests clean
-	@make -s -C ../tests all
+	@make -s -C ../tests check
 
 
 # ls ../tests/testfiles/*; \
