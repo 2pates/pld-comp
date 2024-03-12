@@ -78,6 +78,8 @@ tests:
 	@make -s -C ../tests clean
 	@make -s -C ../tests all
 
+check:
+	@make -s -C ../tests check
 
 analyse:
 	@read -p "Enter a number: " num; \
