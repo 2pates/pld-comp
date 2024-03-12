@@ -32,6 +32,8 @@ public:
     std::map<std::string, VariableInfo> variables;
     int tmp_index;
 
+    antlrcpp::Any visitBitwise(std::string l_var, char OP, std::string r_var);
+
     int push_stack(int source, int dest);
     int push_stack(std::string source, int dest, int size);
 
