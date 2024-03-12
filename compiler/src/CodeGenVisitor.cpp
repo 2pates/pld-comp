@@ -1,5 +1,6 @@
 #include "CodeGenVisitor.h"
 
+
 antlrcpp::Any CodeGenVisitor::visitProg(ifccParser::ProgContext* ctx) {
     std::cout << ".globl main\n";
     std::cout << "main: \n";
@@ -14,7 +15,12 @@ antlrcpp::Any CodeGenVisitor::visitProg(ifccParser::ProgContext* ctx) {
     std::cout << "    ret\n";
 
     return 0;
+} 
+antlrcpp::Any CodeGenVisitor::visitRvalue(ifccParser::RvalueContext* ctx)
+{
+    return visit(ctx->expr());
 }
+
 
 antlrcpp::Any CodeGenVisitor::visitInstruction(ifccParser::InstructionContext* ctx) {
     if (ctx->assignment_stmt() != nullptr)
@@ -25,9 +31,12 @@ antlrcpp::Any CodeGenVisitor::visitInstruction(ifccParser::InstructionContext* c
 }
 
 antlrcpp::Any CodeGenVisitor::visitReturn_stmt(ifccParser::Return_stmtContext* ctx) {
-    int retval = stoi(ctx->CONST()->getText());
-
-    std::cout << "    movl $" << retval << ", %eax\n";
+    std::string var_name = visit(ctx->atomic_expr());
+    
+    int var_size = variables.at(var_name).size;
+    int var_address = variables.at(var_name).address;
+    
+    mov(std::to_string(var_address) + "(%rbp)", "%eax", var_size);
     std::cout << "    leave\n";
 
     return 0;
@@ -37,7 +46,6 @@ antlrcpp::Any CodeGenVisitor::visitDeclare_stmt(ifccParser::Declare_stmtContext*
 
 antlrcpp::Any CodeGenVisitor::visitAssignment_stmt(ifccParser::Assignment_stmtContext* ctx) {
     if (variables.find(ctx->lvalue()->getText()) != variables.end()) {
-
         int l_addr = variables.at(ctx->lvalue()->getText()).address;
         int l_size = variables.at(ctx->lvalue()->getText()).size;
         std::string r_name = visit(ctx->rvalue());
@@ -59,7 +67,90 @@ antlrcpp::Any CodeGenVisitor::visitAssignment_stmt(ifccParser::Assignment_stmtCo
     }
 }
 
-antlrcpp::Any CodeGenVisitor::visitRvalue(ifccParser::RvalueContext* ctx) {
+antlrcpp::Any CodeGenVisitor::visitExpr(ifccParser::ExprContext* ctx)
+{
+    if(ctx->atomic_expr() != nullptr) {
+        std::string var_name = visit(ctx->atomic_expr());
+        return var_name;
+    }
+
+    if(ctx->OP() != nullptr) {
+        std::string l_var_name = visit(ctx->expr().at(0));
+        std::string r_var_name = visit(ctx->expr().at(1));
+        int l_var_size = variables.at(l_var_name).size;
+        int l_var_address  = variables.at(l_var_name).address;
+        int r_var_size = variables.at(r_var_name).size;
+        int r_var_address  = variables.at(r_var_name).address;
+
+        tmp_index++;
+        std::string tmp_var_name = "#tmp" + std::to_string(tmp_index);
+        int tmp_var_size = variables.at(tmp_var_name).size;
+        int tmp_var_address = variables.at(tmp_var_name).address;
+
+        mov(std::to_string(l_var_address)+"(%rbp)", "%eax", 4);
+        switch (ctx->OP()->getText()[0])
+        {
+        case '&':
+            std::cout << "    andl " << r_var_address << "(%rbp)" << ", %eax\n";
+            break;
+        
+        case '^':
+            std::cout << "    xorl " << r_var_address << "(%rbp)" << ", %eax\n";
+            break;
+        
+        case '|':
+            std::cout << "    orl " << r_var_address << "(%rbp)" << ", %eax\n";
+            break;
+        
+        default:
+            break;
+        }
+
+        push_stack("%eax", tmp_var_address, tmp_var_size);
+        return tmp_var_name;
+    } 
+    if(ctx->OPU() != nullptr) {
+        std::string var_name = visit(ctx->expr().at(0));
+        int var_size = variables.at(var_name).size;
+        int var_address  = variables.at(var_name).address;
+
+        tmp_index++;
+        std::string tmp_var_name = "#tmp" + std::to_string(tmp_index);
+        int tmp_var_size = variables.at(tmp_var_name).size;
+        int tmp_var_address = variables.at(tmp_var_name).address;
+        switch (ctx->OPU()->getText()[0])
+        {
+        case '~':
+            mov(std::to_string(var_address) + "(%rbp)", "%eax", var_size);
+            std::cout << "   notl %eax" << std::endl; 
+            push_stack("%eax", tmp_var_address, tmp_var_size);
+            break;
+        case '-':
+            mov(std::to_string(var_address) + "(%rbp)", "%eax", var_size);
+            std::cout << "   negl %eax" << std::endl; 
+            push_stack("%eax", tmp_var_address, tmp_var_size);
+            break;
+        default:
+            break;
+        }
+        return tmp_var_name;
+    }
+
+    std::string var_name = visit(ctx->expr().at(0));
+    int var_size = variables.at(var_name).size;
+    int var_address  = variables.at(var_name).address;
+    mov(std::to_string(var_address) + "(%rbp)", "%eax", var_size);
+    
+    tmp_index++;
+    std::string tmp_var_name = "#tmp" + std::to_string(tmp_index);
+    int tmp_var_size = variables.at(tmp_var_name).size;
+    int tmp_var_address = variables.at(tmp_var_name).address;
+    push_stack("%eax", tmp_var_address, tmp_var_size);
+    return tmp_var_name;
+}
+
+antlrcpp::Any CodeGenVisitor::visitAtomic_expr(ifccParser::Atomic_exprContext* ctx) 
+{
     std::string var_name;
     if (ctx->CONST() != nullptr) {
         tmp_index++;
@@ -69,10 +160,9 @@ antlrcpp::Any CodeGenVisitor::visitRvalue(ifccParser::RvalueContext* ctx) {
     } else if (ctx->VARNAME() != nullptr) {
         var_name = ctx->VARNAME()->getText();
     }
+
     return var_name; // std::string
 }
-
-antlrcpp::Any CodeGenVisitor::visitLvalue(ifccParser::LvalueContext* ctx) { return 0; }
 
 int CodeGenVisitor::push_stack(int source, int dest) {
     std::cout << "    movq ";
@@ -97,7 +187,6 @@ int CodeGenVisitor::push_stack(std::string source, int dest, int size) {
         default:
             break;
     }
-    // std::cout << "$" << source << ", ";
     std::cout << source << ", ";
     std::cout << dest << "(%rbp)"
               << "\n";
@@ -122,3 +211,5 @@ int CodeGenVisitor::mov(std::string source, std::string dest, int size) {
     std::cout << dest << "\n";
     return 0;
 }
+
+

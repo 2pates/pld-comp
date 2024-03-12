@@ -21,17 +21,17 @@ public:
 class SymbolGenVisitor : public ifccBaseVisitor {
 public:
     SymbolGenVisitor() : memory_offset(0), tmp_index(0) {}
-    virtual antlrcpp::Any visitReturn_stmt(ifccParser::Return_stmtContext* ctx) override;
     virtual antlrcpp::Any visitDeclare_stmt(ifccParser::Declare_stmtContext* ctx) override;
     virtual antlrcpp::Any visitAssignment_stmt(ifccParser::Assignment_stmtContext* ctx) override;
-    virtual antlrcpp::Any visitRvalue(ifccParser::RvalueContext* ctx) override;
-    virtual antlrcpp::Any visitLvalue(ifccParser::LvalueContext* ctx) override;
+    virtual antlrcpp::Any visitExpr(ifccParser::ExprContext* ctx) override;
+    virtual antlrcpp::Any visitAtomic_expr(ifccParser::Atomic_exprContext* ctx) override;
+
 
     std::map<std::string, VariableInfo> variables;
     long int memory_offset;
     int tmp_index;
 
-    int check_exist(ifccParser::RvalueContext* ctx);
+    int check_exist(ifccParser::Atomic_exprContext* ctx);
     int check_exist(std::string varname);
 };
 

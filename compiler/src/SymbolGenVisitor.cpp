@@ -1,7 +1,5 @@
 #include "SymbolGenVisitor.h"
 
-antlrcpp::Any SymbolGenVisitor::visitReturn_stmt(ifccParser::Return_stmtContext* ctx) { return 0; }
-
 antlrcpp::Any SymbolGenVisitor::visitDeclare_stmt(ifccParser::Declare_stmtContext* ctx) {
     if (ctx->TYPE()->getText() == "int") {
         std::string name = ctx->lvalue()->getText();
@@ -21,7 +19,7 @@ antlrcpp::Any SymbolGenVisitor::visitDeclare_stmt(ifccParser::Declare_stmtContex
 }
 
 antlrcpp::Any SymbolGenVisitor::visitAssignment_stmt(ifccParser::Assignment_stmtContext* ctx) {
-    visit(ctx->lvalue());
+    //visit(ctx->lvalue());
     if (variables.find(ctx->lvalue()->getText()) != variables.end()) {
         visit(ctx->rvalue());
         std::cerr << "Affectation: " << ctx->lvalue()->getText() << " = " << ctx->rvalue()->getText() << std::endl;
@@ -31,7 +29,9 @@ antlrcpp::Any SymbolGenVisitor::visitAssignment_stmt(ifccParser::Assignment_stmt
     return UNDECLARED; // undeclared variable affectation
 }
 
-antlrcpp::Any SymbolGenVisitor::visitRvalue(ifccParser::RvalueContext* ctx) {
+
+antlrcpp::Any SymbolGenVisitor::visitAtomic_expr(ifccParser::Atomic_exprContext* ctx)
+{
     if (ctx->CONST() != nullptr) {
         memory_offset -= 4;
         tmp_index++;
@@ -40,9 +40,25 @@ antlrcpp::Any SymbolGenVisitor::visitRvalue(ifccParser::RvalueContext* ctx) {
     return 0;
 }
 
-antlrcpp::Any SymbolGenVisitor::visitLvalue(ifccParser::LvalueContext* ctx) { return 0; }
+antlrcpp::Any SymbolGenVisitor::visitExpr(ifccParser::ExprContext *ctx) {
 
-int SymbolGenVisitor::check_exist(ifccParser::RvalueContext* ctx) {
+    if(ctx->atomic_expr() != nullptr)
+    {
+        visit(ctx->atomic_expr());
+        return 0;
+    }
+    visit(ctx->expr().at(0));
+    
+    if(ctx->OP() != nullptr) {
+        visit(ctx->expr().at(1));
+    }
+    memory_offset -= 4;
+    tmp_index++;
+    variables.insert({"#tmp" + std::to_string(tmp_index), VariableInfo(memory_offset, 4)});
+    return 0;
+}
+
+int SymbolGenVisitor::check_exist(ifccParser::Atomic_exprContext* ctx) {
     if (ctx->CONST())
         return EXIST;
     else if (variables.find(ctx->VARNAME()->getText()) != variables.end())

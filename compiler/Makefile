@@ -7,6 +7,7 @@ include config/config.mk
 CC=g++
 CCFLAGS=-g -c -std=c++17 -I$(ANTLRINC) -Wno-attributes# -Wno-defaulted-function-deleted -Wno-unknown-warning-option
 LDFLAGS=-g
+T=
 
 default: all
 all: ifcc
@@ -76,6 +77,26 @@ clean:
 tests:
 	@make -s -C ../tests clean
 	@make -s -C ../tests all
+
+
+analyse:
+	@read -p "Enter a number: " num; \
+    files=$$(ls ../tests/testfiles/$$num\_*.c 2>/dev/null); \
+    if [ -n "$$files" ]; then \
+		./build/ifcc "$$files"; \
+    else \
+        echo "No file found for number $$num"; \
+    fi
+
+
+
+
+
+# ls ../tests/testfiles/*; \
+	@read -p "Entrez le numéro du fichier à tester : " ans; \
+	./build/ifcc ../tests/testfiles/$$(ans)_*.c
+
+# ./build/ifcc ../tests/testfiles/$(T)_*.c; \
 
 
 

@@ -14,8 +14,9 @@ public:
     virtual antlrcpp::Any visitReturn_stmt(ifccParser::Return_stmtContext* ctx) override;
     virtual antlrcpp::Any visitDeclare_stmt(ifccParser::Declare_stmtContext* ctx) override;
     virtual antlrcpp::Any visitAssignment_stmt(ifccParser::Assignment_stmtContext* ctx) override;
+    virtual antlrcpp::Any visitExpr(ifccParser::ExprContext* ctx) override;
     virtual antlrcpp::Any visitRvalue(ifccParser::RvalueContext* ctx) override;
-    virtual antlrcpp::Any visitLvalue(ifccParser::LvalueContext* ctx) override;
+    virtual antlrcpp::Any visitAtomic_expr(ifccParser::Atomic_exprContext* ctx) override;
 
     std::map<std::string, VariableInfo> variables;
     int tmp_index;
@@ -25,3 +26,4 @@ public:
 
     int mov(std::string source, std::string dest, int size);
 };
+
