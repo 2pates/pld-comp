@@ -4,20 +4,34 @@ axiom : prog EOF ;
 
 prog : 'int' 'main' '(' ')' '{' instruction* return_stmt '}' ;
 
-instruction: declare_stmt | assignment_stmt ;
+function_def: TYPE FUNCNAME '(' declare_only_stmt? ')' '{' instruction* return_stmt? '}' ;
+function_call: FUNCNAME '(' expr* ')' ';' ;
 
-assignment_stmt: lvalue '=' rvalue ';' ;
-declare_stmt: TYPE lvalue ';' ;
-return_stmt: RETURN atomic_expr ';' ;
+instruction: declare_stmt ';' | assignment_stmt ';' ;
+
+assignment_stmt: lvalue '=' rvalue ;
+declare_stmt: TYPE declare;
+declare: (lvalue | assignment_stmt) (',' declare)? ;
+
+declare_only_stmt: TYPE lvalue (',' declare_only_stmt)* ;
+return_stmt: RETURN expr ';' ;
 
 rvalue: expr ;
 lvalue: VARNAME ;
-atomic_expr: CONST | VARNAME ;
 
-expr: OPU expr | expr OP expr | '(' expr ')' | atomic_expr ;
-
-OPU: '-' | '~' ;
-OP: '&' | '^' | '|' ; // AND > XOR > OR
+expr: '(' expr ')'					# expr_parenthesis
+| OP=('-'|'~'|'!') expr				# expr_unaire
+| expr OP=('*'|'/'|'%') expr		# expr_mult
+| expr OP=('+'|'-') expr			# expr_add
+| expr OP=('<'|'<='|'>'|'>=') expr	# expr_relational
+| expr OP=('=='|'!=') expr			# expr_equality
+| expr '&' expr						# expr_and
+| expr '^' expr						# expr_xor
+| expr '|' expr						# expr_or
+| expr '&&' expr					# expr_lazy_and
+| expr '||' expr					# expr_lazy_or
+| (CONST | VARNAME)					# expr_atom
+;
 
 TYPE: 'int' ;
 RETURN : 'return' ;
