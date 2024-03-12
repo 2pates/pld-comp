@@ -1,4 +1,7 @@
 #include "SymbolGenVisitor.h"
+#include "Error.h"
+
+
 
 antlrcpp::Any SymbolGenVisitor::visitDeclare_stmt(ifccParser::Declare_stmtContext* ctx) {
     if (ctx->TYPE()->getText() == "int") {
@@ -41,33 +44,44 @@ antlrcpp::Any SymbolGenVisitor::visitAssignment_stmt(ifccParser::Assignment_stmt
     return UNDECLARED; // undeclared variable affectation
 }
 
-// antlrcpp::Any SymbolGenVisitor::visitAtomic_expr(ifccParser::Atomic_exprContext* ctx)
-// {
-//     if (ctx->CONST() != nullptr) {
-//         memory_offset -= 4;
-//         tmp_index++;
-//         variables.insert({"#tmp" + std::to_string(tmp_index), VariableInfo(memory_offset, 4)});
-//     }
-//     return 0;
-// }
+antlrcpp::Any SymbolGenVisitor::visitExpr_atom(ifccParser::Expr_atomContext* ctx)
+{
+    debug("expr_atom symbol");
+    if (ctx->CONST() != nullptr) {
+        memory_offset -= 4;
+        tmp_index++;
+        variables.insert({"#tmp"+std::to_string(tmp_index), VariableInfo(memory_offset, 4)});
+    }
+    return 0;
+}
 
-// antlrcpp::Any SymbolGenVisitor::visitExpr(ifccParser::ExprContext *ctx) {
 
-//     if(ctx->atomic_expr() != nullptr)
-//     {
-//         visit(ctx->atomic_expr());
-//         return 0;
-//     }
-//     visit(ctx->expr().at(0));
-    
-//     if(ctx->OP() != nullptr) {
-//         visit(ctx->expr().at(1));
-//     }
-//     memory_offset -= 4;
-//     tmp_index++;
-//     variables.insert({"#tmp" + std::to_string(tmp_index), VariableInfo(memory_offset, 4)});
-//     return 0;
-// }
+antlrcpp::Any SymbolGenVisitor::visitExpr_and(ifccParser::Expr_andContext* ctx) {
+    visit(ctx->expr()[0]);
+    memory_offset -= 4;
+    tmp_index++;
+    variables.insert({"#tmp"+std::to_string(tmp_index), VariableInfo(memory_offset, 4)});
+    visit(ctx->expr()[1]);
+    return 0;
+}
+
+antlrcpp::Any SymbolGenVisitor::visitExpr_xor(ifccParser::Expr_xorContext* ctx) {
+    visit(ctx->expr()[0]);
+    memory_offset -= 4;
+    tmp_index++;
+    variables.insert({"#tmp"+std::to_string(tmp_index), VariableInfo(memory_offset, 4)});
+    visit(ctx->expr()[1]);
+    return 0;
+}
+
+antlrcpp::Any SymbolGenVisitor::visitExpr_or(ifccParser::Expr_orContext* ctx) {
+    visit(ctx->expr()[0]);
+    memory_offset -= 4;
+    tmp_index++;
+    variables.insert({"#tmp"+std::to_string(tmp_index), VariableInfo(memory_offset, 4)});
+    visit(ctx->expr()[1]);
+    return 0;
+}
 
 int SymbolGenVisitor::check_exist(ifccParser::Expr_atomContext* ctx) {
     if (ctx->CONST())
@@ -84,3 +98,5 @@ int SymbolGenVisitor::check_exist(std::string varname) {
     else
         return UNDECLARED;
 }
+
+

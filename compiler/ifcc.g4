@@ -14,7 +14,7 @@ declare_stmt: TYPE declare;
 declare: (lvalue | assignment_stmt) (',' declare)? ;
 
 declare_only_stmt: TYPE lvalue (',' declare_only_stmt)? ;
-return_stmt: RETURN CONST ';' ;
+return_stmt: RETURN expr ';' ;
 
 rvalue: expr ;
 lvalue: VARNAME ;

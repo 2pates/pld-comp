@@ -109,6 +109,7 @@ antlrcpp::Any CodeGenVisitor::visitExpr_equality(ifccParser::Expr_equalityContex
 }
 
 antlrcpp::Any CodeGenVisitor::visitBitwise(std::string l_var_name, char OP, std::string r_var_name) {
+    debug("visit bitwise "+OP);
     int l_var_size = variables.at(l_var_name).size;
     int l_var_address  = variables.at(l_var_name).address;
     int r_var_size = variables.at(r_var_name).size;

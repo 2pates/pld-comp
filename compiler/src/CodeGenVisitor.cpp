@@ -58,17 +58,12 @@ antlrcpp::Any CodeGenVisitor::visitDeclare(ifccParser::DeclareContext* ctx) {
 
 antlrcpp::Any CodeGenVisitor::visitReturn_stmt(ifccParser::Return_stmtContext* ctx) {
     debug("return_stmt");
-    // std::string var_name = visit(ctx->expr());
+    std::string var_name = visit(ctx->expr());
     
-    // int var_size = variables.at(var_name).size;
-    // int var_address = variables.at(var_name).address;
+    int var_size = variables.at(var_name).size;
+    int var_address = variables.at(var_name).address;
     
-    // mov(std::to_string(var_address) + "(%rbp)", "%eax", var_size);
-    // std::cout << "    leave\n";
-    
-    int retval = std::stoi(ctx->CONST()->getText());
-
-    std::cout << "    movl $" << retval << ", %eax\n";
+    mov(std::to_string(var_address) + "(%rbp)", "%eax", var_size);
     std::cout << "    leave\n";
 
     return 0;
