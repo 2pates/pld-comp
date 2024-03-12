@@ -13,9 +13,9 @@ jobs:
 
     steps:
     - uses: actions/checkout@v3
-    - name: configure
-      run: cd compiler
     - name: make
+      working-directory: ./compiler
       run: make
     - name: make check
+      working-directory: ./compiler
       run: make check
