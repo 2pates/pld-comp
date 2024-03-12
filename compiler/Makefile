@@ -5,11 +5,18 @@
 include config/config.mk
 
 CC=g++
-CCFLAGS=-g -c -std=c++17 -I$(ANTLRINC) -Wno-attributes# -Wno-defaulted-function-deleted -Wno-unknown-warning-option
+CCFLAGS=-g -c -std=c++17 -I$(ANTLRINC) -Wno-attributes -DTRACE# -Wno-defaulted-function-deleted -Wno-unknown-warning-option
 LDFLAGS=-g
 T=
 
 default: all
+
+.PHONY:help
+help : ## show this help
+		@egrep -h '\s##\s' $(MAKEFILE_LIST) | sort | awk 'BEGIN {FS = ":.*?## "} \
+		{printf "\033[36m%-20s\033[0m %s\n", $$1, $$2}'
+
+
 all: ifcc
 
 ##########################################
@@ -23,7 +30,7 @@ OBJECTS=build/ifccBaseVisitor.o \
 	build/CodeGenVisitorExpr.o \
 	build/SymbolGenVisitor.o
 
-ifcc: $(OBJECTS)
+ifcc: $(OBJECTS) ## compilation
 	@mkdir -p build
 	$(CC) $(LDFLAGS) build/*.o $(ANTLRLIB) -o build/ifcc
 
@@ -61,7 +68,7 @@ generated/ifccParser.cpp: ifcc.g4
 # Usage: `make gui FILE=path/to/your/file.c`
 FILE ?= ../tests/testfiles/1_return42.c
 
-gui:
+gui: ## graphical interface
 	@mkdir -p generated build
 	$(ANTLR) -Dlanguage=Java -o generated ifcc.g4
 	javac -cp $(ANTLRJAR) -d build generated/*.java
@@ -69,19 +76,21 @@ gui:
 
 ##########################################
 # delete all machine-generated files
-clean:
+clean: ## clean repo
 	rm -rf build generated
 	rm -f build/ifcc
 	@make -s -C ../tests clean
 
 
-tests:
+##########################################
+# tests and verifications
+tests: ## start all tests with python
 	@make -s -C ../tests clean
 	@make -s -C ../tests all | tee ../tests/test-ouput.txt
 
 
 
-analyse:
+verify: ## check a specific compilation
 	@read -p "Enter a number: " num; \
     files=$$(ls ../tests/testfiles/$$num\_*.c 2>/dev/null); \
     if [ -n "$$files" ]; then \
@@ -93,14 +102,6 @@ analyse:
 
 check:
 	@make -s -C ../tests check
-
-
-# ls ../tests/testfiles/*; \
-	@read -p "Entrez le numéro du fichier à tester : " ans; \
-	./build/ifcc ../tests/testfiles/$$(ans)_*.c
-
-# ./build/ifcc ../tests/testfiles/$(T)_*.c; \
-
 
 
 

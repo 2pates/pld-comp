@@ -7,13 +7,13 @@ TEST FAIL (your compiler rejects a valid program)
 TEST-CASE: ifcc-test-output/testfiles-13_comma
 TEST FAIL (your compiler rejects a valid program)
 TEST-CASE: ifcc-test-output/testfiles-1_return42
-TEST OK
+TEST FAIL (your compiler rejects a valid program)
 TEST-CASE: ifcc-test-output/testfiles-2_invalid_program
 TEST OK
 TEST-CASE: ifcc-test-output/testfiles-3_return_var
 TEST FAIL (your compiler rejects a valid program)
 TEST-CASE: ifcc-test-output/testfiles-4_declare_var
-TEST OK
+TEST FAIL (your compiler rejects a valid program)
 TEST-CASE: ifcc-test-output/testfiles-5_affect_var_const
 TEST FAIL (your compiler rejects a valid program)
 TEST-CASE: ifcc-test-output/testfiles-6_affect_var_var

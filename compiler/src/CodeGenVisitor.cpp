@@ -1,5 +1,14 @@
 #include "CodeGenVisitor.h"
 
+#ifdef TRACE
+#include <iostream>
+#define debug(expression) (std::cerr << __FILE__ << ":" << __LINE__ << \
+" -> " << (expression) << std::endl)
+#else
+#define debug(expression) ((void)0)
+#endif
+
+
 
 antlrcpp::Any CodeGenVisitor::visitProg(ifccParser::ProgContext* ctx) {
     std::cout << ".globl main\n";
@@ -15,12 +24,12 @@ antlrcpp::Any CodeGenVisitor::visitProg(ifccParser::ProgContext* ctx) {
     std::cout << "    ret\n";
 
     return 0;
-} 
-antlrcpp::Any CodeGenVisitor::visitRvalue(ifccParser::RvalueContext* ctx)
-{
-    return visit(ctx->expr());
 }
 
+antlrcpp::Any CodeGenVisitor::visitRvalue(ifccParser::RvalueContext* ctx) {
+    debug("r_value");
+    return visit(ctx->expr());
+}
 
 antlrcpp::Any CodeGenVisitor::visitInstruction(ifccParser::InstructionContext* ctx) {
     if (ctx->assignment_stmt() != nullptr)
@@ -29,7 +38,15 @@ antlrcpp::Any CodeGenVisitor::visitInstruction(ifccParser::InstructionContext* c
         this->visit(ctx->declare_stmt());
     return 0;
 }
-antlrcpp::Any CodeGenVisitor::visitDeclare(ifccParser::DeclareContext* ctx){
+
+antlrcpp::Any CodeGenVisitor::visitDeclare_stmt(ifccParser::Declare_stmtContext* ctx) {
+    declaration_mode = true;
+    visit(ctx->declare());
+    declaration_mode = false;
+    return 0;
+}
+
+antlrcpp::Any CodeGenVisitor::visitDeclare(ifccParser::DeclareContext* ctx) {
     if(ctx->assignment_stmt()!=nullptr){
         visit(ctx->assignment_stmt());
     }
@@ -40,19 +57,25 @@ antlrcpp::Any CodeGenVisitor::visitDeclare(ifccParser::DeclareContext* ctx){
 }
 
 antlrcpp::Any CodeGenVisitor::visitReturn_stmt(ifccParser::Return_stmtContext* ctx) {
-    std::string var_name = visit(ctx->expr());
+    debug("return_stmt");
+    // std::string var_name = visit(ctx->expr());
     
-    int var_size = variables.at(var_name).size;
-    int var_address = variables.at(var_name).address;
+    // int var_size = variables.at(var_name).size;
+    // int var_address = variables.at(var_name).address;
     
-    mov(std::to_string(var_address) + "(%rbp)", "%eax", var_size);
+    // mov(std::to_string(var_address) + "(%rbp)", "%eax", var_size);
+    // std::cout << "    leave\n";
+    
+    int retval = std::stoi(ctx->CONST()->getText());
+
+    std::cout << "    movl $" << retval << ", %eax\n";
     std::cout << "    leave\n";
 
     return 0;
 }
 
 antlrcpp::Any CodeGenVisitor::visitAssignment_stmt(ifccParser::Assignment_stmtContext* ctx) {
-    if (variables.find(ctx->lvalue()->getText()) != variables.end()) {
+    if (declaration_mode || variables.find(ctx->lvalue()->getText()) != variables.end()) {
         int l_addr = variables.at(ctx->lvalue()->getText()).address;
         int l_size = variables.at(ctx->lvalue()->getText()).size;
         std::string r_name = visit(ctx->rvalue());
