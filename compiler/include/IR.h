@@ -11,6 +11,8 @@
 #include "symbole.h"
 #include "SymbolGenVisitor.h"
 
+using namespace std;
+
 class BasicBlock;
 class CFG;
 class DefFonction;
@@ -36,7 +38,8 @@ class IRInstr {
 		call, 
 		cmp_eq,
 		cmp_lt,
-		cmp_le
+		cmp_le,
+		ret
 	} Operation;
 
 
@@ -88,7 +91,7 @@ Possible optimization:
 class BasicBlock {
  public:
 	BasicBlock(CFG* cfg, string entry_label);
-	void gen_asm(ostream &o); /**< x86 assembly code generation for this basic block (very simple) */
+	void gen_asm(ostream &o, Target target); /**< x86 assembly code generation for this basic block (very simple) */
 
 	void add_IRInstr(IRInstr::Operation op, Type t, vector<string> params);
 
@@ -119,21 +122,18 @@ class BasicBlock {
  */
 class CFG {
  public:
-	CFG(DefFonction* ast);
-
-	DefFonction* ast; /**< The AST this CFG comes from */
+	CFG(string entryBlockName);
 	
 	void add_bb(BasicBlock* bb); 
 
 	// x86 code generation: could be encapsulated in a processor class in a retargetable compiler
-	void gen_asm(ostream& o);
+	void gen_asm(ostream& o, Target target);
 	string IR_reg_to_asm(string reg); /**< helper method: inputs a IR reg or input variable, returns e.g. "-24(%rbp)" for the proper value of 24 */
-	void gen_asm_prologue(ostream& o);
-	void gen_asm_epilogue(ostream& o);
+	void gen_asm_prologue(ostream& o, Target target);
+	void gen_asm_epilogue(ostream& o, Target target);
 
 	// symbol table methods
-	void add_to_symbol_table(string name, Type t);
-	string create_new_tempvar(Type t);
+	void add_to_symbol_table(string name, VariableInfo t);
 	VariableInfo get_var_info(string name);
 
 	// basic block management
@@ -142,7 +142,7 @@ class CFG {
 
  protected:
 	std::map<std::string, VariableInfo> variables;
-
+	string entryBlockLabel;
 	int nextBBnumber; /**< just for naming */
 	
 	std::vector <BasicBlock*> bbs; /**< all the basic blocks of this CFG*/
