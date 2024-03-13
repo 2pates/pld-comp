@@ -28,7 +28,8 @@ OBJECTS=build/ifccBaseVisitor.o \
 	build/main.o \
 	build/CodeGenVisitor.o \
 	build/CodeGenVisitorExpr.o \
-	build/SymbolGenVisitor.o
+	build/SymbolGenVisitor.o \
+	build/IR.o
 
 ifcc: $(OBJECTS) ## compilation
 	@mkdir -p build

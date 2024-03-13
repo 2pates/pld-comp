@@ -1,27 +1,21 @@
 #include "CodeGenVisitor.h"
+#include "IR.h"
 
 #ifdef TRACE
 #include <iostream>
-#define debug(expression) (std::cerr << __FILE__ << ":" << __LINE__ << \
-" -> " << (expression) << std::endl)
+#define debug(expression) (std::cerr << __FILE__ << ":" << __LINE__ << " -> " << (expression) << std::endl)
 #else
 #define debug(expression) ((void)0)
 #endif
 
-
-
 antlrcpp::Any CodeGenVisitor::visitProg(ifccParser::ProgContext* ctx) {
-    std::cout << ".globl main\n";
-    std::cout << "main: \n";
-    std::cout << "pushq %rbp\n";      // Save the old base pointer
-    std::cout << "movq %rsp, %rbp\n"; // Set up a new base pointer
+    cfg->add_bb(new BasicBlock(cfg, cfg->entry_block_label));
 
     for (auto instr : ctx->instruction()) {
         this->visit(instr);
     }
 
     this->visit(ctx->return_stmt());
-    std::cout << "    ret\n";
 
     return 0;
 }
@@ -47,10 +41,10 @@ antlrcpp::Any CodeGenVisitor::visitDeclare_stmt(ifccParser::Declare_stmtContext*
 }
 
 antlrcpp::Any CodeGenVisitor::visitDeclare(ifccParser::DeclareContext* ctx) {
-    if(ctx->assignment_stmt()!=nullptr){
+    if (ctx->assignment_stmt() != nullptr) {
         visit(ctx->assignment_stmt());
     }
-    if(ctx->declare()!=nullptr){
+    if (ctx->declare() != nullptr) {
         visit(ctx->declare());
     }
     return 0;
@@ -59,28 +53,16 @@ antlrcpp::Any CodeGenVisitor::visitDeclare(ifccParser::DeclareContext* ctx) {
 antlrcpp::Any CodeGenVisitor::visitReturn_stmt(ifccParser::Return_stmtContext* ctx) {
     debug("return_stmt");
     std::string var_name = visit(ctx->expr());
-    
-    int var_size = variables.at(var_name).size;
-    int var_address = variables.at(var_name).address;
-    
-    mov(std::to_string(var_address) + "(%rbp)", "%eax", var_size);
-    std::cout << "    leave\n";
+    cfg->current_bb->add_IRInstr(IRInstr::Operation::ret, Type::INT32, {var_name});
 
     return 0;
 }
 
 antlrcpp::Any CodeGenVisitor::visitAssignment_stmt(ifccParser::Assignment_stmtContext* ctx) {
-    if (declaration_mode || variables.find(ctx->lvalue()->getText()) != variables.end()) {
-        int l_addr = variables.at(ctx->lvalue()->getText()).address;
-        int l_size = variables.at(ctx->lvalue()->getText()).size;
+    if (declaration_mode || variables.find(ctx->lvalue()->getText()) != cfg->variables.end()) {
         std::string r_name = visit(ctx->rvalue());
         if (variables.find(r_name) != variables.end()) {
-            int r_addr = variables.at(r_name).address;
-            int r_size = variables.at(r_name).size;
-
-            mov(std::to_string(r_addr) + "(%rbp)", "%eax", r_size);
-            mov("%eax", std::to_string(l_addr) + "(%rbp)", l_size);
-
+            cfg->current_bb->add_IRInstr(IRInstr::Operation::copy, Type::INT32, {r_name, ctx->lvalue()->getText()});
             return 0;
         } else {
             std::cerr << "Programmer error" << std::endl;
@@ -139,5 +121,3 @@ int CodeGenVisitor::mov(std::string source, std::string dest, int size) {
     std::cout << dest << "\n";
     return 0;
 }
-
-

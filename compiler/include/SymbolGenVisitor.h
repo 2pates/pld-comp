@@ -10,6 +10,7 @@
 
 class VariableInfo {
 public:
+    VariableInfo() { defined = false; }
     VariableInfo(long int address_, int size_) : address(address_), size(size_), defined(true) {}
     VariableInfo(long int address_, int size_, bool defined_) : address(address_), size(size_), defined(defined_) {}
     long int address; // relative address of the pointer
