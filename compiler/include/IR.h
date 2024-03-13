@@ -9,10 +9,15 @@
 // Declarations from the parser -- replace with your own
 #include "type.h"
 #include "symbole.h"
+#include "SymbolGenVisitor.h"
 
 class BasicBlock;
 class CFG;
 class DefFonction;
+
+typedef enum {
+	x86
+} Target;
 
 
 //! The class for one 3-address instruction
@@ -39,7 +44,7 @@ class IRInstr {
 	IRInstr(BasicBlock* bb_, Operation op, Type t, vector<string> params);
 	
 	/** Actual code generation */
-	void gen_asm(ostream &o); /**< x86 assembly code generation for this IR instruction */
+	void gen_asm(ostream &o, Target target); /**< x86 assembly code generation for this IR instruction */
 	
  private:
 	BasicBlock* bb; /**< The BB this instruction belongs to, which provides a pointer to the CFG this instruction belong to */
@@ -129,17 +134,15 @@ class CFG {
 	// symbol table methods
 	void add_to_symbol_table(string name, Type t);
 	string create_new_tempvar(Type t);
-	int get_var_index(string name);
-	Type get_var_type(string name);
+	VariableInfo get_var_info(string name);
 
 	// basic block management
 	string new_BB_name();
 	BasicBlock* current_bb;
 
  protected:
-	std::map<std::string, Type> SymbolType; /**< part of the symbol table  */
-	std::map<std::string, int> SymbolIndex; /**< part of the symbol table  */
-	int nextFreeSymbolIndex; /**< to allocate new symbols in the symbol table */
+	std::map<std::string, VariableInfo> variables;
+
 	int nextBBnumber; /**< just for naming */
 	
 	std::vector <BasicBlock*> bbs; /**< all the basic blocks of this CFG*/
