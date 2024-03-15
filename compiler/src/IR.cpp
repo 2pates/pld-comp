@@ -29,6 +29,11 @@ cmp_eq : variable_membre_gauche, variable_membre_droite, variable_destination
 cmp_lt : variable_membre_gauche, variable_membre_droite, variable_destination
 cmp_le : variable_membre_gauche, variable_membre_droite, variable_destination
 ret : variable
+bitwise_and : variable_membre_gauche, variable_membre_droite, variable_destination
+bitwise_or : variable_membre_gauche, variable_membre_droite, variable_destination
+bitwise_xor : variable_membre_gauche, variable_membre_droite, variable_destination
+bitwise_not : variable, variable_destination
+neg : variable, variable_destination
 */
 void IRInstr::gen_asm(ostream& o, Target target) {
     switch (op) {
@@ -114,6 +119,78 @@ void IRInstr::gen_asm(ostream& o, Target target) {
                 o << "leave" << endl;
             }
             break;
+        }
+        case bitwise_and: {
+            VariableInfo membreGauche = bb->cfg->get_var_info(params[0]);
+            VariableInfo membreDroit = bb->cfg->get_var_info(params[1]);
+            VariableInfo destination = bb->cfg->get_var_info(params[2]);
+
+            if (target == Target::x86) {
+                o << "mov" << size_to_letter(membreGauche.size) << " " << to_string(membreGauche.address)
+                  << "(%rbp), %eax" << endl;
+                o << "and" << size_to_letter(destination.size) << " " << to_string(membreDroit.address)
+                  << "(%rbp), %eax" << endl;
+                o << "mov" << size_to_letter(destination.size) << " %eax, " << to_string(destination.address)
+                  << "(%rbp)" << endl;
+            }
+            break;
+        }
+        case bitwise_or: {
+            VariableInfo membreGauche = bb->cfg->get_var_info(params[0]);
+            VariableInfo membreDroit = bb->cfg->get_var_info(params[1]);
+            VariableInfo destination = bb->cfg->get_var_info(params[2]);
+
+            if (target == Target::x86) {
+                o << "mov" << size_to_letter(membreGauche.size) << " " << to_string(membreGauche.address)
+                  << "(%rbp), %eax" << endl;
+                o << "or" << size_to_letter(destination.size) << " " << to_string(membreDroit.address)
+                  << "(%rbp), %eax" << endl;
+                o << "mov" << size_to_letter(destination.size) << " %eax, " << to_string(destination.address)
+                  << "(%rbp)" << endl;
+            }
+            break;
+        }
+        case bitwise_xor: {
+            VariableInfo membreGauche = bb->cfg->get_var_info(params[0]);
+            VariableInfo membreDroit = bb->cfg->get_var_info(params[1]);
+            VariableInfo destination = bb->cfg->get_var_info(params[2]);
+
+            if (target == Target::x86) {
+                o << "mov" << size_to_letter(membreGauche.size) << " " << to_string(membreGauche.address)
+                  << "(%rbp), %eax" << endl;
+                o << "xor" << size_to_letter(destination.size) << " " << to_string(membreDroit.address)
+                  << "(%rbp), %eax" << endl;
+                o << "mov" << size_to_letter(destination.size) << " %eax, " << to_string(destination.address)
+                  << "(%rbp)" << endl;
+            }
+            break;
+        }
+        case bitwise_not: {
+            VariableInfo varName = bb->cfg->get_var_info(params[0]);
+            VariableInfo destination = bb->cfg->get_var_info(params[1]);
+
+            if (target == Target::x86) {
+                o << "mov" << size_to_letter(varName.size) << " " << to_string(varName.address)
+                  << "(%rbp), %eax" << endl;
+                o << "not" << size_to_letter(destination.size) << " %eax" << endl;
+                o << "mov" << size_to_letter(destination.size) << " %eax, " << to_string(destination.address)
+                  << "(%rbp)" << endl;
+            }
+            break;
+        }
+        case neg: {
+            VariableInfo varName = bb->cfg->get_var_info(params[0]);
+            VariableInfo destination = bb->cfg->get_var_info(params[1]);
+
+            if (target == Target::x86) {
+                o << "mov" << size_to_letter(varName.size) << " " << to_string(varName.address)
+                  << "(%rbp), %eax" << endl;
+                o << "neg" << size_to_letter(destination.size) << " %eax" << endl;
+                o << "mov" << size_to_letter(destination.size) << " %eax, " << to_string(destination.address)
+                  << "(%rbp)" << endl;
+            }
+            break;
+        
         }
     }
 }
