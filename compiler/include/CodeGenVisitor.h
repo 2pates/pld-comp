@@ -1,14 +1,15 @@
 #pragma once
 
+#include "Error.h"
+#include "IR.h"
 #include "SymbolGenVisitor.h"
 #include "antlr4-runtime.h"
 #include "ifccBaseVisitor.h"
 #include <string.h>
-#include "Error.h"
 
 class CodeGenVisitor : public ifccBaseVisitor {
 public:
-    CodeGenVisitor(std::map<std::string, VariableInfo> variables_) : variables(variables_), tmp_index(0) {}
+    CodeGenVisitor(CFG* cfg_) : tmp_index(0), cfg(cfg_), variables(cfg->variables) {}
     virtual antlrcpp::Any visitProg(ifccParser::ProgContext* ctx) override;
     virtual antlrcpp::Any visitInstruction(ifccParser::InstructionContext* ctx) override;
     virtual antlrcpp::Any visitReturn_stmt(ifccParser::Return_stmtContext* ctx) override;
@@ -30,7 +31,9 @@ public:
     virtual antlrcpp::Any visitExpr_lazy_or(ifccParser::Expr_lazy_orContext* ctx) override;
     virtual antlrcpp::Any visitExpr_atom(ifccParser::Expr_atomContext* ctx) override;
 
-    std::map<std::string, VariableInfo> variables;
+    // std::map<std::string, VariableInfo> variables;
+    CFG* cfg;
+    std::map<std::string, VariableInfo>& variables;
     int tmp_index;
     bool declaration_mode = false;
 
@@ -41,4 +44,3 @@ public:
 
     int mov(std::string source, std::string dest, int size);
 };
-

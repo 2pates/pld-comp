@@ -10,6 +10,7 @@
 
 class VariableInfo {
 public:
+    VariableInfo() { defined = false; }
     VariableInfo(long int address_, int size_) : address(address_), size(size_), defined(true) {}
     VariableInfo(long int address_, int size_, bool defined_) : address(address_), size(size_), defined(defined_) {}
     long int address; // relative address of the pointer
@@ -28,6 +29,10 @@ public:
     virtual antlrcpp::Any visitExpr_and(ifccParser::Expr_andContext* ctx) override;
     virtual antlrcpp::Any visitExpr_xor(ifccParser::Expr_xorContext* ctx) override;
     virtual antlrcpp::Any visitExpr_or(ifccParser::Expr_orContext* ctx) override;
+    virtual antlrcpp::Any visitExpr_unaire(ifccParser::Expr_unaireContext* ctx) override;
+    virtual antlrcpp::Any visitExpr_relational(ifccParser::Expr_relationalContext* ctx) override;
+    virtual antlrcpp::Any visitExpr_equality(ifccParser::Expr_equalityContext* ctx) override;
+
 
     std::map<std::string, VariableInfo> variables;
     long int memory_offset;

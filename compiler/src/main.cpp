@@ -9,6 +9,7 @@
 #include "ifccParser.h"
 
 #include "CodeGenVisitor.h"
+#include "IR.h"
 #include "SymbolGenVisitor.h"
 
 using namespace antlr4;
@@ -46,8 +47,10 @@ int main(int argn, const char** argv) {
     SymbolGenVisitor s;
     s.visit(tree);
 
-    CodeGenVisitor v(s.variables);
+    CFG cfg(s.variables, "entry_point");
+    CodeGenVisitor v(&cfg);
     v.visit(tree);
+    cfg.gen_asm(cout, Target::x86);
 
     return 0;
 }
