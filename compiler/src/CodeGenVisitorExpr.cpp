@@ -85,7 +85,7 @@ antlrcpp::Any CodeGenVisitor::visitExpr_relational(ifccParser::Expr_relationalCo
     } else if (ope == ">") {
         cfg->current_bb->add_IRInstr(IRInstr::Operation::cmp_gt, Type::INT32,
                                      {left_var_name, right_var_name, tmp_var_name});
-    } else if (ope == "<") {
+    } else if (ope == ">=") {
         cfg->current_bb->add_IRInstr(IRInstr::Operation::cmp_ge, Type::INT32,
                                      {left_var_name, right_var_name, tmp_var_name});
     }
