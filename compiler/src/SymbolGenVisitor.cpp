@@ -99,6 +99,14 @@ antlrcpp::Any SymbolGenVisitor::visitExpr_or(ifccParser::Expr_orContext* ctx) {
     return 0;
 }
 
+antlrcpp::Any SymbolGenVisitor::visitExpr_unaire(ifccParser::Expr_unaireContext* ctx) {
+    visit(ctx->expr());
+    memory_offset -= 4;
+    tmp_index++;
+    variables.insert({"#tmp" + std::to_string(tmp_index), VariableInfo(memory_offset, 4)});
+    return 0;
+}
+
 int SymbolGenVisitor::check_exist(ifccParser::Expr_atomContext* ctx) {
     if (ctx->CONST())
         return EXIST;

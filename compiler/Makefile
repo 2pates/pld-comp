@@ -87,7 +87,7 @@ clean: ## clean repo
 # tests and verifications
 tests: ## start all tests with python
 	@make -s -C ../tests clean
-	@make -s -C ../tests all | tee ../tests/test-ouput.txt
+	@make -s -C ../tests all
 
 
 

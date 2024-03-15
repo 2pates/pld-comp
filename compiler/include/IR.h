@@ -22,7 +22,25 @@ class IRInstr {
 
 public:
     /** The instructions themselves -- feel free to subclass instead */
-    typedef enum { ldconst, copy, add, sub, mul, rmem, wmem, call, cmp_eq, cmp_ne, cmp_lt, cmp_le, cmp_gt, cmp_ge, ret, l_not } Operation;
+    typedef enum {
+        ldconst,
+        copy,
+        add,
+        sub,
+        mul,
+        rmem,
+        wmem,
+        call,
+        cmp_eq,
+        cmp_ne, cmp_lt,
+        cmp_le,
+        cmp_gt, cmp_ge, ret,
+        bitwise_and,
+        bitwise_or,
+        bitwise_xor,
+        bitwise_not,
+        neg,
+   , l_not } Operation;
 
     /**  constructor */
     IRInstr(BasicBlock* bb_, Operation op, Type t, std::vector<std::string> params);
@@ -100,7 +118,7 @@ class CFG {
     friend class CodeGenVisitor;
 
 public:
-    CFG(std::map<std::string, VariableInfo> variables_, std::string entry_block_label_);
+    CFG(std::map<std::string, VariableInfo>& variables_, std::string entry_block_label_);
 
     void add_bb(BasicBlock* bb);
 
@@ -120,7 +138,7 @@ public:
     BasicBlock* current_bb;
 
 protected:
-    std::map<std::string, VariableInfo> variables;
+    std::map<std::string, VariableInfo>& variables;
     string entry_block_label;
     int nextBBnumber; /**< just for naming */
 
