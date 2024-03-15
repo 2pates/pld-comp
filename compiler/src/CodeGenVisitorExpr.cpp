@@ -44,6 +44,9 @@ antlrcpp::Any CodeGenVisitor::visitExpr_unaire(ifccParser::Expr_unaireContext* c
             std::cout << "   negl %eax" << std::endl;
             push_stack("%eax", tmp_var_address, tmp_var_size);
             break;
+        case '!':
+            cfg->current_bb->add_IRInstr(IRInstr::Operation::l_not, Type::INT32, {var_name, tmp_var_name});
+            break;
         default:
             break;
     }
@@ -72,7 +75,7 @@ antlrcpp::Any CodeGenVisitor::visitExpr_mult(ifccParser::Expr_multContext* ctx) 
             std::cout << "    movl %edx, " << tmp_var_address << "(%rbp)" << std::endl;
         }
     }
-    return tmp_var_address;
+    return tmp_var_name;
 }
 
 antlrcpp::Any CodeGenVisitor::visitExpr_add(ifccParser::Expr_addContext* ctx) {
@@ -93,12 +96,64 @@ antlrcpp::Any CodeGenVisitor::visitExpr_add(ifccParser::Expr_addContext* ctx) {
         std::cout << "	subl %ebx, %eax" << std::endl;
         std::cout << "    movl %eax, " << tmp_var_address << "(%rbp)" << std::endl;
     }
-    return tmp_var_address;
+    return tmp_var_name;
 }
 
-antlrcpp::Any CodeGenVisitor::visitExpr_relational(ifccParser::Expr_relationalContext* ctx) { return 0; }
+antlrcpp::Any CodeGenVisitor::visitExpr_relational(ifccParser::Expr_relationalContext* ctx) {
+    std::string left_var_name = visit(ctx->expr()[0]);
+    int left_var_size = variables.at(left_var_name).size;
+    int left_var_address = variables.at(left_var_name).address;
 
-antlrcpp::Any CodeGenVisitor::visitExpr_equality(ifccParser::Expr_equalityContext* ctx) { return 0; }
+    std::string right_var_name = visit(ctx->expr()[1]);
+    int right_var_size = variables.at(right_var_name).size;
+    int right_var_address = variables.at(right_var_name).address;
+
+    tmp_index++;
+    std::string tmp_var_name = "#tmp" + std::to_string(tmp_index);
+    int tmp_var_size = variables.at(tmp_var_name).size;
+    int tmp_var_address = variables.at(tmp_var_name).address;
+
+    std::string ope = ctx->OP->getText();
+    if (ope == "<") {
+        cfg->current_bb->add_IRInstr(IRInstr::Operation::cmp_lt, Type::INT32,
+                                     {left_var_name, right_var_name, tmp_var_name});
+    } else if (ope == "<=") {
+        cfg->current_bb->add_IRInstr(IRInstr::Operation::cmp_le, Type::INT32,
+                                     {left_var_name, right_var_name, tmp_var_name});
+    } else if (ope == ">") {
+        cfg->current_bb->add_IRInstr(IRInstr::Operation::cmp_gt, Type::INT32,
+                                     {left_var_name, right_var_name, tmp_var_name});
+    } else if (ope == "<") {
+        cfg->current_bb->add_IRInstr(IRInstr::Operation::cmp_ge, Type::INT32,
+                                     {left_var_name, right_var_name, tmp_var_name});
+    }
+    return tmp_var_name;
+}
+
+antlrcpp::Any CodeGenVisitor::visitExpr_equality(ifccParser::Expr_equalityContext* ctx) {
+    std::string left_var_name = visit(ctx->expr()[0]);
+    int left_var_size = variables.at(left_var_name).size;
+    int left_var_address = variables.at(left_var_name).address;
+
+    std::string right_var_name = visit(ctx->expr()[1]);
+    int right_var_size = variables.at(right_var_name).size;
+    int right_var_address = variables.at(right_var_name).address;
+
+    tmp_index++;
+    std::string tmp_var_name = "#tmp" + std::to_string(tmp_index);
+    int tmp_var_size = variables.at(tmp_var_name).size;
+    int tmp_var_address = variables.at(tmp_var_name).address;
+
+    std::string ope = ctx->OP->getText();
+    if (ope == "==") {
+        cfg->current_bb->add_IRInstr(IRInstr::Operation::cmp_eq, Type::INT32,
+                                     {left_var_name, right_var_name, tmp_var_name});
+    } else if (ope == "!=") {
+        cfg->current_bb->add_IRInstr(IRInstr::Operation::cmp_ne, Type::INT32,
+                                     {left_var_name, right_var_name, tmp_var_name});
+    }
+    return tmp_var_name;
+}
 
 antlrcpp::Any CodeGenVisitor::visitBitwise(std::string l_var_name, char OP, std::string r_var_name) {
     debug("visit bitwise " + OP);
@@ -163,7 +218,6 @@ antlrcpp::Any CodeGenVisitor::visitExpr_lazy_and(ifccParser::Expr_lazy_andContex
 antlrcpp::Any CodeGenVisitor::visitExpr_lazy_or(ifccParser::Expr_lazy_orContext* ctx) { return 0; }
 
 antlrcpp::Any CodeGenVisitor::visitExpr_atom(ifccParser::Expr_atomContext* ctx) {
-    debug("expr_atom");
     std::string var_name;
     if (ctx->CONST() != nullptr) {
         tmp_index++;
@@ -176,6 +230,5 @@ antlrcpp::Any CodeGenVisitor::visitExpr_atom(ifccParser::Expr_atomContext* ctx) 
     } else if (ctx->VARNAME() != nullptr) {
         var_name = ctx->VARNAME()->getText();
     }
-    debug("expr_atom fin");
     return var_name;
 }

@@ -25,9 +25,13 @@ copy : variable_source, variable_destination
 add : variable_membre_gauche, variable_membre_droite, variable_destination
 sub : variable_membre_gauche, variable_membre_droite, variable_destination
 mul : variable_membre_gauche, variable_membre_droite, variable_destination
+l_not : variable_initiale, varibale_destination
 cmp_eq : variable_membre_gauche, variable_membre_droite, variable_destination
+cmp_ne : variable_membre_gauche, variable_membre_droite, variable_destination
 cmp_lt : variable_membre_gauche, variable_membre_droite, variable_destination
 cmp_le : variable_membre_gauche, variable_membre_droite, variable_destination
+cmp_gt : variable_membre_gauche, variable_membre_droite, variable_destination
+cmp_ge : variable_membre_gauche, variable_membre_droite, variable_destination
 ret : variable
 */
 void IRInstr::gen_asm(ostream& o, Target target) {
@@ -46,7 +50,7 @@ void IRInstr::gen_asm(ostream& o, Target target) {
 
             if (target == Target::x86) {
                 o << "mov" << size_to_letter(source.size) << " " << to_string(source.address) << "(%rbp), %eax" << endl;
-                o << "mov" << size_to_letter(destination.size) << " %ebx," << to_string(destination.address) << "(%rbp)"
+                o << "mov" << size_to_letter(destination.size) << " %eax," << to_string(destination.address) << "(%rbp)"
                   << endl;
             }
             break;
@@ -99,12 +103,122 @@ void IRInstr::gen_asm(ostream& o, Target target) {
             }
             break;
         }
-        case cmp_eq:
+        case l_not: {
+            VariableInfo variableInitiale = bb->cfg->get_var_info(params[0]);
+            VariableInfo destination = bb->cfg->get_var_info(params[1]);
+
+            if (target == Target::x86) {
+                o << "cmp" << size_to_letter(variableInitiale.size) << " $0, " << to_string(variableInitiale.address)
+                  << "(%rbp)" << endl;
+                o << "sete %al" << endl;
+                o << "movzb" << size_to_letter(variableInitiale.size) << " %al, %eax" << endl;
+                o << "mov" << size_to_letter(variableInitiale.size) << " %eax, " << destination.size << "(%rbp)"
+                  << endl;
+            }
             break;
-        case cmp_lt:
+        }
+        case cmp_eq: {
+            VariableInfo membreGauche = bb->cfg->get_var_info(params[0]);
+            VariableInfo membreDroit = bb->cfg->get_var_info(params[1]);
+            VariableInfo destination = bb->cfg->get_var_info(params[2]);
+
+            if (target == Target::x86) {
+                o << "mov" << size_to_letter(membreGauche.size) << " " << to_string(membreGauche.address)
+                  << "(%rbp), %eax" << endl;
+                o << "cmp" << size_to_letter(membreDroit.size) << " " << to_string(membreDroit.address)
+                  << "(%rbp), %eax" << endl;
+                o << "sete %al" << endl;
+                o << "movzb" << size_to_letter(destination.size) << " %al, %eax" << endl;
+                o << "mov" << size_to_letter(destination.size) << " %eax, " << to_string(destination.address)
+                  << "(%rbp)" << endl;
+            }
             break;
-        case cmp_le:
+        }
+        case cmp_ne: {
+            VariableInfo membreGauche = bb->cfg->get_var_info(params[0]);
+            VariableInfo membreDroit = bb->cfg->get_var_info(params[1]);
+            VariableInfo destination = bb->cfg->get_var_info(params[2]);
+
+            if (target == Target::x86) {
+                o << "mov" << size_to_letter(membreGauche.size) << " " << to_string(membreGauche.address)
+                  << "(%rbp), %eax" << endl;
+                o << "cmp" << size_to_letter(membreDroit.size) << " " << to_string(membreDroit.address)
+                  << "(%rbp), %eax" << endl;
+                o << "setne %al" << endl;
+                o << "movzb" << size_to_letter(destination.size) << " %al, %eax" << endl;
+                o << "mov" << size_to_letter(destination.size) << " %eax, " << to_string(destination.address)
+                  << "(%rbp)" << endl;
+            }
             break;
+        }
+        case cmp_lt: {
+            VariableInfo membreGauche = bb->cfg->get_var_info(params[0]);
+            VariableInfo membreDroit = bb->cfg->get_var_info(params[1]);
+            VariableInfo destination = bb->cfg->get_var_info(params[2]);
+
+            if (target == Target::x86) {
+                o << "mov" << size_to_letter(membreGauche.size) << " " << to_string(membreGauche.address)
+                  << "(%rbp), %eax" << endl;
+                o << "cmp" << size_to_letter(membreDroit.size) << " " << to_string(membreDroit.address)
+                  << "(%rbp), %eax" << endl;
+                o << "setl %al" << endl;
+                o << "movzb" << size_to_letter(destination.size) << " %al, %eax" << endl;
+                o << "mov" << size_to_letter(destination.size) << " %eax, " << to_string(destination.address)
+                  << "(%rbp)" << endl;
+            }
+            break;
+        }
+        case cmp_le: {
+            VariableInfo membreGauche = bb->cfg->get_var_info(params[0]);
+            VariableInfo membreDroit = bb->cfg->get_var_info(params[1]);
+            VariableInfo destination = bb->cfg->get_var_info(params[2]);
+
+            if (target == Target::x86) {
+                o << "mov" << size_to_letter(membreGauche.size) << " " << to_string(membreGauche.address)
+                  << "(%rbp), %eax" << endl;
+                o << "cmp" << size_to_letter(membreDroit.size) << " " << to_string(membreDroit.address)
+                  << "(%rbp), %eax" << endl;
+                o << "setle %al" << endl;
+                o << "movzb" << size_to_letter(destination.size) << " %al, %eax" << endl;
+                o << "mov" << size_to_letter(destination.size) << " %eax, " << to_string(destination.address)
+                  << "(%rbp)" << endl;
+            }
+            break;
+        }
+        case cmp_gt: {
+            VariableInfo membreGauche = bb->cfg->get_var_info(params[0]);
+            VariableInfo membreDroit = bb->cfg->get_var_info(params[1]);
+            VariableInfo destination = bb->cfg->get_var_info(params[2]);
+
+            if (target == Target::x86) {
+                o << "mov" << size_to_letter(membreGauche.size) << " " << to_string(membreGauche.address)
+                  << "(%rbp), %eax" << endl;
+                o << "cmp" << size_to_letter(membreDroit.size) << " " << to_string(membreDroit.address)
+                  << "(%rbp), %eax" << endl;
+                o << "setg %al" << endl;
+                o << "movzb" << size_to_letter(destination.size) << " %al, %eax" << endl;
+                o << "mov" << size_to_letter(destination.size) << " %eax, " << to_string(destination.address)
+                  << "(%rbp)" << endl;
+            }
+            break;
+        }
+        case cmp_ge: {
+            VariableInfo membreGauche = bb->cfg->get_var_info(params[0]);
+            VariableInfo membreDroit = bb->cfg->get_var_info(params[1]);
+            VariableInfo destination = bb->cfg->get_var_info(params[2]);
+
+            if (target == Target::x86) {
+                o << "mov" << size_to_letter(membreGauche.size) << " " << to_string(membreGauche.address)
+                  << "(%rbp), %eax" << endl;
+                o << "cmp" << size_to_letter(membreDroit.size) << " " << to_string(membreDroit.address)
+                  << "(%rbp), %eax" << endl;
+                o << "setge %al" << endl;
+                o << "movzb" << size_to_letter(destination.size) << " %al, %eax" << endl;
+                o << "mov" << size_to_letter(destination.size) << " %eax, " << to_string(destination.address)
+                  << "(%rbp)" << endl;
+            }
+            break;
+        }
         case ret: {
             if (target == Target::x86) {
                 VariableInfo variable = bb->cfg->get_var_info(params[0]);

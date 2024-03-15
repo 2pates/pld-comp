@@ -21,7 +21,6 @@ antlrcpp::Any CodeGenVisitor::visitProg(ifccParser::ProgContext* ctx) {
 }
 
 antlrcpp::Any CodeGenVisitor::visitRvalue(ifccParser::RvalueContext* ctx) {
-    debug("r_value");
     return visit(ctx->expr());
 }
 
@@ -51,7 +50,6 @@ antlrcpp::Any CodeGenVisitor::visitDeclare(ifccParser::DeclareContext* ctx) {
 }
 
 antlrcpp::Any CodeGenVisitor::visitReturn_stmt(ifccParser::Return_stmtContext* ctx) {
-    debug("return_stmt");
     std::string var_name = visit(ctx->expr());
     cfg->current_bb->add_IRInstr(IRInstr::Operation::ret, Type::INT32, {var_name});
 

@@ -41,8 +41,29 @@ antlrcpp::Any SymbolGenVisitor::visitAssignment_stmt(ifccParser::Assignment_stmt
     return UNDECLARED; // undeclared variable affectation
 }
 
+antlrcpp::Any SymbolGenVisitor::visitExpr_unaire(ifccParser::Expr_unaireContext* ctx) {
+    memory_offset -= 4;
+    tmp_index++;
+    variables.insert({"#tmp" + std::to_string(tmp_index), VariableInfo(memory_offset, 4)});
+    return 0;
+}
+
+antlrcpp::Any SymbolGenVisitor::visitExpr_relational(ifccParser::Expr_relationalContext* ctx) {
+    memory_offset -= 4;
+    tmp_index++;
+    variables.insert({"#tmp" + std::to_string(tmp_index), VariableInfo(memory_offset, 4)});
+    return 0;
+}
+
+antlrcpp::Any SymbolGenVisitor::visitExpr_equality(ifccParser::Expr_equalityContext* ctx) {
+    memory_offset -= 4;
+    tmp_index++;
+    variables.insert({"#tmp" + std::to_string(tmp_index), VariableInfo(memory_offset, 4)});
+    return 0;
+}
+
+
 antlrcpp::Any SymbolGenVisitor::visitExpr_atom(ifccParser::Expr_atomContext* ctx) {
-    debug("expr_atom symbol");
     if (ctx->CONST() != nullptr) {
         memory_offset -= 4;
         tmp_index++;

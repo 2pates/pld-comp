@@ -22,7 +22,7 @@ class IRInstr {
 
 public:
     /** The instructions themselves -- feel free to subclass instead */
-    typedef enum { ldconst, copy, add, sub, mul, rmem, wmem, call, cmp_eq, cmp_lt, cmp_le, ret } Operation;
+    typedef enum { ldconst, copy, add, sub, mul, rmem, wmem, call, cmp_eq, cmp_ne, cmp_lt, cmp_le, cmp_gt, cmp_ge, ret, l_not } Operation;
 
     /**  constructor */
     IRInstr(BasicBlock* bb_, Operation op, Type t, std::vector<std::string> params);
