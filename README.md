@@ -17,7 +17,7 @@ Here we put the non-programming choices we made
 
 ## TODO
 ### Obligatoire
-- [ ] Type de données char
+- [ ] Type de données char : bachir
 - [x] Type de données int
 - [x] Variables
 - [x] Constantes entières
@@ -32,7 +32,7 @@ Here we put the non-programming choices we made
 - [ ] Utilisation des fonctions standard putchar et getchar pour les entrées-sorties : James
 - [ ] Définition de fonctions avec paramètres, et type de retour int, char ou void
 - [ ] Vérification de la cohérence des appels de fonctions et leurs paramètres (noms réservés)
-- [ ] Structure de blocs grâce à { et } : Roua
+- [ ] Structure de blocs grâce à { et } : Roua & bachir
 - [ ] Support des portées de variables et du shadowing
 - [ ] Les structures de contrôle if, else, while : Mathieu
 - [ ] Support du return expression n’importe où
