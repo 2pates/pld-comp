@@ -13,8 +13,8 @@
 antlrcpp::Any CodeGenVisitor::visitProg(ifccParser::ProgContext* ctx) {
     std::cout << ".globl main\n";
     std::cout << "main: \n";
-    std::cout << "pushq %rbp\n";      // Save the old base pointer
-    std::cout << "movq %rsp, %rbp\n"; // Set up a new base pointer
+    std::cout << "  pushq %rbp\n";      // Save the old base pointer
+    std::cout << "  movq %rsp, %rbp\n"; // Set up a new base pointer
 
     for (auto instr : ctx->instruction()) {
         this->visit(instr);
@@ -70,7 +70,8 @@ antlrcpp::Any CodeGenVisitor::visitReturn_stmt(ifccParser::Return_stmtContext* c
 }
 
 antlrcpp::Any CodeGenVisitor::visitAssignment_stmt(ifccParser::Assignment_stmtContext* ctx) {
-    if (declaration_mode || variables.find(ctx->lvalue()->getText()) != variables.end()) {
+    debug("assignment statement");
+    if (variables.find(ctx->lvalue()->getText()) != variables.end()) {
         int l_addr = variables.at(ctx->lvalue()->getText()).address;
         int l_size = variables.at(ctx->lvalue()->getText()).size;
         std::string r_name = visit(ctx->rvalue());

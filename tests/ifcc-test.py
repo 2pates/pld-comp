@@ -14,6 +14,10 @@
 #
 #
 
+def natural_sort_key(s): # to sort in natural order (ls -v equivalent)
+    import re
+    return [int(text) if text.isdigit() else text.lower() for text in re.split('(\d+)', s)]
+
 import argparse
 import glob
 import os
@@ -154,7 +158,7 @@ for j in jobs:
             break # and skip the 'else' branch
     else:
         unique_jobs.append(j)
-jobs=sorted(unique_jobs)
+jobs=sorted(unique_jobs, key=natural_sort_key)
 # debug: after deduplication
 if args.debug:
     print("debug: list of test-cases after deduplication:"," ".join(jobs))
