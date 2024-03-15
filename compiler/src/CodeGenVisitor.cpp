@@ -65,7 +65,7 @@ antlrcpp::Any CodeGenVisitor::visitAssignment_stmt(ifccParser::Assignment_stmtCo
             cfg->current_bb->add_IRInstr(IRInstr::Operation::copy, Type::INT32, {r_name, ctx->lvalue()->getText()});
             return 0;
         } else {
-            std::cerr << "Programmer error" << std::endl;
+            debug("Variable " + r_name + " not found");
             return PROGRAMER_ERROR;
         }
     } else {
