@@ -12,4 +12,5 @@
 #define UNDECLARED 1 // no declaration
 #define UNDEFINED 2  // no affectation
 #define DOUBLE_DECLARATION 3
+#define RESERVED_KEY_WORD 4
 #define PROGRAMER_ERROR -1

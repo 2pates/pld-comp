@@ -49,10 +49,14 @@ antlrcpp::Any SymbolGenVisitor::visitAssignment_stmt(ifccParser::Assignment_stmt
 
 antlrcpp::Any SymbolGenVisitor::visitLvalue(ifccParser::LvalueContext* ctx) {
     std::string name = ctx->VARNAME()->getText();
-    memory_offset -= 4; // decrement index first !
-    VariableInfo var(memory_offset, 4, false);
-    variables.insert({name, var});
-    return 0;
+    if (std::find(reserved_word.begin(), reserved_word.end(), name) != reserved_word.end()) {
+        return RESERVED_KEY_WORD;
+    } else {
+        memory_offset -= 4; // decrement index first !
+        VariableInfo var(memory_offset, 4, false);
+        variables.insert({name, var});
+        return 0;
+    }
 }
 
 antlrcpp::Any SymbolGenVisitor::visitExpr_relational(ifccParser::Expr_relationalContext* ctx) {

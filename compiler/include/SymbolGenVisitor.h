@@ -2,6 +2,8 @@
 #define __SYMBOL_GEN_VISITOR__
 
 #include <map>
+#include <vector>
+#include <string>
 
 #include "antlr4-runtime.h"
 #include "ifccBaseVisitor.h"
@@ -38,6 +40,13 @@ public:
     long int memory_offset;
     int tmp_index;
     bool declaration_mode = false;
+    std::vector<std::string> reserved_word{"if", "else", "switch", "case", // to optimize later
+            "default", "break", "int", "float", "char",
+            "double", "long", "for", "while", "do", "void",
+            "goto", "auto", "signed", "const", "extern",
+            "register", "unsigned", "return", "continue",
+            "enum", "sizeof", "struct", "typedef", "union",
+            "volatile"};
 
     int check_exist(ifccParser::Expr_atomContext* ctx);
     int check_exist(std::string varname);
