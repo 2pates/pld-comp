@@ -32,15 +32,18 @@ public:
         wmem,
         call,
         cmp_eq,
-        cmp_ne, cmp_lt,
+        cmp_ne,
+        cmp_lt,
         cmp_le,
-        cmp_gt, cmp_ge, ret,
+        cmp_gt,
+        cmp_ge,
+        ret,
         bitwise_and,
         bitwise_or,
         bitwise_xor,
         bitwise_not,
         neg,
-   , l_not } Operation;
+        l_not } Operation;
 
     /**  constructor */
     IRInstr(BasicBlock* bb_, Operation op, Type t, std::vector<std::string> params);
