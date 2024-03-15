@@ -46,7 +46,7 @@ void IRInstr::gen_asm(ostream& o, Target target) {
 
             if (target == Target::x86) {
                 o << "mov" << size_to_letter(source.size) << " " << to_string(source.address) << "(%rbp), %eax" << endl;
-                o << "mov" << size_to_letter(destination.size) << " %ebx," << to_string(destination.address) << "(%rbp)"
+                o << "mov" << size_to_letter(destination.size) << " %eax," << to_string(destination.address) << "(%rbp)"
                   << endl;
             }
             break;
@@ -149,7 +149,7 @@ void BasicBlock::add_IRInstr(IRInstr::Operation op, Type t, vector<string> param
     instrs.push_back(instruction);
 }
 
-CFG::CFG(std::map<std::string, VariableInfo> variables_, string entry_block_label_)
+CFG::CFG(std::map<std::string, VariableInfo>& variables_, string entry_block_label_)
     : variables(variables_), entry_block_label(entry_block_label_), nextBBnumber(0) {}
 
 void CFG::add_bb(BasicBlock* bb) {
