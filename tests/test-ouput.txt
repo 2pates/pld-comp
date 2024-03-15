@@ -1,12 +1,26 @@
 TEST-CASE: ifcc-test-output/testfiles-10_bitwise_or
-TEST OK
+TEST FAIL (different results at execution)
 TEST-CASE: ifcc-test-output/testfiles-11_bitwise_not
-TEST FAIL (your compiler rejects a valid program)
+TEST FAIL (different results at execution)
 TEST-CASE: ifcc-test-output/testfiles-12_oposite
-TEST FAIL (your compiler rejects a valid program)
+TEST FAIL (different results at execution)
 TEST-CASE: ifcc-test-output/testfiles-13_comma
 TEST FAIL (your compiler rejects a valid program)
+TEST-CASE: ifcc-test-output/testfiles-14_logical_not
+TEST OK
+TEST-CASE: ifcc-test-output/testfiles-15_equal
+TEST OK
+TEST-CASE: ifcc-test-output/testfiles-16_not_equal
+TEST OK
+TEST-CASE: ifcc-test-output/testfiles-17_less_than
+TEST OK
+TEST-CASE: ifcc-test-output/testfiles-18_less_equal
+TEST OK
+TEST-CASE: ifcc-test-output/testfiles-19_greater_than
+TEST OK
 TEST-CASE: ifcc-test-output/testfiles-1_return42
+TEST OK
+TEST-CASE: ifcc-test-output/testfiles-20_greater_equal
 TEST OK
 TEST-CASE: ifcc-test-output/testfiles-2_invalid_program
 TEST OK
@@ -21,6 +35,6 @@ TEST OK
 TEST-CASE: ifcc-test-output/testfiles-7_affect_var_weird
 TEST OK
 TEST-CASE: ifcc-test-output/testfiles-8_bitwise_and
-TEST OK
+TEST FAIL (different results at execution)
 TEST-CASE: ifcc-test-output/testfiles-9_bitwise_xor 3
-TEST OK
+TEST FAIL (different results at execution)

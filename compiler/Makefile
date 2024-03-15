@@ -28,7 +28,8 @@ OBJECTS=build/ifccBaseVisitor.o \
 	build/main.o \
 	build/CodeGenVisitor.o \
 	build/CodeGenVisitorExpr.o \
-	build/SymbolGenVisitor.o
+	build/SymbolGenVisitor.o \
+	build/IR.o
 
 ifcc: $(OBJECTS) ## compilation
 	@mkdir -p build
@@ -86,7 +87,7 @@ clean: ## clean repo
 # tests and verifications
 tests: ## start all tests with python
 	@make -s -C ../tests clean
-	@make -s -C ../tests all | tee ../tests/test-ouput.txt
+	@make -s -C ../tests all
 
 
 
