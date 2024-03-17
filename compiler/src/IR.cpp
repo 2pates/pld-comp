@@ -77,26 +77,29 @@ void IRInstr::gen_asm(ostream& o, Target target) {
             break;
         }
         case div: {
-            VariableInfo membreGauche = bb->cfg->get_var_info(params[0]); // Dividend
-            VariableInfo membreDroit = bb->cfg->get_var_info(params[1]); // Divisor
-            VariableInfo destination = bb->cfg->get_var_info(params[2]); // Result
+            // Assuming params[0] and params[1] hold the variable names/identifiers for the dividend and divisor
+            // and that params[2] holds the destination variable identifier.
+            VariableInfo dividend = bb->cfg->get_var_info(params[0]);
+            VariableInfo divisor = bb->cfg->get_var_info(params[1]);
+            VariableInfo destination = bb->cfg->get_var_info(params[2]);
 
             if (target == Target::x86) {
-                // Load the dividend into eax, and sign-extend eax into edx:eax for division
-                o << "mov" << size_to_letter(membreGauche.size) << " " << to_string(membreGauche.address) << "(%rbp), %eax" << endl;
-                o << "cdq" << endl; // Convert Double to Quad word (sign-extend eax into edx:eax)
-
-                // Load the divisor into a register (e.g., ebx)
-                o << "mov" << size_to_letter(membreDroit.size) << " " << to_string(membreDroit.address) << "(%rbp), %ebx" << endl;
-
-                // Perform the division, the quotient is in eax and remainder in edx
-                o << "idivl %ebx" << endl; // Use idiv for signed division
-
-                // Store the result (quotient) from eax to the destination variable
-                o << "mov" << size_to_letter(destination.size) << " %eax, " << to_string(destination.address) << "(%rbp)" << endl;
+                // Load the dividend into eax. In your provided assembly, variables are directly accessed via their stack addresses.
+                o << "movl " << to_string(dividend.address) << "(%rbp), %eax" << endl;
+                
+                // Prepare %edx:%eax for division by sign-extending %eax into %edx. This is analogous to the 'cltd' instruction.
+                o << "cltd" << endl;
+                
+                // Perform the division. The 'idivl' instruction divides %edx:%eax by the divisor, with the quotient stored in %eax.
+                // The divisor is accessed directly from its stack address.
+                o << "idivl " << to_string(divisor.address) << "(%rbp)" << endl;
+                
+                // Store the quotient (result of the division) at the destination variable's stack address.
+                o << "movl %eax, " << to_string(destination.address) << "(%rbp)" << endl;
             }
             break;
         }
+
 
         case mod: {
             VariableInfo membreGauche = bb->cfg->get_var_info(params[0]); // Operand for dividend
