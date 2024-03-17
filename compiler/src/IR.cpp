@@ -76,6 +76,49 @@ void IRInstr::gen_asm(ostream& o, Target target) {
             }
             break;
         }
+        case div: {
+            VariableInfo membreGauche = bb->cfg->get_var_info(params[0]); // Dividend
+            VariableInfo membreDroit = bb->cfg->get_var_info(params[1]); // Divisor
+            VariableInfo destination = bb->cfg->get_var_info(params[2]); // Result
+
+            if (target == Target::x86) {
+                // Load the dividend into eax, and sign-extend eax into edx:eax for division
+                o << "mov" << size_to_letter(membreGauche.size) << " " << to_string(membreGauche.address) << "(%rbp), %eax" << endl;
+                o << "cdq" << endl; // Convert Double to Quad word (sign-extend eax into edx:eax)
+
+                // Load the divisor into a register (e.g., ebx)
+                o << "mov" << size_to_letter(membreDroit.size) << " " << to_string(membreDroit.address) << "(%rbp), %ebx" << endl;
+
+                // Perform the division, the quotient is in eax and remainder in edx
+                o << "idivl %ebx" << endl; // Use idiv for signed division
+
+                // Store the result (quotient) from eax to the destination variable
+                o << "mov" << size_to_letter(destination.size) << " %eax, " << to_string(destination.address) << "(%rbp)" << endl;
+            }
+            break;
+        }
+
+        case mod: {
+            VariableInfo membreGauche = bb->cfg->get_var_info(params[0]); // Operand for dividend
+            VariableInfo membreDroit = bb->cfg->get_var_info(params[1]); // Operand for divisor
+            VariableInfo destination = bb->cfg->get_var_info(params[2]); // Result of modulo
+
+            if (target == Target::x86) {
+                // Load the dividend into eax
+                o << "mov" << size_to_letter(membreGauche.size) << " " << to_string(membreGauche.address) << "(%rbp), %eax" << endl;
+                // Sign-extend eax into edx to prepare edx:eax for division
+                o << "cdq" << endl;
+                // Load the divisor into a register, using ebx for example
+                o << "mov" << size_to_letter(membreDroit.size) << " " << to_string(membreDroit.address) << "(%rbp), %ebx" << endl;
+                // Perform the division with idiv; quotient in eax, remainder in edx
+                o << "idivl %ebx" << endl;
+                // For modulo, the interest is in the remainder, which is now in edx. Move it to the destination.
+                o << "mov" << size_to_letter(destination.size) << " %edx, " << to_string(destination.address) << "(%rbp)" << endl;
+            }
+            break;
+        }
+
+
         case sub: {
             VariableInfo membreGauche = bb->cfg->get_var_info(params[0]);
             VariableInfo membreDroit = bb->cfg->get_var_info(params[1]);
