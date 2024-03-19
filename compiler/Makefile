@@ -70,10 +70,16 @@ generated/ifccParser.cpp: ifcc.g4
 FILE ?= ../tests/testfiles/1_return42.c
 
 gui: ## graphical interface
-	@mkdir -p generated build
-	$(ANTLR) -Dlanguage=Java -o generated ifcc.g4
-	javac -cp $(ANTLRJAR) -d build generated/*.java
-	java -cp $(ANTLRJAR):build org.antlr.v4.gui.TestRig ifcc axiom -gui $(FILE)
+	@read -p "Enter a number: " num; \
+    files=$$(ls ../tests/testfiles/*/$$num\_*.c 2>/dev/null); \
+    if [ -n "$$files" ]; then \
+		mkdir -p generated build; \
+		$(ANTLR) -Dlanguage=Java -o generated ifcc.g4; \
+		javac -cp $(ANTLRJAR) -d build generated/*.java; \
+		java -cp $(ANTLRJAR):build org.antlr.v4.gui.TestRig ifcc axiom -gui $$files; \
+    else \
+        echo "No file found for number $$num"; \
+    fi
 
 ##########################################
 # delete all machine-generated files
