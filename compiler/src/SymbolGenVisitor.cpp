@@ -142,9 +142,7 @@ int SymbolGenVisitor::check_exist(std::string varname) {
     else
         return UNDECLARED;
 }
-<<<<<<< HEAD
 
-=======
 antlrcpp::Any SymbolGenVisitor::visitExpr_add(ifccParser::Expr_addContext* ctx){
     this->visit(ctx->expr(0));
     this->visit(ctx->expr(1));
@@ -153,6 +151,7 @@ antlrcpp::Any SymbolGenVisitor::visitExpr_add(ifccParser::Expr_addContext* ctx){
     variables.insert({"#tmp" + std::to_string(tmp_index), VariableInfo(memory_offset, 4)});
     return 0;
 }
+
 antlrcpp::Any SymbolGenVisitor::visitExpr_mult(ifccParser::Expr_multContext* ctx){
     this->visit(ctx->expr(0));
     this->visit(ctx->expr(1));
@@ -161,6 +160,7 @@ antlrcpp::Any SymbolGenVisitor::visitExpr_mult(ifccParser::Expr_multContext* ctx
     variables.insert({"#tmp" + std::to_string(tmp_index), VariableInfo(memory_offset, 4)});
     return 0;
 }
+
 antlrcpp::Any SymbolGenVisitor::visitExpr_parenthesis(ifccParser::Expr_parenthesisContext* ctx) {
     visit(ctx->expr());
     memory_offset -= 4;
@@ -168,4 +168,4 @@ antlrcpp::Any SymbolGenVisitor::visitExpr_parenthesis(ifccParser::Expr_parenthes
     variables.insert({"#tmp" + std::to_string(tmp_index), VariableInfo(memory_offset, 4)});
     return 0;
 }
->>>>>>> 8ac06fc1dbd980375eac39ad3ffdf0e2021b3e44
+
