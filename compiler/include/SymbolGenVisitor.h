@@ -28,6 +28,7 @@ public:
     virtual antlrcpp::Any visitAssignment_stmt(ifccParser::Assignment_stmtContext* ctx) override;
     virtual antlrcpp::Any visitLvalue(ifccParser::LvalueContext* ctx) override;
     virtual antlrcpp::Any visitExpr_atom(ifccParser::Expr_atomContext* ctx) override;
+    virtual antlrcpp::Any visitExpr_mult(ifccParser::Expr_multContext* ctx) override;
     virtual antlrcpp::Any visitExpr_and(ifccParser::Expr_andContext* ctx) override;
     virtual antlrcpp::Any visitExpr_xor(ifccParser::Expr_xorContext* ctx) override;
     virtual antlrcpp::Any visitExpr_or(ifccParser::Expr_orContext* ctx) override;

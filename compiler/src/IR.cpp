@@ -77,28 +77,33 @@ void IRInstr::gen_asm(ostream& o, Target target) {
             break;
         }
         case div: {
-            // Assuming params[0] and params[1] hold the variable names/identifiers for the dividend and divisor
-            // and that params[2] holds the destination variable identifier.
             VariableInfo dividend = bb->cfg->get_var_info(params[0]);
             VariableInfo divisor = bb->cfg->get_var_info(params[1]);
             VariableInfo destination = bb->cfg->get_var_info(params[2]);
 
             if (target == Target::x86) {
-                // Load the dividend into eax. In your provided assembly, variables are directly accessed via their stack addresses.
-                o << "movl " << to_string(dividend.address) << "(%rbp), %eax" << endl;
+                // Load the dividend into eax, using size-appropriate move instruction
+                o << "mov" << size_to_letter(dividend.size) << " " << to_string(dividend.address) << "(%rbp), %eax" << endl;
                 
-                // Prepare %edx:%eax for division by sign-extending %eax into %edx. This is analogous to the 'cltd' instruction.
-                o << "cltd" << endl;
+                // Sign-extend eax into edx:eax, preparing for division
+                // Note: 'cdq' (or 'cqo' for 64-bit) is only applicable for 32-bit (or 64-bit) division in eax,
+                // and does not need a size suffix.
+                o << "cdq" << endl;
                 
-                // Perform the division. The 'idivl' instruction divides %edx:%eax by the divisor, with the quotient stored in %eax.
-                // The divisor is accessed directly from its stack address.
-                o << "idivl " << to_string(divisor.address) << "(%rbp)" << endl;
+                // Load the divisor into ebx, using size-appropriate move instruction
+                // Ensure the divisor size matches the dividend size for consistency.
+                o << "mov" << size_to_letter(divisor.size) << " " << to_string(divisor.address) << "(%rbp), %ebx" << endl;
                 
-                // Store the quotient (result of the division) at the destination variable's stack address.
-                o << "movl %eax, " << to_string(destination.address) << "(%rbp)" << endl;
+                // Perform the division with idiv, which uses edx:eax as the dividend
+                // idiv does not use a size suffix, but ensure operand sizes are matched beforehand
+                o << "idivl %ebx" << endl;
+                
+                // Store the quotient (result of the division) in the destination variable, using size-appropriate move instruction
+                o << "mov" << size_to_letter(destination.size) << " %eax, " << to_string(destination.address) << "(%rbp)" << endl;
             }
             break;
         }
+
 
 
         case mod: {
