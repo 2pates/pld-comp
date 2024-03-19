@@ -16,7 +16,7 @@
 
 def natural_sort_key(s): # to sort in natural order (ls -v equivalent)
     import re
-    return [int(text) if text.isdigit() else text.lower() for text in re.split('(\d+)', s)]
+    return [int(text) if text.isdigit() else text.lower() for text in re.split(r'(\d+)', s)]
 
 import argparse
 import glob
