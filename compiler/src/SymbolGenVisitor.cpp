@@ -75,8 +75,8 @@ antlrcpp::Any SymbolGenVisitor::visitExpr_equality(ifccParser::Expr_equalityCont
 
 antlrcpp::Any SymbolGenVisitor::visitExpr_mult(ifccParser::Expr_multContext* ctx) {
  
-    std::string a = this->visit(ctx->expr(0));
-    std::string b = this->visit(ctx->expr(1));
+    this->visit(ctx->expr(0));
+    this->visit(ctx->expr(1));
     memory_offset -= 4;
     tmp_index++;
     variables.insert({"#tmp" + std::to_string(tmp_index), VariableInfo(memory_offset, 4)});
