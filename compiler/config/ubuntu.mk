@@ -1,5 +1,5 @@
 # the ANTLRJAR part below is copied from /usr/bin/antlr4
-ANTLRJAR=/usr/share/java/stringtemplate4.jar:/usr/share/java/antlr4.jar:/usr/share/java/antlr4-runtime.jar:/usr/share/java/antlr3-runtime.jar/:/usr/share/java/treelayout.jar
-ANTLRINC=/usr/include/antlr4-runtime
-ANTLRLIB=/usr/lib/x86_64-linux-gnu/libantlr4-runtime.a
-ANTLR=antlr4
+ANTLRJAR=../antlr/jar/antlr-4.9.2-complete.jar
+ANTLRINC=../antlr/include
+ANTLRLIB=../antlr/lib/libantlr4-runtime.a
+ANTLR = java -cp $(ANTLRJAR) org.antlr.v4.Tool

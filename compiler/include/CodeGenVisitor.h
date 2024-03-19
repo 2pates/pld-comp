@@ -30,6 +30,7 @@ public:
     virtual antlrcpp::Any visitExpr_lazy_and(ifccParser::Expr_lazy_andContext* ctx) override;
     virtual antlrcpp::Any visitExpr_lazy_or(ifccParser::Expr_lazy_orContext* ctx) override;
     virtual antlrcpp::Any visitExpr_atom(ifccParser::Expr_atomContext* ctx) override;
+    virtual antlrcpp::Any visitSelection_stmt(ifccParser::Selection_stmtContext* ctx) override;
 
     // std::map<std::string, VariableInfo> variables;
     CFG* cfg;
