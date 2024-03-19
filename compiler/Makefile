@@ -5,6 +5,7 @@
 include config/config.mk
 
 CC=g++
+ANTLR_FLAGS=-g -c -std=c++17 -I$(ANTLRINC) -Wno-attributes# -Wno-defaulted-function-deleted -Wno-unknown-warning-option
 CCFLAGS=-g -c -std=c++17 -I$(ANTLRINC) -Wno-attributes -Wall -Wextra -DTRACE# -Wno-defaulted-function-deleted -Wno-unknown-warning-option
 LDFLAGS=-g
 T=
@@ -45,7 +46,7 @@ build/%.o: src/%.cpp generated/ifccParser.cpp
 # compile all the antlr-generated C++
 build/%.o: generated/%.cpp
 	@mkdir -p build
-	$(CC) $(CCFLAGS) -MMD -o $@ $< 
+	$(CC) $(ANTLR_FLAGS) -MMD -o $@ $< 
 
 # automagic dependency management: `gcc -MMD` generates all the .d files for us
 -include build/*.d

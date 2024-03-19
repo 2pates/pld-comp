@@ -3,6 +3,16 @@
 
 
 
+antlrcpp::Any SymbolGenVisitor::visitBlock(ifccParser::BlockContext* ctx) {
+    tmp_block_index++; // we increase the number of blocks
+    blocks.insert({tmp_block_index, current_block}) // set father
+    current_block = tmp_block_index;
+    for (auto instr : ctx->statement()) {
+        this->visit(instr);
+    }
+    current_block = blocks.find(current_block); // the current is now the father
+    return GOOD;
+}
 
 antlrcpp::Any SymbolGenVisitor::visitDeclare_stmt(ifccParser::Declare_stmtContext* ctx) {
     declaration_mode = true;

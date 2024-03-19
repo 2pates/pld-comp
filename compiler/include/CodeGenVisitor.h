@@ -9,7 +9,7 @@
 
 class CodeGenVisitor : public ifccBaseVisitor {
 public:
-    CodeGenVisitor(CFG* cfg_) : tmp_index(0), cfg(cfg_), variables(cfg->variables) {}
+    CodeGenVisitor(CFG* cfg_) : tmp_index(0), cfg(cfg_), variables(cfg->variables), declaration_mode(false) {}
     virtual antlrcpp::Any visitProg(ifccParser::ProgContext* ctx) override;
     virtual antlrcpp::Any visitInstruction(ifccParser::InstructionContext* ctx) override;
     virtual antlrcpp::Any visitReturn_stmt(ifccParser::Return_stmtContext* ctx) override;
@@ -34,5 +34,5 @@ public:
     int tmp_index;
     CFG* cfg;
     std::map<std::string, VariableInfo>& variables;
-    bool declaration_mode = false;
+    bool declaration_mode;
 };

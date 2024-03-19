@@ -18,11 +18,13 @@ public:
     long int address; // relative address of the pointer
     int size;         // size of the variable in octets
     bool defined;
+    int block_id;       // block of the variable
 };
 
 class SymbolGenVisitor : public ifccBaseVisitor {
 public:
-    SymbolGenVisitor() : memory_offset(0), tmp_index(0) {}
+    SymbolGenVisitor() : current_block(0), tmp_block_index(0), memory_offset(0), tmp_index(0) {}
+    virtual antlrcpp::Any visitBlock(ifccParser::BlockContext* ctx) override;
     virtual antlrcpp::Any visitDeclare_stmt(ifccParser::Declare_stmtContext* ctx) override;
     virtual antlrcpp::Any visitDeclare(ifccParser::DeclareContext* ctx) override;
     virtual antlrcpp::Any visitAssignment_stmt(ifccParser::Assignment_stmtContext* ctx) override;
@@ -35,6 +37,9 @@ public:
     virtual antlrcpp::Any visitExpr_relational(ifccParser::Expr_relationalContext* ctx) override;
     virtual antlrcpp::Any visitExpr_equality(ifccParser::Expr_equalityContext* ctx) override;
 
+    std::map<int, int> blocks; // id current block, id parent block
+    int current_block;
+    int tmp_block_index;
 
     std::map<std::string, VariableInfo> variables;
     long int memory_offset;
@@ -48,6 +53,7 @@ public:
             "enum", "sizeof", "struct", "typedef", "union",
             "volatile"};
 
+    
     int check_exist(ifccParser::Expr_atomContext* ctx);
     int check_exist(std::string varname);
 };

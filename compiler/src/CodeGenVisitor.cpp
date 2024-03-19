@@ -5,7 +5,7 @@
 antlrcpp::Any CodeGenVisitor::visitProg(ifccParser::ProgContext* ctx) {
     cfg->add_bb(new BasicBlock(cfg, cfg->entry_block_label));
 
-    for (auto instr : ctx->instruction()) {
+    for (auto instr : ctx->statement()) {
         this->visit(instr);
     }
 
