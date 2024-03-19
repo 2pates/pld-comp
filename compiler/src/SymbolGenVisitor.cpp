@@ -2,9 +2,11 @@
 #include "Error.h"
 
 antlrcpp::Any SymbolGenVisitor::visitDeclare_stmt(ifccParser::Declare_stmtContext* ctx) {
+    declaration_mode = true;
     if (ctx->TYPE()->getText() == "int") {
         visit(ctx->declare());
     }
+    declaration_mode = false;
     return 0;
 }
 
@@ -31,14 +33,30 @@ antlrcpp::Any SymbolGenVisitor::visitDeclare(ifccParser::DeclareContext* ctx) {
 }
 
 antlrcpp::Any SymbolGenVisitor::visitAssignment_stmt(ifccParser::Assignment_stmtContext* ctx) {
-    // visit(ctx->lvalue());
     if (variables.find(ctx->lvalue()->getText()) != variables.end()) {
         visit(ctx->rvalue());
         std::cerr << "Affectation: " << ctx->lvalue()->getText() << " = " << ctx->rvalue()->getText() << std::endl;
         return 0;
+    } else if (declaration_mode) {
+        visit(ctx->lvalue());
+        visit(ctx->rvalue());
+        return 0;
+    } else {
+        std::cerr << "Error: undeclared variable " << ctx->lvalue()->getText() << std::endl;
+        return UNDECLARED; // undeclared variable affectation
     }
-    std::cerr << "Error: undeclared variable " << ctx->lvalue()->getText() << std::endl;
-    return UNDECLARED; // undeclared variable affectation
+}
+
+antlrcpp::Any SymbolGenVisitor::visitLvalue(ifccParser::LvalueContext* ctx) {
+    std::string name = ctx->VARNAME()->getText();
+    if (std::find(reserved_word.begin(), reserved_word.end(), name) != reserved_word.end()) {
+        return RESERVED_KEY_WORD;
+    } else {
+        memory_offset -= 4; // decrement index first !
+        VariableInfo var(memory_offset, 4, false);
+        variables.insert({name, var});
+        return 0;
+    }
 }
 
 antlrcpp::Any SymbolGenVisitor::visitExpr_relational(ifccParser::Expr_relationalContext* ctx) {

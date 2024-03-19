@@ -16,43 +16,39 @@ Here we put the non-programming choices we made
 - 
 
 ## TODO
-### Obligatoire
-- [ ] Type de données char : bachir
-- [x] Type de données int
+### Mandatory
+
+- [ ] Data type char : Bachir
+- [x] Data type int
 - [x] Variables
-- [x] Constantes entières
-- [ ] Caractère (avec simple quote)
-- [x] Opérations arithmétiques de base : +,-, *
-- [x] Opérations logiques bit-à-bit : |, &,ˆ
-- [x] Opérations de comparaison : ==, !=, <, >
-- [x] Opérations unaires : ! et - et ~ (bonus)
-- [x] Déclaration de variables n’importe où
-- [ ] Affectation (qui, en C, retourne aussi une valeur)
-- [ ] Possibilité d’initialiser une variable lors de sa déclaration : Gaspard & Benjamin
-- [ ] Utilisation des fonctions standard putchar et getchar pour les entrées-sorties : James
-- [ ] Définition de fonctions avec paramètres, et type de retour int, char ou void
-- [ ] Vérification de la cohérence des appels de fonctions et leurs paramètres (noms réservés)
-- [ ] Structure de blocs grâce à { et } : Roua & bachir
-- [ ] Support des portées de variables et du shadowing
-- [ ] Les structures de contrôle if, else, while : Mathieu
-- [ ] Support du return expression n’importe où
-- [ ] Vérification qu’une variable utilisée dans une expression a été déclarée
-- [ ] Vérification qu’une variable n’est pas déclarée plusieurs fois
-- [ ] Vérification qu’une variable déclarée est utilisée au moins une fois
+- [x] Integer constants
+- [ ] Character (with single quote)
+- [x] Basic arithmetic operations: +,-, *
+- [x] Bit-by-bit logical operations: |, &,ˆ
+- [x] Comparison operations: ==, !=, <, >.
+- [x] Unary operations: ! and - and ~ (bonus)
+- [x] Declaration of variables anywhere
+- [ ] Assignment (which, in C, also returns a value)
+- [x] Possibility of initializing a variable when declaring it
+- [ ] Use of standard putchar and getchar functions for I/O: James
+- [ ] Define functions with parameters, and int, char or void return type
+- [ ] Check consistency of function calls and parameters (reserved names) : Gaspard & Benjamin
+- [ ] Block structure using { and } : Roua & bachir
+- [ ] Support for variable scopes and shadowing
+- [ ] If, else, while control structures : Mathieu
+- [ ] Support for return expression anywhere
+- [ ] Check that a variable used in an expression has been declared
+- [ ] Check that a variable is not declared more than once
+- [ ] Check that a declared variable is used at least once
 
-### Facultatif
-- [ ] Division et modulo (dans l'IR) : Bachir
-- [ ] Opérateurs d’affectation +=, -= etc., d’incrémentation ++ et décrémentation - -
-- [ ] Tableaux (à une dimension)
-- [ ] Pointeurs
-- [ ] break et continue
-- [ ] Les chaînes de caractères représentées par des tableaux de char
-- [ ] switch...case
-- [ ] Les opérateurs logiques paresseux ||, && : Myriam
-- [ ] Reciblage vers plusieurs architectures : x86, MSP430, ARM
-- [ ] Propagation de constantes simple
-- [ ] Propagation de variables constantes (avec analyse du data-flow)
+### Optional
 
+- [ ] Division and modulo (in IR): Bachir
+- [ ] Assignment operators +=, -= etc., increment ++ and decrement - - - [ ] Arrays (one-dimensional): Bachir
+- [ ] Arrays (one-dimensional)
+- [ ] Pointers
+- [ ] Break and continue
+- [ ] Strings re
 
 ## Ressources
 
