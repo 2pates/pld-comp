@@ -76,33 +76,22 @@ void IRInstr::gen_asm(ostream& o, Target target) {
             }
             break;
         }
-        case div: {
-            VariableInfo dividend = bb->cfg->get_var_info(params[0]);
-            VariableInfo divisor = bb->cfg->get_var_info(params[1]);
-            VariableInfo destination = bb->cfg->get_var_info(params[2]);
+        case div: { // Adjusting comment to reflect division
+            VariableInfo numerator = bb->cfg->get_var_info(params[0]);
+            VariableInfo denominator = bb->cfg->get_var_info(params[1]);
+            VariableInfo result = bb->cfg->get_var_info(params[2]);
 
             if (target == Target::x86) {
-                // Load the dividend into eax, using size-appropriate move instruction
-                o << "mov" << size_to_letter(dividend.size) << " " << to_string(dividend.address) << "(%rbp), %eax" << endl;
-                
-                // Sign-extend eax into edx:eax, preparing for division
-                // Note: 'cdq' (or 'cqo' for 64-bit) is only applicable for 32-bit (or 64-bit) division in eax,
-                // and does not need a size suffix.
-                o << "cdq" << endl;
-                
-                // Load the divisor into ebx, using size-appropriate move instruction
-                // Ensure the divisor size matches the dividend size for consistency.
-                o << "mov" << size_to_letter(divisor.size) << " " << to_string(divisor.address) << "(%rbp), %ebx" << endl;
-                
-                // Perform the division with idiv, which uses edx:eax as the dividend
-                // idiv does not use a size suffix, but ensure operand sizes are matched beforehand
-                o << "idivl %ebx" << endl;
-                
-                // Store the quotient (result of the division) in the destination variable, using size-appropriate move instruction
-                o << "mov" << size_to_letter(destination.size) << " %eax, " << to_string(destination.address) << "(%rbp)" << endl;
+                o << "mov" << size_to_letter(numerator.size) << " " << to_string(numerator.address) << "(%rbp), %eax" << endl;
+                o << "cdq" << endl; // Prepare for division, sign-extend the dividend
+                o << "mov" << size_to_letter(denominator.size) << " " << to_string(denominator.address) << "(%rbp), %ebx" << endl;
+                o << "idivl %ebx" << endl; // Perform division; quotient in %eax, remainder in %edx
+                // Correct use of quotient for division result
+                o << "mov" << size_to_letter(result.size) << " %eax, " << to_string(result.address) << "(%rbp)" << endl; // Store quotient
             }
             break;
         }
+
 
 
 
