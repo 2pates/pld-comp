@@ -52,6 +52,20 @@ void IRInstr::gen_asm(ostream& o, Target target) {
             }
             break;
         }
+        case mov_eax: {
+            string value = params[0];
+            if (target == Target::x86) {
+                o << "movl" << " $" << value << ", " << "%eax" << endl;
+            }
+            break;
+        }
+        case mov_from_eax: {
+            VariableInfo variable = bb->cfg->get_var_info(params[0]);
+            if (target == Target::x86) {
+                o << "movl" << " %eax" << ", " << variable.address << "(%eax)" << endl;
+            }
+            break;
+        }
         case copy: {
             VariableInfo source = bb->cfg->get_var_info(params[0]);
             VariableInfo destination = bb->cfg->get_var_info(params[1]);
@@ -319,8 +333,8 @@ void IRInstr::gen_asm(ostream& o, Target target) {
             VariableInfo membreGauche = bb->cfg->get_var_info(params[0]);
             VariableInfo membreDroit = bb->cfg->get_var_info(params[1]);
             VariableInfo destination = bb->cfg->get_var_info(params[2]);
-            string bloc1Name = new_and_block_name();
-            string bloc2Name = new_and_block_name();
+            string bloc1Name = "";
+            string bloc2Name = "";
 
             if (target == Target::x86) {
                 

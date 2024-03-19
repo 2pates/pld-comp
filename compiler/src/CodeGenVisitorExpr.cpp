@@ -163,20 +163,30 @@ antlrcpp::Any CodeGenVisitor::visitExpr_lazy_and(ifccParser::Expr_lazy_andContex
         o << "jnz " << exit_true->label << endl;
         o << "jmp " << exit_false->label << endl;
     } */
-
+    tmp_index++;
+    std::string tmp_var_name = "#tmp" + std::to_string(tmp_index);
 
     std::string l_var_name = visit(ctx->expr().at(0));
     std::string r_var_name = visit(ctx->expr().at(1));
 
-    cfg->current_bb->add_IRInstr(IRInstr::Operation::cmp_const, Type::INT32, {"0", l_var_name});
-    cfg->current_bb->test_var_name = 
+    BasicBlock* nextBlock = new BasicBlock(cfg, cfg->new_BB_name());
+    nextBlock->add_IRInstr(IRInstr::Operation::mov_from_eax, Type::INT32, {tmp_var_name});
 
-    cfg->current_bb->add_IRInstr(IRInstr::Operation::cmp_const, Type::INT32, {"0", r_var_name});
+    BasicBlock* trueBlock = new BasicBlock(cfg, cfg->new_BB_name());
+    trueBlock->add_IRInstr(IRInstr::Operation::mov_eax, Type::INT32, {"0"});
 
+    BasicBlock* falseFalseBlock = new BasicBlock(cfg, cfg->new_BB_name());
+    trueBlock->add_IRInstr(IRInstr::Operation::mov_eax, Type::INT32, {"1"});
+    trueBlock->exit_true = nextBlock;
 
-    
-    
-    cfg->current_bb->add_IRInstr(IRInstr::Operation::bitwise_and, Type::INT32, {l_var_name, r_var_name, tmp_var_name});
+    BasicBlock* falseBlock = new BasicBlock(cfg, cfg->new_BB_name());
+    falseBlock->test_var_name = r_var_name;
+    falseBlock->exit_true = trueBlock;
+
+    cfg->current_bb->test_var_name = l_var_name;
+
+    cfg-> current_bb = nextBlock;
+
     return tmp_var_name;
 }
 

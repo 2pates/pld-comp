@@ -25,6 +25,8 @@ public:
     typedef enum {
         ldconst,
         copy,
+        mov_eax,
+        mov_from_eax,
         cmp_const,
         add,
         sub,
