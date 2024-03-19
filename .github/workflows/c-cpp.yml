@@ -17,9 +17,9 @@ jobs:
     - uses: awalsh128/cache-apt-pkgs-action@latest
       with:
         packages: antlr4 libantlr4-runtime-dev default-jdk
-    - name: make
+    - name: make ifcc -j4
       working-directory: ./compiler
-      run: make
+      run: make ifcc -j4
     - name: make check
       working-directory: ./compiler
       run: make check

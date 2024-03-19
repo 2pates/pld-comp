@@ -1,12 +1,6 @@
 #include "CodeGenVisitor.h"
 #include "IR.h"
-
-#ifdef TRACE
-#include <iostream>
-#define debug(expression) (std::cerr << __FILE__ << ":" << __LINE__ << " -> " << (expression) << std::endl)
-#else
-#define debug(expression) ((void)0)
-#endif
+#include "Error.h"
 
 antlrcpp::Any CodeGenVisitor::visitProg(ifccParser::ProgContext* ctx) {
     cfg->add_bb(new BasicBlock(cfg, cfg->entry_block_label));
@@ -52,7 +46,6 @@ antlrcpp::Any CodeGenVisitor::visitDeclare(ifccParser::DeclareContext* ctx) {
 antlrcpp::Any CodeGenVisitor::visitReturn_stmt(ifccParser::Return_stmtContext* ctx) {
     std::string var_name = visit(ctx->expr());
     cfg->current_bb->add_IRInstr(IRInstr::Operation::ret, Type::INT32, {var_name});
-
     return 0;
 }
 
@@ -67,55 +60,7 @@ antlrcpp::Any CodeGenVisitor::visitAssignment_stmt(ifccParser::Assignment_stmtCo
             return PROGRAMER_ERROR;
         }
     } else {
-        std::cerr << "Undeclared error" << std::endl;
+        error("Error : undeclared error variable" + ctx->lvalue()->getText());
         return UNDECLARED;
     }
-}
-
-int CodeGenVisitor::push_stack(int source, int dest) {
-    std::cout << "    movq ";
-    std::cout << source << "(%rbp)"
-              << ", ";
-    std::cout << dest << "(%rbp)"
-              << "\n";
-    return 0;
-}
-
-int CodeGenVisitor::push_stack(std::string source, int dest, int size) {
-    switch (size) {
-        case 8:
-            std::cout << "    movq ";
-            break;
-        case 4:
-            std::cout << "    movl ";
-            break;
-        case 1:
-            std::cout << "    movb ";
-            break;
-        default:
-            break;
-    }
-    std::cout << source << ", ";
-    std::cout << dest << "(%rbp)"
-              << "\n";
-    return 0;
-}
-
-int CodeGenVisitor::mov(std::string source, std::string dest, int size) {
-    switch (size) {
-        case 8:
-            std::cout << "    movq ";
-            break;
-        case 4:
-            std::cout << "    movl ";
-            break;
-        case 1:
-            std::cout << "    movb ";
-            break;
-        default:
-            break;
-    }
-    std::cout << source << ", ";
-    std::cout << dest << "\n";
-    return 0;
 }
