@@ -181,9 +181,50 @@ antlrcpp::Any CodeGenVisitor::visitExpr_or(ifccParser::Expr_orContext* ctx) {
     return tmp_var_name;
 }
 
-antlrcpp::Any CodeGenVisitor::visitExpr_lazy_and(ifccParser::Expr_lazy_andContext* ctx) { return 0; }
+antlrcpp::Any CodeGenVisitor::visitExpr_lazy_and(ifccParser::Expr_lazy_andContext* ctx) {
+    /* for (auto instruction : instrs) {
+        instruction->gen_asm(o, target);
+    }
 
-antlrcpp::Any CodeGenVisitor::visitExpr_lazy_or(ifccParser::Expr_lazy_orContext* ctx) { return 0; }
+    if (exit_false == nullptr && exit_true != nullptr) {
+        // unconditional jmp to the exit_true branch
+        o << "jmp " << exit_true->label << endl;
+    } else if (exit_false != nullptr && exit_true == nullptr) {
+        // jump if equal to the exit_true branch
+        o << "je " << exit_false->label << endl;
+    } else if (exit_false != nullptr && exit_true != nullptr) {
+        // jmp to exit_true if test_var_name, otherwise jmp to exit_false
+        VariableInfo testVar = cfg->get_var_info(test_var_name);
+        o << "mov" << size_to_letter(testVar.size) << " " << to_string(testVar.address) << "(%rbp), %eax" << endl;
+        o << "cmp %eax, $1";
+        o << "jnz " << exit_true->label << endl;
+        o << "jmp " << exit_false->label << endl;
+    } */
+
+
+    std::string l_var_name = visit(ctx->expr().at(0));
+    std::string r_var_name = visit(ctx->expr().at(1));
+
+    cfg->current_bb->add_IRInstr(IRInstr::Operation::cmp_const, Type::INT32, {"0", l_var_name});
+    cfg->current_bb->test_var_name = 
+
+    cfg->current_bb->add_IRInstr(IRInstr::Operation::cmp_const, Type::INT32, {"0", r_var_name});
+
+
+    
+    
+    cfg->current_bb->add_IRInstr(IRInstr::Operation::bitwise_and, Type::INT32, {l_var_name, r_var_name, tmp_var_name});
+    return tmp_var_name;
+}
+
+antlrcpp::Any CodeGenVisitor::visitExpr_lazy_or(ifccParser::Expr_lazy_orContext* ctx) {
+    std::string l_var_name = visit(ctx->expr().at(0));
+    std::string r_var_name = visit(ctx->expr().at(1));
+    tmp_index++;
+    std::string tmp_var_name = "#tmp" + std::to_string(tmp_index);
+    cfg->current_bb->add_IRInstr(IRInstr::Operation::bitwise_or, Type::INT32, {l_var_name, r_var_name, tmp_var_name});
+    return tmp_var_name;
+}
 
 antlrcpp::Any CodeGenVisitor::visitExpr_atom(ifccParser::Expr_atomContext* ctx) {
     std::string var_name;

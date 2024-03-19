@@ -25,6 +25,7 @@ public:
     typedef enum {
         ldconst,
         copy,
+        cmp_const,
         add,
         sub,
         mul,
@@ -43,7 +44,9 @@ public:
         bitwise_xor,
         bitwise_not,
         neg,
-        l_not } Operation;
+        l_not,
+        lazy_and,
+        lazy_or } Operation;
 
     /**  constructor */
     IRInstr(BasicBlock* bb_, Operation op, Type t, std::vector<std::string> params);
