@@ -7,6 +7,8 @@
 #define debug(expression) ((void)0)
 #endif
 
+#define error(expression) (std::cout << (expression) << std::endl)
+
 
 #define EXIST 0      // all good
 #define UNDECLARED 1 // no declaration
@@ -14,3 +16,5 @@
 #define DOUBLE_DECLARATION 3
 #define RESERVED_KEY_WORD 4
 #define PROGRAMER_ERROR -1
+
+

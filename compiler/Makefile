@@ -5,7 +5,7 @@
 include config/config.mk
 
 CC=g++
-CCFLAGS=-g -c -std=c99 -I$(ANTLRINC) -Wno-attributes -DTRACE# -Wno-defaulted-function-deleted -Wno-unknown-warning-option
+CCFLAGS=-g -c -std=c++17 -I$(ANTLRINC) -Wno-attributes -DTRACE# -Wno-defaulted-function-deleted -Wno-unknown-warning-option
 LDFLAGS=-g
 T=
 
@@ -93,7 +93,7 @@ tests: ## start all tests with python
 
 verify: ## check a specific compilation
 	@read -p "Enter a number: " num; \
-    files=$$(ls ../tests/testfiles/$$num\_*.c 2>/dev/null); \
+    files=$$(ls ../tests/testfiles/*/$$num\_*.c 2>/dev/null); \
     if [ -n "$$files" ]; then \
 		./build/ifcc "$$files"; \
     else \
