@@ -117,7 +117,7 @@ void IRInstr::gen_asm(ostream& o, Target target) {
                   << "(%rbp)" << endl;
                 o << "sete %al" << endl;
                 o << "movzb" << size_to_letter(variableInitiale.size) << " %al, %eax" << endl;
-                o << "mov" << size_to_letter(variableInitiale.size) << " %eax, " << destination.size << "(%rbp)"
+                o << "mov" << size_to_letter(variableInitiale.size) << " %eax, " << destination.address << "(%rbp)"
                   << endl;
             }
             break;
@@ -231,6 +231,7 @@ void IRInstr::gen_asm(ostream& o, Target target) {
                 o << "mov" << size_to_letter(variable.size) << " " << to_string(variable.address) << "(%rbp), %eax"
                   << endl;
                 o << "leave" << endl;
+                o << "ret" << endl;
             }
             break;
         }
@@ -317,7 +318,7 @@ void BasicBlock::gen_asm(ostream& o, Target target) {
         for (auto instruction : instrs) {
             instruction->gen_asm(o, target);
         }
-
+        
         if (exit_false == nullptr && exit_true != nullptr) {
             // unconditional jmp to the exit_true branch
             o << "jmp " << exit_true->label << endl;
@@ -328,9 +329,9 @@ void BasicBlock::gen_asm(ostream& o, Target target) {
             // jmp to exit_true if test_var_name, otherwise jmp to exit_false
             VariableInfo testVar = cfg->get_var_info(test_var_name);
             o << "mov" << size_to_letter(testVar.size) << " " << to_string(testVar.address) << "(%rbp), %eax" << endl;
-            o << "cmp %eax, $1";
-            o << "jnz " << exit_true->label << endl;
-            o << "jmp " << exit_false->label << endl;
+            o << "cmp" << size_to_letter(testVar.size) << " $0, %eax" << endl;
+            o << "jz " << exit_false->label << endl;
+            o << "jmp " << exit_true->label << endl;
         }
     }
 }
@@ -345,7 +346,7 @@ CFG::CFG(std::map<std::string, VariableInfo>& variables_, string entry_block_lab
 
 void CFG::add_bb(BasicBlock* bb) {
     bbs.push_back(bb);
-    current_bb = bb;
+    //current_bb = bb;
 }
 
 void CFG::gen_asm(ostream& o, Target target) {
@@ -358,8 +359,8 @@ void CFG::gen_asm(ostream& o, Target target) {
 
 void CFG::gen_asm_prologue(ostream& o, Target target) {
     if (target == Target::x86) {
-        o << ".globl main" << endl;
-        o << "main:" << endl;
+        o << ".globl _main" << endl;
+        o << "_main:" << endl;
         o << "pushq %rbp" << endl;                // Save the old base pointer
         o << "movq %rsp, %rbp" << endl;           // Set up a new base pointer
         o << "jmp " << entry_block_label << endl; // Jump to entry block
@@ -368,7 +369,6 @@ void CFG::gen_asm_prologue(ostream& o, Target target) {
 
 void CFG::gen_asm_epilogue(ostream& o, Target target) {
     if (target == Target::x86) {
-        o << "ret" << endl;
     }
 }
 

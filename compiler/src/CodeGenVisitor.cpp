@@ -9,7 +9,9 @@
 #endif
 
 antlrcpp::Any CodeGenVisitor::visitProg(ifccParser::ProgContext* ctx) {
-    cfg->add_bb(new BasicBlock(cfg, cfg->entry_block_label));
+    BasicBlock* bb = new BasicBlock(cfg, cfg->entry_block_label);
+    cfg->current_bb = bb;
+    cfg->add_bb(bb);
 
     for (auto instr : ctx->instruction()) {
         this->visit(instr);
@@ -29,6 +31,8 @@ antlrcpp::Any CodeGenVisitor::visitInstruction(ifccParser::InstructionContext* c
         this->visit(ctx->assignment_stmt());
     if (ctx->declare_stmt() != nullptr)
         this->visit(ctx->declare_stmt());
+    if (ctx->selection_stmt() != nullptr)
+        this->visit(ctx->selection_stmt());
     return 0;
 }
 
@@ -117,5 +121,48 @@ int CodeGenVisitor::mov(std::string source, std::string dest, int size) {
     }
     std::cout << source << ", ";
     std::cout << dest << "\n";
+    return 0;
+}
+
+antlrcpp::Any CodeGenVisitor::visitSelection_stmt(ifccParser::Selection_stmtContext* ctx) {
+    BasicBlock* nextBB = new BasicBlock(cfg, cfg->new_BB_name());
+    cfg->add_bb(nextBB);
+    BasicBlock* testBlock = new BasicBlock(cfg, cfg->new_BB_name());
+    cfg->add_bb(testBlock);
+    
+    string testVarName = visit(ctx->expr());
+    testBlock->test_var_name = testVarName;
+
+    cfg->current_bb->exit_true = testBlock; // After current block, jump to testBlock
+    
+    BasicBlock* thenBB = new BasicBlock(cfg, cfg->new_BB_name());
+    cfg->add_bb(thenBB);
+    //After then block, jump to nextBB, might be overwritten during visit(ctx->instruction(0))
+    thenBB->exit_true = nextBB;
+    cfg->current_bb = thenBB;
+    visit(ctx->instruction()[0]);
+
+    //If test is true jump to thenBB
+    testBlock->exit_true = thenBB;
+    //If test is false jump to nextBB
+    testBlock->exit_false = nextBB;
+
+    if(ctx->instruction()[1] != nullptr)
+    {
+        //If else statement
+        BasicBlock* elseBB = new BasicBlock(cfg, cfg->new_BB_name());
+        cfg->add_bb(elseBB);
+        //After else block, jump to nextBB, might be overwritten during visit(ctx->instruction(1))
+        elseBB->exit_true = nextBB;
+
+        cfg->current_bb = elseBB;
+        visit(ctx->instruction(1));
+
+        // If test is false, jump to elseBB
+        testBlock->exit_false = elseBB;
+        
+    }
+
+    cfg->current_bb = nextBB;
     return 0;
 }
