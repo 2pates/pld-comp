@@ -32,7 +32,7 @@ Here we put the non-programming choices we made
 - [x] Possibility of initializing a variable when declaring it
 - [ ] Use of standard putchar and getchar functions for I/O: James
 - [ ] Define functions with parameters, and int, char or void return type
-- [ ] Check consistency of function calls and parameters (reserved names) : Gaspard & Benjamin
+- [x] Check consistency of function calls and parameters (reserved names)
 - [ ] Block structure using { and } : Roua & bachir
 - [ ] Support for variable scopes and shadowing
 - [ ] If, else, while control structures : Mathieu

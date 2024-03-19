@@ -117,43 +117,6 @@ antlrcpp::Any CodeGenVisitor::visitExpr_equality(ifccParser::Expr_equalityContex
     return tmp_var_name;
 }
 
-antlrcpp::Any CodeGenVisitor::visitBitwise(std::string l_var_name, char OP, std::string r_var_name) {
-    debug("visit bitwise " + OP);
-    int l_var_size = variables.at(l_var_name).size;
-    int l_var_address = variables.at(l_var_name).address;
-    int r_var_size = variables.at(r_var_name).size;
-    int r_var_address = variables.at(r_var_name).address;
-
-    tmp_index++;
-    std::string tmp_var_name = "#tmp" + std::to_string(tmp_index);
-    int tmp_var_size = variables.at(tmp_var_name).size;
-    int tmp_var_address = variables.at(tmp_var_name).address;
-
-    mov(std::to_string(l_var_address) + "(%rbp)", "%eax", 4);
-    switch (OP) {
-        case '&':
-            std::cout << "    andl " << r_var_address << "(%rbp)"
-                      << ", %eax\n";
-            break;
-
-        case '^':
-            std::cout << "    xorl " << r_var_address << "(%rbp)"
-                      << ", %eax\n";
-            break;
-
-        case '|':
-            std::cout << "    orl " << r_var_address << "(%rbp)"
-                      << ", %eax\n";
-            break;
-
-        default:
-            break;
-    }
-
-    push_stack("%eax", tmp_var_address, tmp_var_size);
-    return tmp_var_name;
-}
-
 antlrcpp::Any CodeGenVisitor::visitExpr_and(ifccParser::Expr_andContext* ctx) {
     std::string l_var_name = visit(ctx->expr().at(0));
     std::string r_var_name = visit(ctx->expr().at(1));

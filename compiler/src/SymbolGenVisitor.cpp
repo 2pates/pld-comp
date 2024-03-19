@@ -1,6 +1,12 @@
 #include "SymbolGenVisitor.h"
 #include "Error.h"
 
+    antlrcpp::Any SymbolGenVisitor::visitAxiom(ifccParser::AxiomContext *ctx)
+    {
+        return visit(ctx->prog());
+    }
+
+
 antlrcpp::Any SymbolGenVisitor::visitDeclare_stmt(ifccParser::Declare_stmtContext* ctx) {
     declaration_mode = true;
     if (ctx->TYPE()->getText() == "int") {
@@ -18,9 +24,9 @@ antlrcpp::Any SymbolGenVisitor::visitDeclare(ifccParser::DeclareContext* ctx) {
             VariableInfo var(memory_offset, 4, false);
             variables.insert({name, var});
 
-            std::cerr << "Declaration: " << name << " (address " << var.address << ")" << std::endl;
+            debug("Declaration: " + name + " (address " +  std::to_string(var.address)  + ")");
         } else {
-            std::cerr << "Already used name" << std::endl;
+            error("Error: already used name" + name);
             return DOUBLE_DECLARATION;
         }
     } else if (ctx->assignment_stmt() != nullptr) {
@@ -35,14 +41,14 @@ antlrcpp::Any SymbolGenVisitor::visitDeclare(ifccParser::DeclareContext* ctx) {
 antlrcpp::Any SymbolGenVisitor::visitAssignment_stmt(ifccParser::Assignment_stmtContext* ctx) {
     if (variables.find(ctx->lvalue()->getText()) != variables.end()) {
         visit(ctx->rvalue());
-        std::cerr << "Affectation: " << ctx->lvalue()->getText() << " = " << ctx->rvalue()->getText() << std::endl;
+        debug("Affectation: " +  ctx->lvalue()->getText() + " = " + ctx->rvalue()->getText());
         return 0;
     } else if (declaration_mode) {
         visit(ctx->lvalue());
         visit(ctx->rvalue());
         return 0;
     } else {
-        std::cerr << "Error: undeclared variable " << ctx->lvalue()->getText() << std::endl;
+        error("Error: undeclared variable " + ctx->lvalue()->getText());
         return UNDECLARED; // undeclared variable affectation
     }
 }
@@ -50,6 +56,7 @@ antlrcpp::Any SymbolGenVisitor::visitAssignment_stmt(ifccParser::Assignment_stmt
 antlrcpp::Any SymbolGenVisitor::visitLvalue(ifccParser::LvalueContext* ctx) {
     std::string name = ctx->VARNAME()->getText();
     if (std::find(reserved_word.begin(), reserved_word.end(), name) != reserved_word.end()) {
+        error("Error: reserved keyword " + name);
         return RESERVED_KEY_WORD;
     } else {
         memory_offset -= 4; // decrement index first !

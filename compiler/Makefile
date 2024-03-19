@@ -93,7 +93,7 @@ tests: ## start all tests with python
 
 verify: ## check a specific compilation
 	@read -p "Enter a number: " num; \
-    files=$$(ls ../tests/testfiles/$$num\_*.c 2>/dev/null); \
+    files=$$(ls ../tests/testfiles/*/$$num\_*.c 2>/dev/null); \
     if [ -n "$$files" ]; then \
 		./build/ifcc "$$files"; \
     else \

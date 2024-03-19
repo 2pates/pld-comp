@@ -38,10 +38,4 @@ public:
     int tmp_index;
     bool declaration_mode = false;
 
-    antlrcpp::Any visitBitwise(std::string l_var, char OP, std::string r_var);
-
-    int push_stack(int source, int dest);
-    int push_stack(std::string source, int dest, int size);
-
-    int mov(std::string source, std::string dest, int size);
 };
