@@ -64,3 +64,4 @@ antlrcpp::Any CodeGenVisitor::visitAssignment_stmt(ifccParser::Assignment_stmtCo
         return UNDECLARED;
     }
 }
+

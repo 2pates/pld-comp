@@ -34,7 +34,9 @@ public:
     virtual antlrcpp::Any visitExpr_unaire(ifccParser::Expr_unaireContext* ctx) override;
     virtual antlrcpp::Any visitExpr_relational(ifccParser::Expr_relationalContext* ctx) override;
     virtual antlrcpp::Any visitExpr_equality(ifccParser::Expr_equalityContext* ctx) override;
-
+    virtual antlrcpp::Any visitExpr_add(ifccParser::Expr_addContext* ctx) override;
+    virtual antlrcpp::Any visitExpr_mult(ifccParser::Expr_multContext* ctx) override;
+    virtual antlrcpp::Any visitExpr_parenthesis(ifccParser::Expr_parenthesisContext* ctx) override;
 
     std::map<std::string, VariableInfo> variables;
     long int memory_offset;

@@ -56,7 +56,6 @@ antlrcpp::Any CodeGenVisitor::visitExpr_add(ifccParser::Expr_addContext* ctx) {
         cfg->current_bb->add_IRInstr(IRInstr::Operation::add, Type::INT32, {a, b, tmp_var_name});
     else
         cfg->current_bb->add_IRInstr(IRInstr::Operation::sub, Type::INT32, {a, b, tmp_var_name});
-
     return tmp_var_name;
 }
 
