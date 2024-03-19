@@ -18,7 +18,7 @@ Here we put the non-programming choices we made
 ## TODO
 ### Mandatory
 
-- [ ] Data type char : *Bachir*
+- [ ] Data type char : *Roua & Bachir*
 - [x] Data type int
 - [x] Variables
 - [x] Integer constants
@@ -33,7 +33,7 @@ Here we put the non-programming choices we made
 - [ ] Use of standard putchar and getchar functions for I/O : *James*
 - [ ] Define functions with parameters, and int, char or void return type
 - [x] Check consistency of function calls and parameters (reserved names)
-- [ ] Block structure using { and } : *Roua*
+- [ ] Block structure using { and } : *Gaspard & Benjamin*
 - [ ] Support for variable scopes and shadowing
 - [ ] If, else, while control structures : *Mathieu*
 - [ ] Support for return expression anywhere
