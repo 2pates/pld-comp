@@ -5,7 +5,7 @@
 include config/config.mk
 
 CC=g++
-CCFLAGS=-g -c -std=c++17 -I$(ANTLRINC) -Wno-attributes -DTRACE# -Wno-defaulted-function-deleted -Wno-unknown-warning-option
+CCFLAGS=-g -c -std=c++17 -I$(ANTLRINC) -Wno-attributes -Wall -Wextra -DTRACE# -Wno-defaulted-function-deleted -Wno-unknown-warning-option
 LDFLAGS=-g
 T=
 

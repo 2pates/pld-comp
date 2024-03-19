@@ -31,10 +31,8 @@ public:
     virtual antlrcpp::Any visitExpr_lazy_or(ifccParser::Expr_lazy_orContext* ctx) override;
     virtual antlrcpp::Any visitExpr_atom(ifccParser::Expr_atomContext* ctx) override;
 
-    // std::map<std::string, VariableInfo> variables;
+    int tmp_index;
     CFG* cfg;
     std::map<std::string, VariableInfo>& variables;
-    int tmp_index;
     bool declaration_mode = false;
-
 };

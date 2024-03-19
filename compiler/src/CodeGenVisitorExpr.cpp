@@ -41,7 +41,7 @@ antlrcpp::Any CodeGenVisitor::visitExpr_mult(ifccParser::Expr_multContext* ctx) 
     string b = this->visit(ctx->expr(1));
     tmp_index++;
     std::string tmp_var_name = "#tmp" + std::to_string(tmp_index);
-    int tmp_var_address = variables.at(tmp_var_name).address;
+    // int tmp_var_address = variables.at(tmp_var_name).address;
     if (s == "*")
         cfg->current_bb->add_IRInstr(IRInstr::Operation::mul, Type::INT32, {a, b, tmp_var_name});
     return tmp_var_name;
@@ -63,17 +63,17 @@ antlrcpp::Any CodeGenVisitor::visitExpr_add(ifccParser::Expr_addContext* ctx) {
 
 antlrcpp::Any CodeGenVisitor::visitExpr_relational(ifccParser::Expr_relationalContext* ctx) {
     std::string left_var_name = visit(ctx->expr()[0]);
-    int left_var_size = variables.at(left_var_name).size;
-    int left_var_address = variables.at(left_var_name).address;
+    // int left_var_size = variables.at(left_var_name).size;
+    // int left_var_address = variables.at(left_var_name).address;
 
     std::string right_var_name = visit(ctx->expr()[1]);
-    int right_var_size = variables.at(right_var_name).size;
-    int right_var_address = variables.at(right_var_name).address;
+    // int right_var_size = variables.at(right_var_name).size;
+    // int right_var_address = variables.at(right_var_name).address;
 
     tmp_index++;
     std::string tmp_var_name = "#tmp" + std::to_string(tmp_index);
-    int tmp_var_size = variables.at(tmp_var_name).size;
-    int tmp_var_address = variables.at(tmp_var_name).address;
+    // int tmp_var_size = variables.at(tmp_var_name).size;
+    // int tmp_var_address = variables.at(tmp_var_name).address;
 
     std::string ope = ctx->OP->getText();
     if (ope == "<") {
@@ -94,17 +94,17 @@ antlrcpp::Any CodeGenVisitor::visitExpr_relational(ifccParser::Expr_relationalCo
 
 antlrcpp::Any CodeGenVisitor::visitExpr_equality(ifccParser::Expr_equalityContext* ctx) {
     std::string left_var_name = visit(ctx->expr()[0]);
-    int left_var_size = variables.at(left_var_name).size;
-    int left_var_address = variables.at(left_var_name).address;
+    // int left_var_size = variables.at(left_var_name).size;
+    // int left_var_address = variables.at(left_var_name).address;
 
     std::string right_var_name = visit(ctx->expr()[1]);
-    int right_var_size = variables.at(right_var_name).size;
-    int right_var_address = variables.at(right_var_name).address;
+    // int right_var_size = variables.at(right_var_name).size;
+    // int right_var_address = variables.at(right_var_name).address;
 
     tmp_index++;
     std::string tmp_var_name = "#tmp" + std::to_string(tmp_index);
-    int tmp_var_size = variables.at(tmp_var_name).size;
-    int tmp_var_address = variables.at(tmp_var_name).address;
+    // int tmp_var_size = variables.at(tmp_var_name).size;
+    // int tmp_var_address = variables.at(tmp_var_name).address;
 
     std::string ope = ctx->OP->getText();
     if (ope == "==") {

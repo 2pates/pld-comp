@@ -46,17 +46,14 @@ int main(int argn, const char** argv) {
     }
 
     SymbolGenVisitor s;
-    // if(!s.visit(tree))
-    // {
-    //     return EXIT_FAILURE;
-    // }
     s.visit(tree);
     
-
     CFG cfg(s.variables, "entry_point");
     CodeGenVisitor v(&cfg);
     v.visit(tree);
     cfg.gen_asm(cout, Target::x86);
 
-    return 0;
+    return EXIT_SUCCESS;
 }
+
+
