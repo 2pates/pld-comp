@@ -153,6 +153,7 @@ antlrcpp::Any CodeGenVisitor::visitExpr_atom(ifccParser::Expr_atomContext* ctx) 
     if (ctx->CONST() != nullptr) {
         tmp_index++;
         var_name = "#tmp" + std::to_string(tmp_index); // we hope that it's the same #tmp number
+        debug(var_name);
         if (variables.find(var_name) != variables.end()) {
             cfg->current_bb->add_IRInstr(IRInstr::Operation::ldconst, Type::INT32, {ctx->CONST()->getText(), var_name});
         } else {
@@ -161,6 +162,7 @@ antlrcpp::Any CodeGenVisitor::visitExpr_atom(ifccParser::Expr_atomContext* ctx) 
         }
     } else if (ctx->VARNAME() != nullptr) {
         var_name = ctx->VARNAME()->getText();
+        debug(var_name);
     }
     return var_name;
 }
