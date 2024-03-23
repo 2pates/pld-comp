@@ -85,8 +85,8 @@ void IRInstr::gen_asm(ostream& o, Target target) {
                 o << "mov" << size_to_letter(membreGauche.size) << " " << to_string(membreGauche.address)
                   << "(%rbp), %eax" << endl;
                 o << "mov" << size_to_letter(membreDroit.size) << " " << to_string(membreDroit.address)
-                  << "(%rbp), %ebx" << endl;
-                o << "sub" << size_to_letter(destination.size) << " %ebx, %eax" << endl;
+                  << "(%rbp), %edx" << endl;
+                o << "sub" << size_to_letter(destination.size) << " %edx, %eax" << endl;
                 o << "mov" << size_to_letter(destination.size) << " %eax, " << to_string(destination.address)
                   << "(%rbp)" << endl;
             }
@@ -376,7 +376,7 @@ void CFG::add_to_symbol_table(string name, VariableInfo t) { variables[name] = t
 
 string CFG::new_BB_name() {
     nextBBnumber++;
-    return "bb_" + to_string(nextBBnumber);
+    return "BB_" + to_string(nextBBnumber);
 }
 
 VariableInfo CFG::get_var_info(string name) { return variables[name]; }
