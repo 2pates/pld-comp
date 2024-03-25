@@ -27,6 +27,8 @@ antlrcpp::Any CodeGenVisitor::visitInstruction(ifccParser::InstructionContext* c
         this->visit(ctx->declare_stmt());
     if (ctx->selection_stmt() != nullptr)
         this->visit(ctx->selection_stmt());
+    if (ctx->iterationStatement() != nullptr)
+        this->visit(ctx->iterationStatement());
     return 0;
 }
 
@@ -69,7 +71,7 @@ antlrcpp::Any CodeGenVisitor::visitAssignment_stmt(ifccParser::Assignment_stmtCo
     }
 }
 
-antlrcpp::Any CodeGenVisitor::visitSelection_stmt(ifccParser::Selection_stmtContext* ctx) {
+antlrcpp::Any CodeGenVisitor::visitSelection_if(ifccParser::Selection_ifContext* ctx) {
     BasicBlock* nextBB = new BasicBlock(cfg, cfg->new_BB_name());
     cfg->add_bb(nextBB);
     BasicBlock* testBlock = new BasicBlock(cfg, cfg->new_BB_name());
@@ -107,6 +109,35 @@ antlrcpp::Any CodeGenVisitor::visitSelection_stmt(ifccParser::Selection_stmtCont
         testBlock->exit_false = elseBB;
         
     }
+
+    cfg->current_bb = nextBB;
+    return 0;
+}
+
+antlrcpp::Any CodeGenVisitor::visitIteration_while(ifccParser::Iteration_whileContext* ctx) {
+    BasicBlock* nextBB = new BasicBlock(cfg, cfg->new_BB_name());
+    cfg->add_bb(nextBB);
+    BasicBlock* testBlock = new BasicBlock(cfg, cfg->new_BB_name());
+    cfg->add_bb(testBlock);
+
+    cfg->current_bb->exit_true = testBlock; // After current block, jump to testBlock
+    
+    BasicBlock* thenBB = new BasicBlock(cfg, cfg->new_BB_name());
+    cfg->add_bb(thenBB);
+    //After then block, jump to nextBB, might be overwritten during visit(ctx->instruction(0))
+    thenBB->exit_true = testBlock;
+    cfg->current_bb = thenBB;
+    visit(ctx->instruction());
+
+    //If test is true jump to thenBB
+    testBlock->exit_true = thenBB;
+    //If test is false jump to nextBB
+    testBlock->exit_false = nextBB;
+
+    cfg->current_bb = testBlock;
+    string testVarName = visit(ctx->expr());
+    testBlock->test_var_name = testVarName;
+
 
     cfg->current_bb = nextBB;
     return 0;
