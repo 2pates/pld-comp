@@ -170,16 +170,20 @@ antlrcpp::Any CodeGenVisitor::visitExpr_lazy_and(ifccParser::Expr_lazy_andContex
     std::string r_var_name = visit(ctx->expr().at(1));
 
     BasicBlock* nextBlock = new BasicBlock(cfg, cfg->new_BB_name());
+    cfg->add_bb(nextBlock);
     nextBlock->add_IRInstr(IRInstr::Operation::mov_from_eax, Type::INT32, {tmp_var_name});
 
     BasicBlock* trueBlock = new BasicBlock(cfg, cfg->new_BB_name());
+    cfg->add_bb(trueBlock);
     trueBlock->add_IRInstr(IRInstr::Operation::mov_eax, Type::INT32, {"0"});
 
     BasicBlock* falseFalseBlock = new BasicBlock(cfg, cfg->new_BB_name());
+    cfg->add_bb(falseFalseBlock);
     trueBlock->add_IRInstr(IRInstr::Operation::mov_eax, Type::INT32, {"1"});
     trueBlock->exit_true = nextBlock;
 
     BasicBlock* falseBlock = new BasicBlock(cfg, cfg->new_BB_name());
+    cfg->add_bb(falseBlock);
     falseBlock->test_var_name = r_var_name;
     falseBlock->exit_true = trueBlock;
 
