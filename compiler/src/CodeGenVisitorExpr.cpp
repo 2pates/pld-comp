@@ -145,51 +145,31 @@ antlrcpp::Any CodeGenVisitor::visitExpr_or(ifccParser::Expr_orContext* ctx) {
 }
 
 antlrcpp::Any CodeGenVisitor::visitExpr_lazy_and(ifccParser::Expr_lazy_andContext* ctx) {
-    /* for (auto instruction : instrs) {
-        instruction->gen_asm(o, target);
-    }
-
-    if (exit_false == nullptr && exit_true != nullptr) {
-        // unconditional jmp to the exit_true branch
-        o << "jmp " << exit_true->label << endl;
-    } else if (exit_false != nullptr && exit_true == nullptr) {
-        // jump if equal to the exit_true branch
-        o << "je " << exit_false->label << endl;
-    } else if (exit_false != nullptr && exit_true != nullptr) {
-        // jmp to exit_true if test_var_name, otherwise jmp to exit_false
-        VariableInfo testVar = cfg->get_var_info(test_var_name);
-        o << "mov" << size_to_letter(testVar.size) << " " << to_string(testVar.address) << "(%rbp), %eax" << endl;
-        o << "cmp %eax, $1";
-        o << "jnz " << exit_true->label << endl;
-        o << "jmp " << exit_false->label << endl;
-    } */
     tmp_index++;
     std::string tmp_var_name = "#tmp" + std::to_string(tmp_index);
 
     std::string l_var_name = visit(ctx->expr().at(0));
     std::string r_var_name = visit(ctx->expr().at(1));
 
-    BasicBlock* nextBlock = new BasicBlock(cfg, cfg->new_BB_name());
-    cfg->add_bb(nextBlock);
-    nextBlock->add_IRInstr(IRInstr::Operation::mov_from_eax, Type::INT32, {tmp_var_name});
+    BasicBlock* nextBB = new BasicBlock(cfg, cfg->new_BB_name());
+    cfg->add_bb(nextBB);
 
-    BasicBlock* trueBlock = new BasicBlock(cfg, cfg->new_BB_name());
-    cfg->add_bb(trueBlock);
-    trueBlock->add_IRInstr(IRInstr::Operation::mov_eax, Type::INT32, {"0"});
+    BasicBlock* rightBB = new BasicBlock(cfg, cfg->new_BB_name());
+    cfg->add_bb(rightBB);
+    rightBB->add_IRInstr(IRInstr::Operation::cmp_const, Type::INT32, {r_var_name, "0", tmp_var_name}); // IF right == false
+    rightBB->add_IRInstr(IRInstr::Operation::l_not, Type::INT32, {tmp_var_name, tmp_var_name}); // NOT (right == false)
+    rightBB->exit_true = nextBB;
 
-    BasicBlock* falseFalseBlock = new BasicBlock(cfg, cfg->new_BB_name());
-    cfg->add_bb(falseFalseBlock);
-    trueBlock->add_IRInstr(IRInstr::Operation::mov_eax, Type::INT32, {"1"});
-    trueBlock->exit_true = nextBlock;
+    BasicBlock* leftBB = new BasicBlock(cfg, cfg->new_BB_name());
+    cfg->add_bb(leftBB);
+    leftBB->add_IRInstr(IRInstr::Operation::cmp_const, Type::INT32, {l_var_name, "0", tmp_var_name}); // IF left == false
+    leftBB->add_IRInstr(IRInstr::Operation::l_not, Type::INT32, {tmp_var_name, tmp_var_name}); // NOT (left == false)
+    leftBB->test_var_name = tmp_var_name;
+    leftBB->exit_true = rightBB; // IF left == true then jump to right -> check if right is also true
+    leftBB->exit_false = nextBB; // IF left == true then jump to right -> result = false
 
-    BasicBlock* falseBlock = new BasicBlock(cfg, cfg->new_BB_name());
-    cfg->add_bb(falseBlock);
-    falseBlock->test_var_name = r_var_name;
-    falseBlock->exit_true = trueBlock;
-
-    cfg->current_bb->test_var_name = l_var_name;
-
-    cfg-> current_bb = nextBlock;
+    cfg->current_bb->exit_true = leftBB;
+    cfg->current_bb = nextBB;
 
     return tmp_var_name;
 }

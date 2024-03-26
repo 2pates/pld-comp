@@ -22,7 +22,7 @@ string size_to_letter(int size) {
 /*
 ldconst : valeur_constante, variable_destination
 copy : variable_source, variable_destination
-cmp_const : constante, variable_destination
+cmp_const : variable_source ,constante, variable_destination
 add : variable_membre_gauche, variable_membre_droite, variable_destination
 sub : variable_membre_gauche, variable_membre_droite, variable_destination
 mul : variable_membre_gauche, variable_membre_droite, variable_destination
@@ -52,20 +52,6 @@ void IRInstr::gen_asm(ostream& o, Target target) {
             }
             break;
         }
-        case mov_eax: {
-            string value = params[0];
-            if (target == Target::x86) {
-                o << "movl" << " $" << value << ", " << "%eax" << endl;
-            }
-            break;
-        }
-        case mov_from_eax: {
-            VariableInfo variable = bb->cfg->get_var_info(params[0]);
-            if (target == Target::x86) {
-                o << "movl" << " %eax" << ", " << variable.address << "(%eax)" << endl;
-            }
-            break;
-        }
         case copy: {
             VariableInfo source = bb->cfg->get_var_info(params[0]);
             VariableInfo destination = bb->cfg->get_var_info(params[1]);
@@ -78,11 +64,13 @@ void IRInstr::gen_asm(ostream& o, Target target) {
             break;
         }
         case cmp_const: {
-          VariableInfo destination = bb->cfg->get_var_info(params[1]);
-          string constante = params[0];
+          VariableInfo destination = bb->cfg->get_var_info(params[2]);
+          VariableInfo source = bb->cfg->get_var_info(params[0]);
+          string constante = params[1];
 
-          o << "cmp" << size_to_letter(destination.size) << " $" << constante << ", " << to_string(destination.address)
-                  << "(%rbp)" << endl;
+          o << "cmp" << size_to_letter(source.size) << " $" << constante << ", " << to_string(source.address) << "(%rbp)" << endl;
+          o << "sete " << to_string(destination.address) << "(%rbp)" << endl;
+          break;
         }
         case add: {
             VariableInfo membreGauche = bb->cfg->get_var_info(params[0]);
@@ -425,8 +413,8 @@ void CFG::gen_asm(ostream& o, Target target) {
 
 void CFG::gen_asm_prologue(ostream& o, Target target) {
     if (target == Target::x86) {
-        o << ".globl main" << endl;
-        o << "main:" << endl;
+        o << ".globl _main" << endl;
+        o << "_main:" << endl;
         o << "pushq %rbp" << endl;                // Save the old base pointer
         o << "movq %rsp, %rbp" << endl;           // Set up a new base pointer
         o << "jmp " << entry_block_label << endl; // Jump to entry block
