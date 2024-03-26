@@ -38,6 +38,7 @@ expr: '(' expr ')'					# expr_parenthesis
 | expr '&&' expr					# expr_lazy_and
 | expr '||' expr					# expr_lazy_or
 | (CONST | VARNAME)					# expr_atom
+| function_call                     # expr_function
 ;
 
 type: 'int'|'char';
