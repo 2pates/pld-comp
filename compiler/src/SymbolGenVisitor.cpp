@@ -110,8 +110,7 @@ antlrcpp::Any SymbolGenVisitor::visitExpr_atom(ifccParser::Expr_atomContext* ctx
         memory_offset -= 4;
         tmp_index++;
         variables.insert({"#tmp" + std::to_string(tmp_index), VariableInfo(memory_offset, 4)});
-            debug("Inserted (Expr_atom) #tmp" + std::to_string(tmp_index) + " (address " + std::to_string(memory_offset) + ")");
-
+    
     }
     return GOOD;
 }
@@ -156,8 +155,27 @@ antlrcpp::Any SymbolGenVisitor::visitExpr_or(ifccParser::Expr_orContext* ctx) {
         debug("Inserted #tmp" + std::to_string(tmp_index) + " (address " + std::to_string(memory_offset) + ")");
 
     visit(ctx->expr()[1]);
+    return 0;
+}
+
+antlrcpp::Any SymbolGenVisitor::visitExpr_lazy_and(ifccParser::Expr_lazy_andContext* ctx) {
+    visit(ctx->expr()[0]);
+    memory_offset -= 4;
+    tmp_index++;
+    variables.insert({"#tmp" + std::to_string(tmp_index), VariableInfo(memory_offset, 4)});
+    visit(ctx->expr()[1]);
     return GOOD;
 }
+
+antlrcpp::Any SymbolGenVisitor::visitExpr_lazy_or(ifccParser::Expr_lazy_orContext* ctx) {
+    visit(ctx->expr()[0]);
+    memory_offset -= 4;
+    tmp_index++;
+    variables.insert({"#tmp" + std::to_string(tmp_index), VariableInfo(memory_offset, 4)});
+    visit(ctx->expr()[1]);
+    return GOOD;
+}
+
 
 antlrcpp::Any SymbolGenVisitor::visitExpr_unaire(ifccParser::Expr_unaireContext* ctx) {
     visit(ctx->expr());
