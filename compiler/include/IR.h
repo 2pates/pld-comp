@@ -145,7 +145,7 @@ public:
     // basic block management
     std::string new_BB_name();
     BasicBlock* current_bb;
-
+    int memoryUse;
 protected:
     std::unordered_map<std::string, VariableInfo>& variables;
     string entry_block_label;
