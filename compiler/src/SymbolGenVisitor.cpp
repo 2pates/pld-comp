@@ -1,6 +1,7 @@
 #include "SymbolGenVisitor.h"
 #include "Error.h"
 
+
 antlrcpp::Any SymbolGenVisitor::visitBlock(ifccParser::BlockContext* ctx) {
     tmp_block_index++;                               // we increase the number of blocks
     blocks.insert({tmp_block_index, current_block}); // set father
@@ -12,9 +13,22 @@ antlrcpp::Any SymbolGenVisitor::visitBlock(ifccParser::BlockContext* ctx) {
     return GOOD;
 }
 
+antlrcpp::Any SymbolGenVisitor::visitFunction_call(ifccParser::Function_callContext* ctx) {
+    //needs to be implemented to say that variables are used
+    //assigns memory in case it's being used in an expression
+
+    for(int i=0;i<ctx->expr().size();i++){
+        visit(ctx->expr()[i]);
+    }
+    memory_offset -= 4;
+    tmp_index++;
+    variables.insert({"#tmp" + std::to_string(tmp_index), VariableInfo(memory_offset, 4)});
+    return 0;
+}
+
 antlrcpp::Any SymbolGenVisitor::visitDeclare_stmt(ifccParser::Declare_stmtContext* ctx) {
     declaration_mode = true;
-    if (ctx->TYPE()->getText() == "int") {
+    if (ctx->type()->getText() == "int") {
         visit(ctx->declare());
     }
     declaration_mode = false;
@@ -70,6 +84,21 @@ antlrcpp::Any SymbolGenVisitor::visitAssignment_stmt(ifccParser::Assignment_stmt
     }
 }
 
+antlrcpp::Any SymbolGenVisitor::visitSelection_if(ifccParser::Selection_ifContext* ctx) {
+    this->visit(ctx->expr());
+    this->visit(ctx->instruction()[0]);
+    if(ctx->instruction()[1] != nullptr) {
+        this->visit(ctx->instruction()[1]);
+    }
+    return 0;
+}
+
+antlrcpp::Any SymbolGenVisitor::visitIteration_while(ifccParser::Iteration_whileContext* ctx) {
+    this->visit(ctx->expr());
+    this->visit(ctx->instruction());
+    return 0;
+}
+
 antlrcpp::Any SymbolGenVisitor::visitLvalue(ifccParser::LvalueContext* ctx) {
     std::string name = ctx->VARNAME()->getText();
     if (std::find(reserved_word.begin(), reserved_word.end(), name) != reserved_word.end()) {
@@ -105,6 +134,16 @@ antlrcpp::Any SymbolGenVisitor::visitExpr_atom(ifccParser::Expr_atomContext* ctx
     return GOOD;
 }
 
+antlrcpp::Any SymbolGenVisitor::visitExpr_add(ifccParser::Expr_addContext* ctx) {
+    visit(ctx->expr()[0]);
+    memory_offset -= 4;
+    tmp_index++;
+    variables.insert({"#tmp" + std::to_string(tmp_index), VariableInfo(memory_offset, 4)});
+    debug("Inserted (Expr_add) #tmp" + std::to_string(tmp_index) + " (address " + std::to_string(memory_offset) + ")");
+    visit(ctx->expr()[1]);
+    return GOOD;
+}
+
 antlrcpp::Any SymbolGenVisitor::visitExpr_and(ifccParser::Expr_andContext* ctx) {
     visit(ctx->expr()[0]);
     visit(ctx->expr()[1]);
@@ -122,6 +161,23 @@ antlrcpp::Any SymbolGenVisitor::visitExpr_xor(ifccParser::Expr_xorContext* ctx) 
 }
 
 antlrcpp::Any SymbolGenVisitor::visitExpr_or(ifccParser::Expr_orContext* ctx) {
+    visit(ctx->expr()[0]);
+    visit(ctx->expr()[1]);
+    memory_offset -= 4;
+    variables.insert({get_new_tmp_varname(), VariableInfo(memory_offset, 4)});
+    return GOOD;
+}
+
+antlrcpp::Any SymbolGenVisitor::visitExpr_lazy_and(ifccParser::Expr_lazy_andContext* ctx) {
+    visit(ctx->expr()[0]);
+    memory_offset -= 4;
+    tmp_index++;
+    variables.insert({"#tmp" + std::to_string(tmp_index), VariableInfo(memory_offset, 4)});
+    visit(ctx->expr()[1]);
+    return GOOD;
+}
+
+antlrcpp::Any SymbolGenVisitor::visitExpr_lazy_or(ifccParser::Expr_lazy_orContext* ctx) {
     visit(ctx->expr()[0]);
     visit(ctx->expr()[1]);
     memory_offset -= 4;
@@ -161,5 +217,22 @@ std::string SymbolGenVisitor::get_new_tmp_varname() {
 
 std::string SymbolGenVisitor::create_unique_var_name(std::string name) {
     return name + "_" + std::to_string(current_block);
+}
+
+antlrcpp::Any SymbolGenVisitor::visitExpr_mult(ifccParser::Expr_multContext* ctx){
+    this->visit(ctx->expr(0));
+    this->visit(ctx->expr(1));
+    memory_offset -= 4;
+    tmp_index++;
+    variables.insert({"#tmp" + std::to_string(tmp_index), VariableInfo(memory_offset, 4)});
+    return 0;
+}
+
+antlrcpp::Any SymbolGenVisitor::visitExpr_parenthesis(ifccParser::Expr_parenthesisContext* ctx) {
+    visit(ctx->expr());
+    memory_offset -= 4;
+    tmp_index++;
+    variables.insert({"#tmp" + std::to_string(tmp_index), VariableInfo(memory_offset, 4)});
+    return 0;
 }
 
