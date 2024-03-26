@@ -51,7 +51,9 @@ int main(int argn, const char** argv) {
     CFG cfg(s.variables, "entry_point");
     CodeGenVisitor v(&cfg);
     v.visit(tree);
+
     cfg.gen_asm(cout, Target::x86);
+    cerr<<EXIT_SUCCESS<<endl;
 
     return EXIT_SUCCESS;
 }

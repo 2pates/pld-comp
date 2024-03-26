@@ -22,17 +22,16 @@ Here we put the non-programming choices we made
 - [x] Data type int
 - [x] Variables
 - [x] Integer constants
-- [ ] Character (with single quote)
 - [x] Basic arithmetic operations: +,-, *
 - [ ] Division and modulo (in IR) : *Bachir*
 - [x] Bit-by-bit logical operations: |, &,ˆ
 - [x] Comparison operations: ==, !=, <, >
 - [x] Unary operations: ! and - and ~ (bonus)
 - [x] Declaration of variables anywhere
-- [ ] Assignment (which, in C, also returns a value)
+- [ ] Assignment (which, in C, also returns a value) : *Mathieu*
 - [x] Possibility of initializing a variable when declaring it
 - [ ] Use of standard putchar and getchar functions for I/O : *James*
-- [ ] Define functions with parameters, and int, char or void return type
+- [ ] Define functions with parameters, and int, char or void return type : *James*
 - [x] Check consistency of function calls and parameters (reserved names)
 - [ ] Block structure using { and } : *Gaspard & Benjamin*
 - [ ] Support for variable scopes and shadowing
@@ -54,8 +53,8 @@ Here we put the non-programming choices we made
 - [ ] Char data type width support (8-bit integer)
 - [ ] Character strings represented by char arrays
 - [ ] Switch...case
-- [x] Lazy operators ||, && *Myriam*
-- [ ] Assignment operators +=, -= etc., increment ++ and decrement
+- [x] Lazy operators ||, && : *Myriam*
+- [ ] Assignment operators +=, -= etc., increment ++ and decrement -- : *Myriam*
 
 
 
