@@ -40,6 +40,7 @@ public:
         cmp_le,
         cmp_gt,
         cmp_ge,
+        copyIn,
         ret,
         bitwise_and,
         bitwise_or,

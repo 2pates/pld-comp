@@ -3,10 +3,22 @@
 
 
 
+antlrcpp::Any SymbolGenVisitor::visitFunction_call(ifccParser::Function_callContext* ctx) {
+    //needs to be implemented to say that variables are used
+    //assigns memory in case it's being used in an expression
+
+    for(int i=0;i<ctx->expr().size();i++){
+        visit(ctx->expr()[i]);
+    }
+    memory_offset -= 4;
+    tmp_index++;
+    variables.insert({"#tmp" + std::to_string(tmp_index), VariableInfo(memory_offset, 4)});
+    return 0;
+}
 
 antlrcpp::Any SymbolGenVisitor::visitDeclare_stmt(ifccParser::Declare_stmtContext* ctx) {
     declaration_mode = true;
-    if (ctx->TYPE()->getText() == "int") {
+    if (ctx->type()->getText() == "int") {
         visit(ctx->declare());
     }
     declaration_mode = false;
@@ -75,7 +87,7 @@ antlrcpp::Any SymbolGenVisitor::visitLvalue(ifccParser::LvalueContext* ctx) {
     std::string name = ctx->VARNAME()->getText();
     if (std::find(reserved_word.begin(), reserved_word.end(), name) != reserved_word.end()) {
         error("Error: reserved keyword " + name);
-        return RESERVED_KEY_WORD;
+        exit(RESERVED_KEY_WORD);
     } else {
         memory_offset -= 4; // decrement index first !
         VariableInfo var(memory_offset, 4, false);

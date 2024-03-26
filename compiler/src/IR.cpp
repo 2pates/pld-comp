@@ -63,6 +63,15 @@ void IRInstr::gen_asm(ostream& o, Target target) {
             }
             break;
         }
+        case copyIn: {
+            VariableInfo source = bb->cfg->get_var_info(params[0]);
+            string destination = params[1];
+
+            if (target == Target::x86) {
+                o << "mov" << size_to_letter(source.size) << " " << to_string(source.address) << "(%rbp), "<< destination << endl;
+            }
+            break;
+        }
         case cmp_const: {
             VariableInfo destination = bb->cfg->get_var_info(params[2]);
             VariableInfo source = bb->cfg->get_var_info(params[0]);
@@ -429,6 +438,7 @@ void CFG::gen_asm_prologue(ostream& o, Target target) {
         o << "main:" << endl;
         o << "pushq %rbp" << endl;                // Save the old base pointer
         o << "movq %rsp, %rbp" << endl;           // Set up a new base pointer
+	      o<<" subq	$"<<160<<", %rsp"<<endl;        //Set up potential function call Needs improvement
         o << "jmp " << entry_block_label << endl; // Jump to entry block
     }
 }

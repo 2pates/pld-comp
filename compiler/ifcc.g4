@@ -4,10 +4,10 @@ axiom : prog EOF ;
 
 prog : 'int' 'main' '(' ')' '{' instruction* return_stmt '}' ;
 
-function_def: TYPE FUNCNAME '(' declare_only_stmt? ')' '{' instruction* return_stmt? '}' ;
-function_call: FUNCNAME '(' expr* ')' ';' ;
+function_def: type VARNAME '(' declare_only_stmt? ')' '{' instruction* return_stmt? '}' ;
+function_call: VARNAME '(' expr* ')' ;
 
-instruction: declare_stmt ';' | assignment_stmt ';' | selection_stmt | iterationStatement ;
+instruction: declare_stmt ';' | assignment_stmt ';'| function_call ';'| selection_stmt | iterationStatement ;
 
 assignment_stmt: lvalue '=' rvalue ;
 
@@ -18,10 +18,10 @@ iterationStatement
     : 'while' '(' expr ')' instruction #iteration_while
     ;
 
-declare_stmt: TYPE declare;
+declare_stmt: type declare;
 declare: (lvalue | assignment_stmt) (',' declare)? ;
 
-declare_only_stmt: TYPE lvalue (',' declare_only_stmt)? ;
+declare_only_stmt: type lvalue (',' declare_only_stmt)? ;
 return_stmt: RETURN expr ';' ;
 
 rvalue: expr ;
@@ -41,7 +41,7 @@ expr: '(' expr ')'					# expr_parenthesis
 | (CONST | VARNAME)					# expr_atom
 ;
 
-TYPE: 'int' ;
+type: 'int'|'char';
 RETURN : 'return' ;
 VARNAME: [_a-zA-Z][_a-zA-Z0-9]*;
 CONST : [0-9]+ ;

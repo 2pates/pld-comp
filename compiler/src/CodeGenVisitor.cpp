@@ -10,12 +10,20 @@ antlrcpp::Any CodeGenVisitor::visitProg(ifccParser::ProgContext* ctx) {
     for (auto instr : ctx->instruction()) {
         this->visit(instr);
     }
-
     this->visit(ctx->return_stmt());
 
     return 0;
 }
-
+antlrcpp::Any CodeGenVisitor::visitFunction_call(ifccParser::Function_callContext *ctx){
+    std::string s=ctx->VARNAME()->getText();
+    if(s=="putchar" && ctx->expr().size()==1 && ctx->expr()[0]!=nullptr){
+        std::string var_name = visit(ctx->expr()[0]);
+        std::string tmp_var_name = "#tmp" + std::to_string(tmp_index);
+        cfg->current_bb->add_IRInstr(IRInstr::Operation::copyIn, Type::INT32, {var_name, "%edi"});
+        cfg->current_bb->add_IRInstr(IRInstr::Operation::call, Type::INT32, {"putchar@PLT"});
+    }    
+    return 0;
+}
 antlrcpp::Any CodeGenVisitor::visitRvalue(ifccParser::RvalueContext* ctx) {
     return visit(ctx->expr());
 }
@@ -25,6 +33,9 @@ antlrcpp::Any CodeGenVisitor::visitInstruction(ifccParser::InstructionContext* c
         this->visit(ctx->assignment_stmt());
     if (ctx->declare_stmt() != nullptr)
         this->visit(ctx->declare_stmt());
+    if (ctx->function_call() != nullptr) {
+        this->visit(ctx->function_call());
+    }
     if (ctx->selection_stmt() != nullptr)
         this->visit(ctx->selection_stmt());
     if (ctx->iterationStatement() != nullptr)
