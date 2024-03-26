@@ -2,6 +2,8 @@
 #define __SYMBOL_GEN_VISITOR__
 
 #include <map>
+#include <vector>
+#include <string>
 
 #include "antlr4-runtime.h"
 #include "ifccBaseVisitor.h"
@@ -24,6 +26,9 @@ public:
     virtual antlrcpp::Any visitDeclare_stmt(ifccParser::Declare_stmtContext* ctx) override;
     virtual antlrcpp::Any visitDeclare(ifccParser::DeclareContext* ctx) override;
     virtual antlrcpp::Any visitAssignment_stmt(ifccParser::Assignment_stmtContext* ctx) override;
+    virtual antlrcpp::Any visitSelection_if(ifccParser::Selection_ifContext* ctx) override;
+    virtual antlrcpp::Any visitIteration_while(ifccParser::Iteration_whileContext* ctx) override;
+    virtual antlrcpp::Any visitLvalue(ifccParser::LvalueContext* ctx) override;
     virtual antlrcpp::Any visitExpr_atom(ifccParser::Expr_atomContext* ctx) override;
     virtual antlrcpp::Any visitExpr_and(ifccParser::Expr_andContext* ctx) override;
     virtual antlrcpp::Any visitExpr_xor(ifccParser::Expr_xorContext* ctx) override;
@@ -31,11 +36,22 @@ public:
     virtual antlrcpp::Any visitExpr_unaire(ifccParser::Expr_unaireContext* ctx) override;
     virtual antlrcpp::Any visitExpr_relational(ifccParser::Expr_relationalContext* ctx) override;
     virtual antlrcpp::Any visitExpr_equality(ifccParser::Expr_equalityContext* ctx) override;
+    virtual antlrcpp::Any visitExpr_add(ifccParser::Expr_addContext* ctx) override;
+    virtual antlrcpp::Any visitExpr_mult(ifccParser::Expr_multContext* ctx) override;
+    virtual antlrcpp::Any visitExpr_parenthesis(ifccParser::Expr_parenthesisContext* ctx) override;
 
 
     std::map<std::string, VariableInfo> variables;
     long int memory_offset;
     int tmp_index;
+    bool declaration_mode = false;
+    std::vector<std::string> reserved_word{"if", "else", "switch", "case", // to optimize later
+            "default", "break", "int", "float", "char",
+            "double", "long", "for", "while", "do", "void",
+            "goto", "auto", "signed", "const", "extern",
+            "register", "unsigned", "return", "continue",
+            "enum", "sizeof", "struct", "typedef", "union",
+            "volatile"};
 
     int check_exist(ifccParser::Expr_atomContext* ctx);
     int check_exist(std::string varname);

@@ -41,7 +41,6 @@ antlrcpp::Any CodeGenVisitor::visitExpr_mult(ifccParser::Expr_multContext* ctx) 
     string b = this->visit(ctx->expr(1));
     tmp_index++;
     std::string tmp_var_name = "#tmp" + std::to_string(tmp_index);
-    int tmp_var_address = variables.at(tmp_var_name).address;
     if (s == "*")
         cfg->current_bb->add_IRInstr(IRInstr::Operation::mul, Type::INT32, {a, b, tmp_var_name});
     return tmp_var_name;
@@ -57,23 +56,16 @@ antlrcpp::Any CodeGenVisitor::visitExpr_add(ifccParser::Expr_addContext* ctx) {
         cfg->current_bb->add_IRInstr(IRInstr::Operation::add, Type::INT32, {a, b, tmp_var_name});
     else
         cfg->current_bb->add_IRInstr(IRInstr::Operation::sub, Type::INT32, {a, b, tmp_var_name});
-
     return tmp_var_name;
 }
 
 antlrcpp::Any CodeGenVisitor::visitExpr_relational(ifccParser::Expr_relationalContext* ctx) {
     std::string left_var_name = visit(ctx->expr()[0]);
-    int left_var_size = variables.at(left_var_name).size;
-    int left_var_address = variables.at(left_var_name).address;
 
     std::string right_var_name = visit(ctx->expr()[1]);
-    int right_var_size = variables.at(right_var_name).size;
-    int right_var_address = variables.at(right_var_name).address;
 
     tmp_index++;
     std::string tmp_var_name = "#tmp" + std::to_string(tmp_index);
-    int tmp_var_size = variables.at(tmp_var_name).size;
-    int tmp_var_address = variables.at(tmp_var_name).address;
 
     std::string ope = ctx->OP->getText();
     if (ope == "<") {
@@ -94,17 +86,11 @@ antlrcpp::Any CodeGenVisitor::visitExpr_relational(ifccParser::Expr_relationalCo
 
 antlrcpp::Any CodeGenVisitor::visitExpr_equality(ifccParser::Expr_equalityContext* ctx) {
     std::string left_var_name = visit(ctx->expr()[0]);
-    int left_var_size = variables.at(left_var_name).size;
-    int left_var_address = variables.at(left_var_name).address;
 
     std::string right_var_name = visit(ctx->expr()[1]);
-    int right_var_size = variables.at(right_var_name).size;
-    int right_var_address = variables.at(right_var_name).address;
 
     tmp_index++;
     std::string tmp_var_name = "#tmp" + std::to_string(tmp_index);
-    int tmp_var_size = variables.at(tmp_var_name).size;
-    int tmp_var_address = variables.at(tmp_var_name).address;
 
     std::string ope = ctx->OP->getText();
     if (ope == "==") {
@@ -114,43 +100,6 @@ antlrcpp::Any CodeGenVisitor::visitExpr_equality(ifccParser::Expr_equalityContex
         cfg->current_bb->add_IRInstr(IRInstr::Operation::cmp_ne, Type::INT32,
                                      {left_var_name, right_var_name, tmp_var_name});
     }
-    return tmp_var_name;
-}
-
-antlrcpp::Any CodeGenVisitor::visitBitwise(std::string l_var_name, char OP, std::string r_var_name) {
-    debug("visit bitwise " + OP);
-    int l_var_size = variables.at(l_var_name).size;
-    int l_var_address = variables.at(l_var_name).address;
-    int r_var_size = variables.at(r_var_name).size;
-    int r_var_address = variables.at(r_var_name).address;
-
-    tmp_index++;
-    std::string tmp_var_name = "#tmp" + std::to_string(tmp_index);
-    int tmp_var_size = variables.at(tmp_var_name).size;
-    int tmp_var_address = variables.at(tmp_var_name).address;
-
-    mov(std::to_string(l_var_address) + "(%rbp)", "%eax", 4);
-    switch (OP) {
-        case '&':
-            std::cout << "    andl " << r_var_address << "(%rbp)"
-                      << ", %eax\n";
-            break;
-
-        case '^':
-            std::cout << "    xorl " << r_var_address << "(%rbp)"
-                      << ", %eax\n";
-            break;
-
-        case '|':
-            std::cout << "    orl " << r_var_address << "(%rbp)"
-                      << ", %eax\n";
-            break;
-
-        default:
-            break;
-    }
-
-    push_stack("%eax", tmp_var_address, tmp_var_size);
     return tmp_var_name;
 }
 
@@ -190,6 +139,7 @@ antlrcpp::Any CodeGenVisitor::visitExpr_atom(ifccParser::Expr_atomContext* ctx) 
     if (ctx->CONST() != nullptr) {
         tmp_index++;
         var_name = "#tmp" + std::to_string(tmp_index); // we hope that it's the same #tmp number
+        debug(var_name);
         if (variables.find(var_name) != variables.end()) {
             cfg->current_bb->add_IRInstr(IRInstr::Operation::ldconst, Type::INT32, {ctx->CONST()->getText(), var_name});
         } else {
@@ -198,6 +148,7 @@ antlrcpp::Any CodeGenVisitor::visitExpr_atom(ifccParser::Expr_atomContext* ctx) 
         }
     } else if (ctx->VARNAME() != nullptr) {
         var_name = ctx->VARNAME()->getText();
+        debug(var_name);
     }
     return var_name;
 }

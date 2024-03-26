@@ -30,17 +30,11 @@ public:
     virtual antlrcpp::Any visitExpr_lazy_and(ifccParser::Expr_lazy_andContext* ctx) override;
     virtual antlrcpp::Any visitExpr_lazy_or(ifccParser::Expr_lazy_orContext* ctx) override;
     virtual antlrcpp::Any visitExpr_atom(ifccParser::Expr_atomContext* ctx) override;
+    virtual antlrcpp::Any visitSelection_if(ifccParser::Selection_ifContext* ctx) override;
+    virtual antlrcpp::Any visitIteration_while(ifccParser::Iteration_whileContext* ctx) override;
 
-    // std::map<std::string, VariableInfo> variables;
+    int tmp_index;
     CFG* cfg;
     std::map<std::string, VariableInfo>& variables;
-    int tmp_index;
     bool declaration_mode = false;
-
-    antlrcpp::Any visitBitwise(std::string l_var, char OP, std::string r_var);
-
-    int push_stack(int source, int dest);
-    int push_stack(std::string source, int dest, int size);
-
-    int mov(std::string source, std::string dest, int size);
 };

@@ -10,6 +10,7 @@
 
 #include "CodeGenVisitor.h"
 #include "IR.h"
+#include "Error.h"
 #include "SymbolGenVisitor.h"
 
 using namespace antlr4;
@@ -40,17 +41,19 @@ int main(int argn, const char** argv) {
     tree::ParseTree* tree = parser.axiom();
 
     if (parser.getNumberOfSyntaxErrors() != 0) {
-        cerr << "error: syntax error during parsing" << endl;
+        cerr << "Error: syntax error during parsing" << endl;
         exit(1);
     }
 
     SymbolGenVisitor s;
     s.visit(tree);
-
+    
     CFG cfg(s.variables, "entry_point");
     CodeGenVisitor v(&cfg);
     v.visit(tree);
     cfg.gen_asm(cout, Target::x86);
 
-    return 0;
+    return EXIT_SUCCESS;
 }
+
+
