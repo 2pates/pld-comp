@@ -36,10 +36,6 @@ antlrcpp::Any CodeGenVisitor::visitFunction_call(ifccParser::Function_callContex
     return 0;
 }
 
-antlrcpp::Any CodeGenVisitor::visitRvalue(ifccParser::RvalueContext* ctx) {
-    return visit(ctx->expr());
-}
-
 antlrcpp::Any CodeGenVisitor::visitRvalue(ifccParser::RvalueContext* ctx) { return visit(ctx->expr()); }
 
 antlrcpp::Any CodeGenVisitor::visitInstruction(ifccParser::InstructionContext* ctx) {
