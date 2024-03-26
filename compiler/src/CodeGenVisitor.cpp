@@ -41,8 +41,10 @@ antlrcpp::Any CodeGenVisitor::visitFunction_call(ifccParser::Function_callContex
         cfg->current_bb->add_IRInstr(IRInstr::Operation::copyOut, Type::INT32, {"%eax",tmp_var_name_return});
         return tmp_var_name_return;        
     }
-    return "0";
-}
+    cfg->current_bb->add_IRInstr(IRInstr::Operation::jump, Type::INT32, {"fonction_"+s});
+    std::string tmp_var_name_return = "#tmp" + std::to_string(tmp_index);
+    cfg->current_bb->add_IRInstr(IRInstr::Operation::copyOut, Type::INT32, {"%eax",tmp_var_name_return});
+    return tmp_var_name_return;}
 
 antlrcpp::Any CodeGenVisitor::visitRvalue(ifccParser::RvalueContext* ctx) { return visit(ctx->expr()); }
 

@@ -48,6 +48,7 @@ public:
         bitwise_xor,
         bitwise_not,
         neg,
+        jump,
         l_not,
         lazy_and,
         lazy_or } Operation;
