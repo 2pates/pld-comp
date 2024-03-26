@@ -28,10 +28,10 @@ Here we put the non-programming choices we made
 - [x] Comparison operations: ==, !=, <, >
 - [x] Unary operations: ! and - and ~ (bonus)
 - [x] Declaration of variables anywhere
-- [ ] Assignment (which, in C, also returns a value)
+- [ ] Assignment (which, in C, also returns a value) : *Mathieu*
 - [x] Possibility of initializing a variable when declaring it
 - [ ] Use of standard putchar and getchar functions for I/O : *James*
-- [ ] Define functions with parameters, and int, char or void return type
+- [ ] Define functions with parameters, and int, char or void return type : *James*
 - [x] Check consistency of function calls and parameters (reserved names)
 - [ ] Block structure using { and } : *Gaspard & Benjamin*
 - [ ] Support for variable scopes and shadowing
