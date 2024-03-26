@@ -39,6 +39,9 @@ public:
     virtual antlrcpp::Any visitExpr_add(ifccParser::Expr_addContext* ctx) override;
     virtual antlrcpp::Any visitExpr_mult(ifccParser::Expr_multContext* ctx) override;
     virtual antlrcpp::Any visitExpr_parenthesis(ifccParser::Expr_parenthesisContext* ctx) override;
+=========
+
+>>>>>>>>> Temporary merge branch 2
 
     std::map<std::string, VariableInfo> variables;
     long int memory_offset;

@@ -16,6 +16,7 @@ antlrcpp::Any SymbolGenVisitor::visitDeclare_stmt(ifccParser::Declare_stmtContex
 antlrcpp::Any SymbolGenVisitor::visitDeclare(ifccParser::DeclareContext* ctx) {
     if (ctx->lvalue() != nullptr) {
         std::string name = ctx->lvalue()->getText();
+        debug(name);
         if (check_exist(name) != GOOD) {
             memory_offset -= 4; // decrement index first !
             VariableInfo var(memory_offset, 4, false);
@@ -105,8 +106,6 @@ antlrcpp::Any SymbolGenVisitor::visitExpr_relational(ifccParser::Expr_relational
     debug("Inserted #tmp" + std::to_string(tmp_index) + " (address " + std::to_string(memory_offset) + ")");
     visit(ctx->expr()[0]);
     visit(ctx->expr()[1]);
-
-
     return GOOD;
 }
 
@@ -117,7 +116,6 @@ antlrcpp::Any SymbolGenVisitor::visitExpr_equality(ifccParser::Expr_equalityCont
     debug("Inserted (Expr_equality) #tmp" + std::to_string(tmp_index) + " (address " + std::to_string(memory_offset) + ")");
     visit(ctx->expr()[0]);
     visit(ctx->expr()[1]);
-
     return GOOD;
 }
 
@@ -138,10 +136,8 @@ antlrcpp::Any SymbolGenVisitor::visitExpr_add(ifccParser::Expr_addContext* ctx) 
     tmp_index++;
     variables.insert({"#tmp" + std::to_string(tmp_index), VariableInfo(memory_offset, 4)});
     debug("Inserted (Expr_add) #tmp" + std::to_string(tmp_index) + " (address " + std::to_string(memory_offset) + ")");
-
-    visit(ctx->expr()[0]);
     visit(ctx->expr()[1]);
-    return 0;
+    return GOOD;
 }
 
 antlrcpp::Any SymbolGenVisitor::visitExpr_and(ifccParser::Expr_andContext* ctx) {
@@ -200,8 +196,7 @@ antlrcpp::Any SymbolGenVisitor::visitExpr_unaire(ifccParser::Expr_unaireContext*
     memory_offset -= 4;
     tmp_index++;
     variables.insert({"#tmp" + std::to_string(tmp_index), VariableInfo(memory_offset, 4)});
-        debug("Inserted #tmp" + std::to_string(tmp_index) + " (address " + std::to_string(memory_offset) + ")");
-
+    debug("Inserted #tmp" + std::to_string(tmp_index) + " (address " + std::to_string(memory_offset) + ")");
     return GOOD;
 }
 
@@ -219,15 +214,6 @@ int SymbolGenVisitor::check_exist(std::string varname) {
         return GOOD;
     else
         return UNDECLARED;
-}
-
-antlrcpp::Any SymbolGenVisitor::visitExpr_add(ifccParser::Expr_addContext* ctx){
-    this->visit(ctx->expr(0));
-    this->visit(ctx->expr(1));
-    memory_offset -= 4;
-    tmp_index++;
-    variables.insert({"#tmp" + std::to_string(tmp_index), VariableInfo(memory_offset, 4)});
-    return 0;
 }
 
 antlrcpp::Any SymbolGenVisitor::visitExpr_mult(ifccParser::Expr_multContext* ctx){

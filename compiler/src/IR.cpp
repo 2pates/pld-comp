@@ -81,8 +81,8 @@ void IRInstr::gen_asm(ostream& o, Target target) {
                 o << "mov" << size_to_letter(membreGauche.size) << " " << to_string(membreGauche.address)
                   << "(%rbp), %eax" << endl;
                 o << "mov" << size_to_letter(membreDroit.size) << " " << to_string(membreDroit.address)
-                  << "(%rbp), %ebx" << endl;
-                o << "add" << size_to_letter(destination.size) << " %ebx, %eax" << endl;
+                  << "(%rbp), %edx" << endl;
+                o << "add" << size_to_letter(destination.size) << " %edx, %eax" << endl;
                 o << "mov" << size_to_letter(destination.size) << " %eax, " << to_string(destination.address)
                   << "(%rbp)" << endl;
             }
@@ -113,8 +113,8 @@ void IRInstr::gen_asm(ostream& o, Target target) {
                 o << "mov" << size_to_letter(membreGauche.size) << " " << to_string(membreGauche.address)
                   << "(%rbp), %eax" << endl;
                 o << "mov" << size_to_letter(membreDroit.size) << " " << to_string(membreDroit.address)
-                  << "(%rbp), %ebx" << endl;
-                o << "imul" << size_to_letter(destination.size) << " %ebx, %eax" << endl;
+                  << "(%rbp), %edx" << endl;
+                o << "imul" << size_to_letter(destination.size) << " %edx, %eax" << endl;
                 o << "mov" << size_to_letter(destination.size) << " %eax, " << to_string(destination.address)
                   << "(%rbp)" << endl;
             }
@@ -358,13 +358,23 @@ void IRInstr::gen_asm(ostream& o, Target target) {
                   << endl;
                 o << "mov" << size_to_letter(destination.size) << " %eax, " << to_string(destination.address)
                   << "(%rbp)" << endl;
-            }
-            break;
+                    }
+        case call: {
+          string fctName = params[0];
+
+          if (target == Target::x86) {
+              o << "call "<<fctName<<endl;
+          }
+
+          break;
         }
     }
 }
 
-BasicBlock::BasicBlock(CFG* cfg, string entry_label) : cfg(cfg), label(entry_label) {}
+BasicBlock::BasicBlock(CFG* cfg, string entry_label) : cfg(cfg), label(entry_label) {
+  exit_false = nullptr;
+  exit_true = nullptr;  
+}
 
 void BasicBlock::gen_asm(ostream& o, Target target) {
     if (target == Target::x86) {
