@@ -33,6 +33,7 @@ public:
     virtual antlrcpp::Any visitFunction_call(ifccParser::Function_callContext *ctx) override;
     virtual antlrcpp::Any visitSelection_if(ifccParser::Selection_ifContext* ctx) override;
     virtual antlrcpp::Any visitIteration_while(ifccParser::Iteration_whileContext* ctx) override;
+    virtual antlrcpp::Any visitExpr_assignment(ifccParser::Expr_assignmentContext* ctx) override;
 
     int tmp_index;
     CFG* cfg;

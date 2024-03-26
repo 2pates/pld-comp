@@ -38,6 +38,7 @@ expr: '(' expr ')'					# expr_parenthesis
 | expr '|' expr						# expr_or
 | expr '&&' expr					# expr_lazy_and
 | expr '||' expr					# expr_lazy_or
+| assignment_stmt                   # expr_assignment
 | (CONST | VARNAME)					# expr_atom
 ;
 

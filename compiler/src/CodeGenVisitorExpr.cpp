@@ -207,3 +207,8 @@ antlrcpp::Any CodeGenVisitor::visitExpr_atom(ifccParser::Expr_atomContext* ctx) 
     }
     return var_name;
 }
+
+antlrcpp::Any CodeGenVisitor::visitExpr_assignment(ifccParser::Expr_assignmentContext* ctx) {
+    string var_name = visit(ctx->assignment_stmt());
+    return var_name;
+}

@@ -71,7 +71,7 @@ antlrcpp::Any CodeGenVisitor::visitAssignment_stmt(ifccParser::Assignment_stmtCo
         std::string r_name = visit(ctx->rvalue());
         if (variables.find(r_name) != variables.end()) {
             cfg->current_bb->add_IRInstr(IRInstr::Operation::copy, Type::INT32, {r_name, ctx->lvalue()->getText()});
-            return 0;
+            return r_name;
         } else {
             debug("Variable " + r_name + " not found");
             return PROGRAMER_ERROR;
@@ -81,6 +81,7 @@ antlrcpp::Any CodeGenVisitor::visitAssignment_stmt(ifccParser::Assignment_stmtCo
         return UNDECLARED;
     }
 }
+
 
 antlrcpp::Any CodeGenVisitor::visitSelection_if(ifccParser::Selection_ifContext* ctx) {
     BasicBlock* nextBB = new BasicBlock(cfg, cfg->new_BB_name());
