@@ -1,14 +1,11 @@
-int main() { // 1
+int main() {
     int a;
-
-    { // 11
-        a = 5;
-		int d = b;
-        int c = 12;
+    {
+        a = 6;
+        {
+            a = 5;
+            int c = 12;
+        }
     }
-
-    { // 12
-        d = 5; 
-    }
-	return a;
+    return a;
 }
