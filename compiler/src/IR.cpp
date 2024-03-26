@@ -69,8 +69,8 @@ void IRInstr::gen_asm(ostream& o, Target target) {
                 o << "mov" << size_to_letter(membreGauche.size) << " " << to_string(membreGauche.address)
                   << "(%rbp), %eax" << endl;
                 o << "mov" << size_to_letter(membreDroit.size) << " " << to_string(membreDroit.address)
-                  << "(%rbp), %ebx" << endl;
-                o << "add" << size_to_letter(destination.size) << " %ebx, %eax" << endl;
+                  << "(%rbp), %edx" << endl;
+                o << "add" << size_to_letter(destination.size) << " %edx, %eax" << endl;
                 o << "mov" << size_to_letter(destination.size) << " %eax, " << to_string(destination.address)
                   << "(%rbp)" << endl;
             }
@@ -101,8 +101,8 @@ void IRInstr::gen_asm(ostream& o, Target target) {
                 o << "mov" << size_to_letter(membreGauche.size) << " " << to_string(membreGauche.address)
                   << "(%rbp), %eax" << endl;
                 o << "mov" << size_to_letter(membreDroit.size) << " " << to_string(membreDroit.address)
-                  << "(%rbp), %ebx" << endl;
-                o << "imul" << size_to_letter(destination.size) << " %ebx, %eax" << endl;
+                  << "(%rbp), %edx" << endl;
+                o << "imul" << size_to_letter(destination.size) << " %edx, %eax" << endl;
                 o << "mov" << size_to_letter(destination.size) << " %eax, " << to_string(destination.address)
                   << "(%rbp)" << endl;
             }
@@ -359,8 +359,8 @@ void CFG::gen_asm(ostream& o, Target target) {
 
 void CFG::gen_asm_prologue(ostream& o, Target target) {
     if (target == Target::x86) {
-        o << ".globl main" << endl;
-        o << "main:" << endl;
+        o << ".globl _main" << endl;
+        o << "_main:" << endl;
         o << "pushq %rbp" << endl;                // Save the old base pointer
         o << "movq %rsp, %rbp" << endl;           // Set up a new base pointer
         o << "jmp " << entry_block_label << endl; // Jump to entry block
