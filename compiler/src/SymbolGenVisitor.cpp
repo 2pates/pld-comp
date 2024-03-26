@@ -86,16 +86,16 @@ antlrcpp::Any SymbolGenVisitor::visitAssignment_stmt(ifccParser::Assignment_stmt
 
 antlrcpp::Any SymbolGenVisitor::visitSelection_if(ifccParser::Selection_ifContext* ctx) {
     this->visit(ctx->expr());
-    this->visit(ctx->instruction()[0]);
-    if(ctx->instruction()[1] != nullptr) {
-        this->visit(ctx->instruction()[1]);
+    this->visit(ctx->statement()[0]);
+    if(ctx->statement()[1] != nullptr) {
+        this->visit(ctx->statement()[1]);
     }
     return 0;
 }
 
 antlrcpp::Any SymbolGenVisitor::visitIteration_while(ifccParser::Iteration_whileContext* ctx) {
     this->visit(ctx->expr());
-    this->visit(ctx->instruction());
+    this->visit(ctx->statement());
     return 0;
 }
 

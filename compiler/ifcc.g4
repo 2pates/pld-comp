@@ -13,12 +13,9 @@ block: '{' statement* '}' ;
 
 assignment_stmt: lvalue '=' rvalue ;
 
-selection_stmt: 'if' '(' expr ')' instruction ('else' instruction)? #selection_if
-    ;
+selection_stmt: 'if' '(' expr ')' statement ('else' statement)? #selection_if ;
 
-iterationStatement
-    : 'while' '(' expr ')' instruction #iteration_while
-    ;
+iterationStatement: 'while' '(' expr ')' statement #iteration_while ;
 
 declare_stmt: type declare;
 declare: (lvalue | assignment_stmt) (',' declare)? ;

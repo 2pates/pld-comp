@@ -121,15 +121,14 @@ antlrcpp::Any CodeGenVisitor::visitSelection_if(ifccParser::Selection_ifContext*
     //After then block, jump to nextBB, might be overwritten during visit(ctx->instruction(0))
     thenBB->exit_true = nextBB;
     cfg->current_bb = thenBB;
-    visit(ctx->instruction()[0]);
+    visit(ctx->statement()[0]);
 
     //If test is true jump to thenBB
     testBlock->exit_true = thenBB;
     //If test is false jump to nextBB
     testBlock->exit_false = nextBB;
 
-    if(ctx->instruction()[1] != nullptr)
-    {
+    if (ctx->statement()[1] != nullptr) {
         //If else statement
         BasicBlock* elseBB = new BasicBlock(cfg, cfg->new_BB_name());
         cfg->add_bb(elseBB);
@@ -137,7 +136,7 @@ antlrcpp::Any CodeGenVisitor::visitSelection_if(ifccParser::Selection_ifContext*
         elseBB->exit_true = nextBB;
 
         cfg->current_bb = elseBB;
-        visit(ctx->instruction(1));
+        visit(ctx->statement(1));
 
         // If test is false, jump to elseBB
         testBlock->exit_false = elseBB;
@@ -161,7 +160,7 @@ antlrcpp::Any CodeGenVisitor::visitIteration_while(ifccParser::Iteration_whileCo
     //After then block, jump to nextBB, might be overwritten during visit(ctx->instruction(0))
     thenBB->exit_true = testBlock;
     cfg->current_bb = thenBB;
-    visit(ctx->instruction());
+    visit(ctx->statement());
 
     //If test is true jump to thenBB
     testBlock->exit_true = thenBB;
