@@ -22,7 +22,6 @@ Here we put the non-programming choices we made
 - [x] Data type int
 - [x] Variables
 - [x] Integer constants
-- [ ] Character (with single quote)
 - [x] Basic arithmetic operations: +,-, *
 - [ ] Division and modulo (in IR) : *Bachir*
 - [x] Bit-by-bit logical operations: |, &,ˆ
