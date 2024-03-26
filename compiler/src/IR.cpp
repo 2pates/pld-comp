@@ -320,6 +320,17 @@ void IRInstr::gen_asm(ostream& o, Target target) {
             }
             break;
         }
+        case retfct: {
+            if (target == Target::x86) {
+                VariableInfo variable = bb->cfg->get_var_info(params[0]);
+
+                o << "mov" << size_to_letter(variable.size) << " " << to_string(variable.address) << "(%rbp), %eax"
+                  << endl;
+                o << "popq %rbp" << endl;
+                o << "ret" << endl;
+            }
+            break;
+        }
         case bitwise_and: {
             VariableInfo membreGauche = bb->cfg->get_var_info(params[0]);
             VariableInfo membreDroit = bb->cfg->get_var_info(params[1]);
@@ -440,6 +451,10 @@ void IRInstr::gen_asm(ostream& o, Target target) {
           if (target == Target::x86) {
               o << "call "<<fctName<<endl;
           }
+          break;
+        }
+        case startfct: {
+          o<<"pushq %rbp"<<endl;
           break;
         }
     }
