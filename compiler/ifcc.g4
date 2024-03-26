@@ -2,7 +2,7 @@ grammar ifcc;
 
 axiom: prog EOF ;
 
-prog: 'int' 'main' '(' ')' '{' statement* return_stmt '}' ;
+prog: 'int' 'main' '(' ')' '{' statement* return_stmt '}' function_def*;
 
 function_def: type VARNAME '(' declare_only_stmt? ')' '{' statement* return_stmt? '}' ;
 function_call: VARNAME '(' expr* ')' ;

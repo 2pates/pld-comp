@@ -31,6 +31,8 @@ public:
         add,
         sub,
         mul,
+        div,
+        mod,
         rmem,
         wmem,
         call,
@@ -48,6 +50,7 @@ public:
         bitwise_xor,
         bitwise_not,
         neg,
+        jump,
         l_not,
         lazy_and,
         lazy_or } Operation;

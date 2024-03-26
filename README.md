@@ -23,7 +23,7 @@ Here we put the non-programming choices we made
 - [x] Variables
 - [x] Integer constants
 - [x] Basic arithmetic operations: +,-, *
-- [ ] Division and modulo (in IR) : *Bachir*
+- [x] Division and modulo (in IR) : *Bachir*
 - [x] Bit-by-bit logical operations: |, &,ˆ
 - [x] Comparison operations: ==, !=, <, >
 - [x] Unary operations: ! and - and ~ (bonus)

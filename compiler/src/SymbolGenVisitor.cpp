@@ -127,6 +127,17 @@ antlrcpp::Any SymbolGenVisitor::visitExpr_equality(ifccParser::Expr_equalityCont
     return GOOD;
 }
 
+antlrcpp::Any SymbolGenVisitor::visitExpr_mult(ifccParser::Expr_multContext* ctx) {
+ 
+    this->visit(ctx->expr(0));
+    this->visit(ctx->expr(1));
+    memory_offset -= 4;
+    tmp_index++;
+    variables.insert({"#tmp" + std::to_string(tmp_index), VariableInfo(memory_offset, 4)});
+    return 0;
+}
+
+
 antlrcpp::Any SymbolGenVisitor::visitExpr_atom(ifccParser::Expr_atomContext* ctx) {
     if (ctx->CONST() != nullptr) {
         memory_offset -= 4;
@@ -234,14 +245,7 @@ std::string SymbolGenVisitor::create_unique_var_name(std::string name) {
     return name + "_" + std::to_string(current_block);
 }
 
-antlrcpp::Any SymbolGenVisitor::visitExpr_mult(ifccParser::Expr_multContext* ctx){
-    this->visit(ctx->expr(0));
-    this->visit(ctx->expr(1));
-    memory_offset -= 4;
-    tmp_index++;
-    variables.insert({"#tmp" + std::to_string(tmp_index), VariableInfo(memory_offset, 4)});
-    return 0;
-}
+
 
 antlrcpp::Any SymbolGenVisitor::visitExpr_parenthesis(ifccParser::Expr_parenthesisContext* ctx) {
     visit(ctx->expr());
