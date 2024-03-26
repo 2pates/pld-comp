@@ -64,13 +64,14 @@ void IRInstr::gen_asm(ostream& o, Target target) {
             break;
         }
         case cmp_const: {
-          VariableInfo destination = bb->cfg->get_var_info(params[2]);
-          VariableInfo source = bb->cfg->get_var_info(params[0]);
-          string constante = params[1];
+            VariableInfo destination = bb->cfg->get_var_info(params[2]);
+            VariableInfo source = bb->cfg->get_var_info(params[0]);
+            string constante = params[1];
 
-          o << "cmp" << size_to_letter(source.size) << " $" << constante << ", " << to_string(source.address) << "(%rbp)" << endl;
-          o << "sete " << to_string(destination.address) << "(%rbp)" << endl;
-          break;
+            o << "cmp" << size_to_letter(source.size) << " $" << constante << ", " << to_string(source.address)
+              << "(%rbp)" << endl;
+            o << "sete " << to_string(destination.address) << "(%rbp)" << endl;
+            break;
         }
         case add: {
             VariableInfo membreGauche = bb->cfg->get_var_info(params[0]);
@@ -326,7 +327,7 @@ void IRInstr::gen_asm(ostream& o, Target target) {
             string bloc2Name = "";
 
             if (target == Target::x86) {
-                
+
                 o << "cmp" << size_to_letter(membreGauche.size) << " $0, " << to_string(membreGauche.address)
                   << "(%rbp)" << endl;
                 o << "je .L" << bloc1Name << endl;
@@ -358,22 +359,23 @@ void IRInstr::gen_asm(ostream& o, Target target) {
                   << endl;
                 o << "mov" << size_to_letter(destination.size) << " %eax, " << to_string(destination.address)
                   << "(%rbp)" << endl;
-                    }
+            }
+            break;
+        }
         case call: {
           string fctName = params[0];
 
           if (target == Target::x86) {
               o << "call "<<fctName<<endl;
           }
-
           break;
         }
     }
 }
 
 BasicBlock::BasicBlock(CFG* cfg, string entry_label) : cfg(cfg), label(entry_label) {
-  exit_false = nullptr;
-  exit_true = nullptr;  
+    exit_false = nullptr;
+    exit_true = nullptr;
 }
 
 void BasicBlock::gen_asm(ostream& o, Target target) {
@@ -382,7 +384,7 @@ void BasicBlock::gen_asm(ostream& o, Target target) {
         for (auto instruction : instrs) {
             instruction->gen_asm(o, target);
         }
-        
+
         if (exit_false == nullptr && exit_true != nullptr) {
             // unconditional jmp to the exit_true branch
             o << "jmp " << exit_true->label << endl;
@@ -410,7 +412,7 @@ CFG::CFG(std::map<std::string, VariableInfo>& variables_, string entry_block_lab
 
 void CFG::add_bb(BasicBlock* bb) {
     bbs.push_back(bb);
-    //current_bb = bb;
+    // current_bb = bb;
 }
 
 void CFG::gen_asm(ostream& o, Target target) {
@@ -423,8 +425,8 @@ void CFG::gen_asm(ostream& o, Target target) {
 
 void CFG::gen_asm_prologue(ostream& o, Target target) {
     if (target == Target::x86) {
-        o << ".globl _main" << endl;
-        o << "_main:" << endl;
+        o << ".globl main" << endl;
+        o << "main:" << endl;
         o << "pushq %rbp" << endl;                // Save the old base pointer
         o << "movq %rsp, %rbp" << endl;           // Set up a new base pointer
         o << "jmp " << entry_block_label << endl; // Jump to entry block

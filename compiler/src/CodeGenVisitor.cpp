@@ -142,4 +142,3 @@ antlrcpp::Any CodeGenVisitor::visitIteration_while(ifccParser::Iteration_whileCo
     cfg->current_bb = nextBB;
     return 0;
 }
->>>>>>>>> Temporary merge branch 2

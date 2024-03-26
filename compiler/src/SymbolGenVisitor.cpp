@@ -71,21 +71,6 @@ antlrcpp::Any SymbolGenVisitor::visitIteration_while(ifccParser::Iteration_while
     return 0;
 }
 
-antlrcpp::Any SymbolGenVisitor::visitSelection_if(ifccParser::Selection_ifContext* ctx) {
-    this->visit(ctx->expr());
-    this->visit(ctx->instruction()[0]);
-    if(ctx->instruction()[1] != nullptr) {
-        this->visit(ctx->instruction()[1]);
-    }
-    return 0;
-}
-
-antlrcpp::Any SymbolGenVisitor::visitIteration_while(ifccParser::Iteration_whileContext* ctx) {
-    this->visit(ctx->expr());
-    this->visit(ctx->instruction());
-    return 0;
-}
-
 antlrcpp::Any SymbolGenVisitor::visitLvalue(ifccParser::LvalueContext* ctx) {
     std::string name = ctx->VARNAME()->getText();
     if (std::find(reserved_word.begin(), reserved_word.end(), name) != reserved_word.end()) {
@@ -180,6 +165,7 @@ antlrcpp::Any SymbolGenVisitor::visitExpr_lazy_and(ifccParser::Expr_lazy_andCont
     variables.insert({"#tmp" + std::to_string(tmp_index), VariableInfo(memory_offset, 4)});
     visit(ctx->expr()[1]);
     return GOOD;
+}
 
 antlrcpp::Any SymbolGenVisitor::visitExpr_lazy_or(ifccParser::Expr_lazy_orContext* ctx) {
     visit(ctx->expr()[0]);

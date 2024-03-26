@@ -24,8 +24,9 @@ Here we put the non-programming choices we made
 - [x] Integer constants
 - [ ] Character (with single quote)
 - [x] Basic arithmetic operations: +,-, *
+- [ ] Division and modulo (in IR) : *Bachir*
 - [x] Bit-by-bit logical operations: |, &,ˆ
-- [x] Comparison operations: ==, !=, <, >.
+- [x] Comparison operations: ==, !=, <, >
 - [x] Unary operations: ! and - and ~ (bonus)
 - [x] Declaration of variables anywhere
 - [ ] Assignment (which, in C, also returns a value)
@@ -43,12 +44,22 @@ Here we put the non-programming choices we made
 
 ### Optional
 
-- [ ] Division and modulo (in IR) : *Bachir*
-- [ ] Assignment operators +=, -= etc., increment ++ and decrement
+- [ ] Retargeting to multiple architectures: x86, MSP430, ARM
+- [ ] Double support with all implicit conversions
+- [ ] Simple constant propagation
+- [ ] Propagation of constant variables (with data-flow analysis)
 - [ ] Arrays (one-dimensional)
 - [ ] Pointers
 - [ ] Break and continue
-- [ ] compilation vers plusieurs architectures
+- [ ] Char data type width support (8-bit integer)
+- [ ] Character strings represented by char arrays
+- [ ] Switch...case
+- [x] Lazy operators ||, && *Myriam*
+- [ ] Assignment operators +=, -= etc., increment ++ and decrement
+
+
+
+
 
 ## Ressources
 

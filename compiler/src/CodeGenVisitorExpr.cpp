@@ -152,7 +152,7 @@ antlrcpp::Any CodeGenVisitor::visitExpr_lazy_and(ifccParser::Expr_lazy_andContex
     leftBB->add_IRInstr(IRInstr::Operation::l_not, Type::INT32, {tmp_var_name, tmp_var_name}); // NOT (left == false)
     leftBB->test_var_name = tmp_var_name;
     leftBB->exit_true = rightBB; // IF left == true then jump to right -> check if right is also true
-    leftBB->exit_false = nextBB; // IF left == true then jump to right -> result = false
+    leftBB->exit_false = nextBB; // IF left == false then jump to next -> result = false
 
     cfg->current_bb->exit_true = leftBB;
     cfg->current_bb = nextBB;
@@ -161,11 +161,31 @@ antlrcpp::Any CodeGenVisitor::visitExpr_lazy_and(ifccParser::Expr_lazy_andContex
 }
 
 antlrcpp::Any CodeGenVisitor::visitExpr_lazy_or(ifccParser::Expr_lazy_orContext* ctx) {
-    std::string l_var_name = visit(ctx->expr().at(0));
-    std::string r_var_name = visit(ctx->expr().at(1));
     tmp_index++;
     std::string tmp_var_name = "#tmp" + std::to_string(tmp_index);
-    cfg->current_bb->add_IRInstr(IRInstr::Operation::bitwise_or, Type::INT32, {l_var_name, r_var_name, tmp_var_name});
+
+    std::string l_var_name = visit(ctx->expr().at(0));
+    std::string r_var_name = visit(ctx->expr().at(1));
+
+    BasicBlock* nextBB = new BasicBlock(cfg, cfg->new_BB_name());
+    cfg->add_bb(nextBB);
+
+    BasicBlock* rightBB = new BasicBlock(cfg, cfg->new_BB_name());
+    cfg->add_bb(rightBB);
+    rightBB->add_IRInstr(IRInstr::Operation::cmp_const, Type::INT32, {r_var_name, "0", tmp_var_name}); // IF right == false
+    rightBB->add_IRInstr(IRInstr::Operation::l_not, Type::INT32, {tmp_var_name, tmp_var_name}); // NOT (right == false)
+    rightBB->exit_true = nextBB;
+
+    BasicBlock* leftBB = new BasicBlock(cfg, cfg->new_BB_name());
+    cfg->add_bb(leftBB);
+    leftBB->add_IRInstr(IRInstr::Operation::cmp_const, Type::INT32, {l_var_name, "0", tmp_var_name}); // IF left == false
+    leftBB->add_IRInstr(IRInstr::Operation::l_not, Type::INT32, {tmp_var_name, tmp_var_name}); // NOT (left == false)
+    leftBB->test_var_name = tmp_var_name;
+    leftBB->exit_true = nextBB; // IF left == true then jump to next -> result = true
+    leftBB->exit_false = rightBB; // IF left == false then jump to right -> result = check if right is true
+
+    cfg->current_bb->exit_true = leftBB;
+    cfg->current_bb = nextBB;
     return tmp_var_name;
 }
 
