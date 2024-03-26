@@ -53,8 +53,8 @@ Here we put the non-programming choices we made
 - [ ] Char data type width support (8-bit integer)
 - [ ] Character strings represented by char arrays
 - [ ] Switch...case
-- [x] Lazy operators ||, && *Myriam*
-- [ ] Assignment operators +=, -= etc., increment ++ and decrement
+- [x] Lazy operators ||, && : *Myriam*
+- [ ] Assignment operators +=, -= etc., increment ++ and decrement -- : *Myriam*
 
 
 
