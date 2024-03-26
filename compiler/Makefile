@@ -2,7 +2,12 @@
 # Each student should have a config.mk corresponding to her system.
 # Examples are  ubuntu.mk, DI.mk, fedora.mk
 # Then config.mk should be in the .gitignore of your project
-include config/config.mk
+
+ifeq ($(shell uname -s), Darwin)
+include config/DI.mk
+else
+include config/ubuntu.mk
+endif
 
 CC=g++
 CCFLAGS=-g -c -std=c++17 -I$(ANTLRINC) -Wno-attributes -Wall -Wextra -DTRACE# -Wno-defaulted-function-deleted -Wno-unknown-warning-option
