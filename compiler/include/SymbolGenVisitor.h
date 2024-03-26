@@ -1,9 +1,9 @@
 #ifndef __SYMBOL_GEN_VISITOR__
 #define __SYMBOL_GEN_VISITOR__
 
-#include <map>
-#include <vector>
 #include <string>
+#include <unordered_map>
+#include <vector>
 
 #include "antlr4-runtime.h"
 #include "ifccBaseVisitor.h"
@@ -18,12 +18,13 @@ public:
     long int address; // relative address of the pointer
     int size;         // size of the variable in octets
     bool defined;
-    int block_id;       // block of the variable
 };
 
 class SymbolGenVisitor : public ifccBaseVisitor {
 public:
-    SymbolGenVisitor() : current_block(0), tmp_block_index(0), memory_offset(0), tmp_index(0) {}
+    SymbolGenVisitor() : current_block(0), tmp_block_index(0), memory_offset(0), tmp_index(0) {
+        blocks.insert({0, -1});
+    }
     virtual antlrcpp::Any visitBlock(ifccParser::BlockContext* ctx) override;
     virtual antlrcpp::Any visitDeclare_stmt(ifccParser::Declare_stmtContext* ctx) override;
     virtual antlrcpp::Any visitDeclare(ifccParser::DeclareContext* ctx) override;
@@ -37,25 +38,24 @@ public:
     virtual antlrcpp::Any visitExpr_relational(ifccParser::Expr_relationalContext* ctx) override;
     virtual antlrcpp::Any visitExpr_equality(ifccParser::Expr_equalityContext* ctx) override;
 
-    std::map<int, int> blocks; // id current block, id parent block
+    std::unordered_map<int, int> blocks; // id current block, id parent block
     int current_block;
     int tmp_block_index;
 
-    std::map<std::string, VariableInfo> variables;
+    std::unordered_map<std::string, VariableInfo> variables;
     long int memory_offset;
     int tmp_index;
     bool declaration_mode = false;
-    std::vector<std::string> reserved_word{"if", "else", "switch", "case", // to optimize later
-            "default", "break", "int", "float", "char",
-            "double", "long", "for", "while", "do", "void",
-            "goto", "auto", "signed", "const", "extern",
-            "register", "unsigned", "return", "continue",
-            "enum", "sizeof", "struct", "typedef", "union",
-            "volatile"};
+    std::vector<std::string> reserved_word{"if",      "else",   "switch",   "case", // to optimize later
+                                           "default", "break",  "int",      "float",    "char",    "double",   "long",
+                                           "for",     "while",  "do",       "void",     "goto",    "auto",     "signed",
+                                           "const",   "extern", "register", "unsigned", "return",  "continue", "enum",
+                                           "sizeof",  "struct", "typedef",  "union",    "volatile"};
 
-    
-    int check_exist(ifccParser::Expr_atomContext* ctx);
-    int check_exist(std::string varname);
+    int check_exist_in_current_block(std::string varname);
+    int check_exist_in_current_or_parent_block(std::string varname);
+    std::string get_new_tmp_varname();
+    std::string get_unique_var_name(std::string name);
 };
 
 #endif

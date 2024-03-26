@@ -9,8 +9,11 @@
 
 class CodeGenVisitor : public ifccBaseVisitor {
 public:
-    CodeGenVisitor(CFG* cfg_) : tmp_index(0), cfg(cfg_), variables(cfg->variables), declaration_mode(false) {}
+    CodeGenVisitor(CFG* cfg_, std::unordered_map<int, int>& blocks_)
+        : current_block(0), tmp_block_index(0), blocks(blocks_), tmp_index(0), cfg(cfg_), variables(cfg->variables),
+          declaration_mode(false) {}
     virtual antlrcpp::Any visitProg(ifccParser::ProgContext* ctx) override;
+    virtual antlrcpp::Any visitBlock(ifccParser::BlockContext* ctx) override;
     virtual antlrcpp::Any visitInstruction(ifccParser::InstructionContext* ctx) override;
     virtual antlrcpp::Any visitReturn_stmt(ifccParser::Return_stmtContext* ctx) override;
     virtual antlrcpp::Any visitDeclare_stmt(ifccParser::Declare_stmtContext* ctx) override;
@@ -31,8 +34,14 @@ public:
     virtual antlrcpp::Any visitExpr_lazy_or(ifccParser::Expr_lazy_orContext* ctx) override;
     virtual antlrcpp::Any visitExpr_atom(ifccParser::Expr_atomContext* ctx) override;
 
+    std::string get_unique_var_name(std::string name) { return name + "_" + std::to_string(current_block); }
+
+    int current_block;
+    int tmp_block_index;
+    std::unordered_map<int, int> blocks; // id current block, id parent block
+
     int tmp_index;
     CFG* cfg;
-    std::map<std::string, VariableInfo>& variables;
+    std::unordered_map<std::string, VariableInfo>& variables;
     bool declaration_mode;
 };

@@ -1,6 +1,6 @@
 #include "CodeGenVisitor.h"
-#include "IR.h"
 #include "Error.h"
+#include "IR.h"
 
 antlrcpp::Any CodeGenVisitor::visitProg(ifccParser::ProgContext* ctx) {
     cfg->add_bb(new BasicBlock(cfg, cfg->entry_block_label));
@@ -14,9 +14,17 @@ antlrcpp::Any CodeGenVisitor::visitProg(ifccParser::ProgContext* ctx) {
     return 0;
 }
 
-antlrcpp::Any CodeGenVisitor::visitRvalue(ifccParser::RvalueContext* ctx) {
-    return visit(ctx->expr());
+antlrcpp::Any CodeGenVisitor::visitBlock(ifccParser::BlockContext* ctx) {
+    tmp_block_index++; // we increase the number of blocks
+    current_block = tmp_block_index;
+    for (auto instr : ctx->statement()) {
+        this->visit(instr);
+    }
+    current_block = blocks.at(current_block); // the current is now the father
+    return GOOD;
 }
+
+antlrcpp::Any CodeGenVisitor::visitRvalue(ifccParser::RvalueContext* ctx) { return visit(ctx->expr()); }
 
 antlrcpp::Any CodeGenVisitor::visitInstruction(ifccParser::InstructionContext* ctx) {
     if (ctx->assignment_stmt() != nullptr)
@@ -50,17 +58,19 @@ antlrcpp::Any CodeGenVisitor::visitReturn_stmt(ifccParser::Return_stmtContext* c
 }
 
 antlrcpp::Any CodeGenVisitor::visitAssignment_stmt(ifccParser::Assignment_stmtContext* ctx) {
-    if (declaration_mode || variables.find(ctx->lvalue()->getText()) != cfg->variables.end()) {
+    std::string lvalue_name = ctx->lvalue()->getText();
+    std::string lvalue_unique_name = get_unique_var_name(lvalue_name);
+    if (declaration_mode || variables.find(lvalue_unique_name) != cfg->variables.end()) {
         std::string r_name = visit(ctx->rvalue());
         if (variables.find(r_name) != variables.end()) {
-            cfg->current_bb->add_IRInstr(IRInstr::Operation::copy, Type::INT32, {r_name, ctx->lvalue()->getText()});
+            cfg->current_bb->add_IRInstr(IRInstr::Operation::copy, Type::INT32, {r_name, lvalue_unique_name});
             return 0;
         } else {
             debug("Variable " + r_name + " not found");
             return PROGRAMER_ERROR;
         }
     } else {
-        error("Error : undeclared error variable" + ctx->lvalue()->getText());
+        error("Error : undeclared error variable " + lvalue_unique_name);
         return UNDECLARED;
     }
 }
