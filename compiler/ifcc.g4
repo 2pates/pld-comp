@@ -41,6 +41,7 @@ VARNAME: [_a-zA-Z][_a-zA-Z0-9]*;
 FUNCNAME: [_a-zA-Z][_a-zA-Z0-9]*;
 CONST : [0-9]+ ;
 COMMENT : '/*' .*? '*/' -> skip ;
+ONE_LINE_COMMENT : '//' .*? '\n' -> skip ;
 DIRECTIVE : '#' .*? '\n' -> skip ;
 WS    : [ \t\r\n] -> channel(HIDDEN);
 
