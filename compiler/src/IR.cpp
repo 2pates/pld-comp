@@ -72,6 +72,15 @@ void IRInstr::gen_asm(ostream& o, Target target) {
             }
             break;
         }
+        case copyOut: {
+            string  source = params[0];
+            VariableInfo destination = bb->cfg->get_var_info(params[1]);
+
+            if (target == Target::x86) {
+                o << "mov" << size_to_letter(destination.size) << " "<<source << ", " << to_string(destination.address) << "(%rbp)"<< endl;
+            }
+            break;
+        }
         case cmp_const: {
             VariableInfo destination = bb->cfg->get_var_info(params[2]);
             VariableInfo source = bb->cfg->get_var_info(params[0]);

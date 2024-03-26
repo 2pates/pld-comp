@@ -42,6 +42,7 @@ public:
         cmp_ge,
         copyIn,
         ret,
+        copyOut,
         bitwise_and,
         bitwise_or,
         bitwise_xor,

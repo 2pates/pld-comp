@@ -20,8 +20,8 @@ public:
     virtual antlrcpp::Any visitDeclare(ifccParser::DeclareContext* ctx) override;
     virtual antlrcpp::Any visitAssignment_stmt(ifccParser::Assignment_stmtContext* ctx) override;
     virtual antlrcpp::Any visitRvalue(ifccParser::RvalueContext* ctx) override;
-
     virtual antlrcpp::Any visitExpr_parenthesis(ifccParser::Expr_parenthesisContext* ctx) override;
+    virtual antlrcpp::Any visitExpr_function(ifccParser::Expr_functionContext* ctx) override;
     virtual antlrcpp::Any visitExpr_unaire(ifccParser::Expr_unaireContext* ctx) override;
     virtual antlrcpp::Any visitExpr_mult(ifccParser::Expr_multContext* ctx) override;
     virtual antlrcpp::Any visitExpr_add(ifccParser::Expr_addContext* ctx) override;

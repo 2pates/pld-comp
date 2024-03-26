@@ -32,6 +32,8 @@ antlrcpp::Any CodeGenVisitor::visitFunction_call(ifccParser::Function_callContex
         std::string tmp_var_name = "#tmp" + std::to_string(tmp_index);
         cfg->current_bb->add_IRInstr(IRInstr::Operation::copyIn, Type::INT32, {var_name, "%edi"});
         cfg->current_bb->add_IRInstr(IRInstr::Operation::call, Type::INT32, {"putchar@PLT"});
+        cfg->current_bb->add_IRInstr(IRInstr::Operation::copyOut, Type::INT32, {"%eax",var_name});
+        return var_name;
     }    
     return 0;
 }

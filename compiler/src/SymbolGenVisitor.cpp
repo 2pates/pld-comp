@@ -143,7 +143,13 @@ antlrcpp::Any SymbolGenVisitor::visitExpr_add(ifccParser::Expr_addContext* ctx) 
     visit(ctx->expr()[1]);
     return GOOD;
 }
-
+antlrcpp::Any SymbolGenVisitor::visitExpr_function(ifccParser::Expr_functionContext* ctx) {
+    visit(ctx->function_call());
+    memory_offset -= 4;
+    tmp_index++;
+    variables.insert({"#tmp" + std::to_string(tmp_index), VariableInfo(memory_offset, 4)});
+    return GOOD;
+}
 antlrcpp::Any SymbolGenVisitor::visitExpr_and(ifccParser::Expr_andContext* ctx) {
     visit(ctx->expr()[0]);
     visit(ctx->expr()[1]);

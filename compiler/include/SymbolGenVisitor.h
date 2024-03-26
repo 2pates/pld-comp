@@ -40,6 +40,7 @@ public:
     virtual antlrcpp::Any visitExpr_relational(ifccParser::Expr_relationalContext* ctx) override;
     virtual antlrcpp::Any visitExpr_equality(ifccParser::Expr_equalityContext* ctx) override;
     virtual antlrcpp::Any visitExpr_add(ifccParser::Expr_addContext* ctx) override;
+    virtual antlrcpp::Any visitExpr_function(ifccParser::Expr_functionContext* ctx) override;
     virtual antlrcpp::Any visitExpr_mult(ifccParser::Expr_multContext* ctx) override;
     virtual antlrcpp::Any visitExpr_parenthesis(ifccParser::Expr_parenthesisContext* ctx) override;
     virtual antlrcpp::Any visitFunction_call(ifccParser::Function_callContext* ctx) override;  
