@@ -14,6 +14,13 @@ antlrcpp::Any CodeGenVisitor::visitExpr_parenthesis(ifccParser::Expr_parenthesis
     cfg->current_bb->add_IRInstr(IRInstr::Operation::copy, Type::INT32, {var_name, tmp_var_name});
     return tmp_var_name;
 }
+antlrcpp::Any CodeGenVisitor::visitExpr_function(ifccParser::Expr_functionContext* ctx) {
+    std::string var_name = visit(ctx->function_call());
+    tmp_index++;
+    std::string tmp_var_name = "#tmp" + std::to_string(tmp_index);
+    cfg->current_bb->add_IRInstr(IRInstr::Operation::copy, Type::INT32, {var_name, tmp_var_name});
+    return tmp_var_name;
+}
 
 antlrcpp::Any CodeGenVisitor::visitExpr_unaire(ifccParser::Expr_unaireContext* ctx) {
     std::string var_name = visit(ctx->expr());
@@ -202,7 +209,7 @@ antlrcpp::Any CodeGenVisitor::visitExpr_atom(ifccParser::Expr_atomContext* ctx) 
             return PROGRAMER_ERROR;
         }
     } else if (ctx->VARNAME() != nullptr) {
-        var_name = ctx->VARNAME()->getText();
+        var_name = get_unique_var_name(ctx->VARNAME()->getText());
         debug(var_name);
     }
     return var_name;

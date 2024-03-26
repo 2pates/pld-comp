@@ -9,16 +9,19 @@
 
 class CodeGenVisitor : public ifccBaseVisitor {
 public:
-    CodeGenVisitor(CFG* cfg_) : tmp_index(0), cfg(cfg_), variables(cfg->variables) {}
+    CodeGenVisitor(CFG* cfg_, std::unordered_map<int, int>& blocks_)
+        : current_block(0), tmp_block_index(0), blocks(blocks_), tmp_index(0), cfg(cfg_), variables(cfg->variables),
+          declaration_mode(false) {}
     virtual antlrcpp::Any visitProg(ifccParser::ProgContext* ctx) override;
+    virtual antlrcpp::Any visitBlock(ifccParser::BlockContext* ctx) override;
     virtual antlrcpp::Any visitInstruction(ifccParser::InstructionContext* ctx) override;
     virtual antlrcpp::Any visitReturn_stmt(ifccParser::Return_stmtContext* ctx) override;
     virtual antlrcpp::Any visitDeclare_stmt(ifccParser::Declare_stmtContext* ctx) override;
     virtual antlrcpp::Any visitDeclare(ifccParser::DeclareContext* ctx) override;
     virtual antlrcpp::Any visitAssignment_stmt(ifccParser::Assignment_stmtContext* ctx) override;
     virtual antlrcpp::Any visitRvalue(ifccParser::RvalueContext* ctx) override;
-
     virtual antlrcpp::Any visitExpr_parenthesis(ifccParser::Expr_parenthesisContext* ctx) override;
+    virtual antlrcpp::Any visitExpr_function(ifccParser::Expr_functionContext* ctx) override;
     virtual antlrcpp::Any visitExpr_unaire(ifccParser::Expr_unaireContext* ctx) override;
     virtual antlrcpp::Any visitExpr_mult(ifccParser::Expr_multContext* ctx) override;
     virtual antlrcpp::Any visitExpr_add(ifccParser::Expr_addContext* ctx) override;
@@ -35,8 +38,14 @@ public:
     virtual antlrcpp::Any visitIteration_while(ifccParser::Iteration_whileContext* ctx) override;
     virtual antlrcpp::Any visitExpr_assignment(ifccParser::Expr_assignmentContext* ctx) override;
 
+    std::string get_unique_var_name(std::string varname);
+
+    int current_block;
+    int tmp_block_index;
+    std::unordered_map<int, int> blocks; // id current block, id parent block
+
     int tmp_index;
     CFG* cfg;
-    std::map<std::string, VariableInfo>& variables;
-    bool declaration_mode = false;
+    std::unordered_map<std::string, VariableInfo>& variables;
+    bool declaration_mode;
 };
