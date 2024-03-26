@@ -55,7 +55,7 @@ antlrcpp::Any CodeGenVisitor::visitReturn_stmt(ifccParser::Return_stmtContext* c
     return 0;
 }
 
-antlrcpp::Any CodeGenVisitor::visitAssignment_stmt(ifccParser::Assignment_stmtContext* ctx) {
+antlrcpp::Any CodeGenVisitor::visitAssignment_equal(ifccParser::Assignment_equalContext* ctx) {
     if (declaration_mode || variables.find(ctx->lvalue()->getText()) != cfg->variables.end()) {
         std::string r_name = visit(ctx->rvalue());
         if (variables.find(r_name) != variables.end()) {
@@ -70,6 +70,66 @@ antlrcpp::Any CodeGenVisitor::visitAssignment_stmt(ifccParser::Assignment_stmtCo
         return UNDECLARED;
     }
 }
+
+antlrcpp::Any CodeGenVisitor::visitAssignment_add(ifccParser::Assignment_addContext* ctx) {
+    std::string s = ctx->OP->getText();
+    string a = ctx->lvalue()->getText();
+    string b = this->visit(ctx->rvalue());
+
+    if (s == "+=")
+        cfg->current_bb->add_IRInstr(IRInstr::Operation::add, Type::INT32, {a, b, a});
+    else
+        cfg->current_bb->add_IRInstr(IRInstr::Operation::sub, Type::INT32, {a, b, a});
+    return a;
+}
+
+
+antlrcpp::Any CodeGenVisitor::visitAssignment_mult(ifccParser::Assignment_multContext* ctx) {
+    std::string s = ctx->OP->getText();
+    string a = ctx->lvalue()->getText();
+    string b = this->visit(ctx->rvalue());
+
+    if (s == "*=")
+        cfg->current_bb->add_IRInstr(IRInstr::Operation::mul, Type::INT32, {a, b, a});/*
+    else if (s== "/=")
+        cfg->current_bb->add_IRInstr(IRInstr::Operation::div, Type::INT32, {a, b, a});
+    else
+        cfg->current_bb->add_IRInstr(IRInstr::Operation::mod, Type::INT32, {a, b, a});*/
+    return a;
+}
+
+antlrcpp::Any CodeGenVisitor::visitPre_incrementation(ifccParser::Pre_incrementationContext* ctx) {
+    string a = ctx->lvalue()->getText();
+    string s = ctx->OP->getText();
+
+    if (s == "++"){
+        cfg->current_bb->add_IRInstr(IRInstr::Operation::add_const, Type::INT32, {a, "1", a});
+    }
+    else{
+        cfg->current_bb->add_IRInstr(IRInstr::Operation::sub_const, Type::INT32, {a, "1", a});
+    }
+
+    return a;
+}
+
+antlrcpp::Any CodeGenVisitor::visitPost_incrementation(ifccParser::Post_incrementationContext* ctx) {
+    string a = ctx->lvalue()->getText();
+    string s = ctx->OP->getText();
+    
+    tmp_index++;
+    std::string tmp_var_name = "#tmp" + std::to_string(tmp_index);
+    cfg->current_bb->add_IRInstr(IRInstr::Operation::copy, Type::INT32, {a, tmp_var_name});
+
+    if (s == "++"){
+        cfg->current_bb->add_IRInstr(IRInstr::Operation::add_const, Type::INT32, {a, "1", a});
+    }
+    else{
+        cfg->current_bb->add_IRInstr(IRInstr::Operation::sub_const, Type::INT32, {a, "1", a});
+    }
+
+    return tmp_var_name;
+}
+
 
 antlrcpp::Any CodeGenVisitor::visitSelection_if(ifccParser::Selection_ifContext* ctx) {
     BasicBlock* nextBB = new BasicBlock(cfg, cfg->new_BB_name());

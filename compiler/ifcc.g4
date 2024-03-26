@@ -9,7 +9,13 @@ function_call: FUNCNAME '(' expr* ')' ';' ;
 
 instruction: declare_stmt ';' | assignment_stmt ';' | selection_stmt | iterationStatement ;
 
-assignment_stmt: lvalue '=' rvalue ;
+assignment_stmt:
+lvalue OP=('++' | '--')                     # post_incrementation
+| OP=('++' | '--') lvalue                   # pre_incrementation
+| lvalue '=' rvalue                         # assignment_equal
+| lvalue OP=('+=' | '-=') rvalue            # assignment_add
+| lvalue OP=('*=' | '/=' | '*/') rvalue     # assignment_mult
+;
 
 selection_stmt: 'if' '(' expr ')' instruction ('else' instruction)? #selection_if
     ;
@@ -27,18 +33,18 @@ return_stmt: RETURN expr ';' ;
 rvalue: expr ;
 lvalue: VARNAME ;
 
-expr: '(' expr ')'					# expr_parenthesis
-| OP=('-'|'~'|'!') expr				# expr_unaire
-| expr OP=('*'|'/'|'%') expr		# expr_mult
-| expr OP=('+'|'-') expr			# expr_add
-| expr OP=('<'|'<='|'>'|'>=') expr	# expr_relational
-| expr OP=('=='|'!=') expr			# expr_equality
-| expr '&' expr						# expr_and
-| expr '^' expr						# expr_xor
-| expr '|' expr						# expr_or
-| expr '&&' expr					# expr_lazy_and
-| expr '||' expr					# expr_lazy_or
-| (CONST | VARNAME)					# expr_atom
+expr: '(' expr ')'					    # expr_parenthesis
+| OP=('-'|'~'|'!') expr				    # expr_unaire
+| expr OP=('*'|'/'|'%') expr		    # expr_mult
+| expr OP=('+'|'-') expr			    # expr_add
+| expr OP=('<'|'<='|'>'|'>=') expr	    # expr_relational
+| expr OP=('=='|'!=') expr			    # expr_equality
+| expr '&' expr						    # expr_and
+| expr '^' expr						    # expr_xor
+| expr '|' expr						    # expr_or
+| expr '&&' expr					    # expr_lazy_and
+| expr '||' expr					    # expr_lazy_or
+| (CONST | VARNAME)					    # expr_atom
 ;
 
 TYPE: 'int' ;
