@@ -4,8 +4,8 @@ axiom: prog EOF ;
 
 prog: 'int' 'main' '(' ')' '{' statement* return_stmt '}' function_def*;
 
-function_def: type VARNAME '(' declare_only_stmt? ')' '{' statement* return_stmt? '}' ;
-function_call: VARNAME '(' expr* ')' ;
+function_def: type VARNAME '(' declare_only_stmt? ')' '{' statement* return_stmt_fct? '}' ;
+function_call: VARNAME '(' ((expr',')*expr|) ')' ;
 
 statement: instruction | block ;
 instruction: declare_stmt ';' | assignment_stmt ';' | function_call ';'| selection_stmt | iterationStatement ;
@@ -22,11 +22,11 @@ declare: (lvalue | assignment_stmt) (',' declare)? ;
 
 declare_only_stmt: type lvalue (',' declare_only_stmt)? ;
 return_stmt: RETURN expr ';' ;
-
+return_stmt_fct: RETURN expr ';' ;
 rvalue: expr ;
 lvalue: VARNAME ;
 
-expr: '(' expr ')'					# expr_parenthesis
+expr:  '(' expr ')'					# expr_parenthesis
 | OP=('-'|'~'|'!') expr				# expr_unaire
 | expr OP=('*'|'/'|'%') expr		# expr_mult
 | expr OP=('+'|'-') expr			# expr_add
@@ -38,8 +38,8 @@ expr: '(' expr ')'					# expr_parenthesis
 | expr '&&' expr					# expr_lazy_and
 | expr '||' expr					# expr_lazy_or
 | assignment_stmt                   # expr_assignment
-| (CONST | VARNAME)					# expr_atom
 | function_call                     # expr_function
+| (CONST | VARNAME)					# expr_atom
 ;
 
 type: 'int'|'char';

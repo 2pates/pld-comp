@@ -20,10 +20,11 @@ antlrcpp::Any CodeGenVisitor::visitFunction_def(ifccParser::Function_defContext*
     BasicBlock* bb = new BasicBlock(cfg, "function_"+ctx->VARNAME()->getText());
     cfg->current_bb = bb;
     cfg->add_bb(bb);
+    cfg->current_bb->add_IRInstr(IRInstr::Operation::startfct, Type::INT32, {});
     for (auto instr : ctx->statement()) {
         this->visit(instr);
     }
-    this->visit(ctx->return_stmt());
+    this->visit(ctx->return_stmt_fct());
     return 0;    
 }
 
@@ -39,24 +40,37 @@ antlrcpp::Any CodeGenVisitor::visitBlock(ifccParser::BlockContext* ctx) {
 
 antlrcpp::Any CodeGenVisitor::visitFunction_call(ifccParser::Function_callContext *ctx){
     std::string s=ctx->VARNAME()->getText();
+    std::string repList[6]={"%edi", "%esi", "%edx", "%ecx", "%e8", "%e9"};
     if(s=="putchar" && ctx->expr().size()==1 && ctx->expr()[0]!=nullptr){
         std::string var_name = visit(ctx->expr()[0]);
         cfg->current_bb->add_IRInstr(IRInstr::Operation::copyIn, Type::INT32, {var_name, "%edi"});
         cfg->current_bb->add_IRInstr(IRInstr::Operation::call, Type::INT32, {"putchar@PLT"});
+        tmp_index++;
         std::string tmp_var_name_return = "#tmp" + std::to_string(tmp_index);
         cfg->current_bb->add_IRInstr(IRInstr::Operation::copyOut, Type::INT32, {"%eax",tmp_var_name_return});
         return tmp_var_name_return;
     }    
     if(s=="getchar" && ctx->expr().size()==0){
         cfg->current_bb->add_IRInstr(IRInstr::Operation::call, Type::INT32, {"getchar@PLT"});
+        tmp_index++;
         std::string tmp_var_name_return = "#tmp" + std::to_string(tmp_index);
         cfg->current_bb->add_IRInstr(IRInstr::Operation::copyOut, Type::INT32, {"%eax",tmp_var_name_return});
         return tmp_var_name_return;        
     }
-    cfg->current_bb->add_IRInstr(IRInstr::Operation::jump, Type::INT32, {"function_"+s});
+    for(long unsigned int i=0;i<ctx->expr().size();i++){
+        if(i>=6){
+            std::cerr<<"to many var"<<std::endl;
+            exit(1);
+        }
+        std::string var_name = visit(ctx->expr()[i]);
+        cfg->current_bb->add_IRInstr(IRInstr::Operation::copyIn, Type::INT32, {var_name, repList[i]});
+    }
+    cfg->current_bb->add_IRInstr(IRInstr::Operation::call, Type::INT32, {"function_"+s});
+    tmp_index++;
     std::string tmp_var_name_return = "#tmp" + std::to_string(tmp_index);
     cfg->current_bb->add_IRInstr(IRInstr::Operation::copyOut, Type::INT32, {"%eax",tmp_var_name_return});
-    return tmp_var_name_return;}
+    return tmp_var_name_return;
+}
 
 antlrcpp::Any CodeGenVisitor::visitRvalue(ifccParser::RvalueContext* ctx) { return visit(ctx->expr()); }
 
@@ -97,7 +111,11 @@ antlrcpp::Any CodeGenVisitor::visitReturn_stmt(ifccParser::Return_stmtContext* c
     cfg->current_bb->add_IRInstr(IRInstr::Operation::ret, Type::INT32, {var_name});
     return 0;
 }
-
+antlrcpp::Any CodeGenVisitor::visitReturn_stmt_fct(ifccParser::Return_stmt_fctContext* ctx) {
+    std::string var_name = visit(ctx->expr());
+    cfg->current_bb->add_IRInstr(IRInstr::Operation::retfct, Type::INT32, {var_name});
+    return 0;
+}
 antlrcpp::Any CodeGenVisitor::visitAssignment_stmt(ifccParser::Assignment_stmtContext* ctx) {
     std::string lvalue_name = ctx->lvalue()->getText();
     std::string lvalue_unique_name = get_unique_var_name(lvalue_name);
