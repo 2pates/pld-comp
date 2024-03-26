@@ -25,6 +25,9 @@ public:
     typedef enum {
         ldconst,
         copy,
+        mov_eax,
+        mov_from_eax,
+        cmp_const,
         add,
         sub,
         mul,
@@ -39,13 +42,17 @@ public:
         cmp_le,
         cmp_gt,
         cmp_ge,
+        copyIn,
         ret,
+        copyOut,
         bitwise_and,
         bitwise_or,
         bitwise_xor,
         bitwise_not,
         neg,
-        l_not } Operation;
+        l_not,
+        lazy_and,
+        lazy_or } Operation;
 
     /**  constructor */
     IRInstr(BasicBlock* bb_, Operation op, Type t, std::vector<std::string> params);
@@ -101,8 +108,8 @@ public:
     BasicBlock* exit_true;  /**< pointer to the next basic block, true branch. If nullptr, return from procedure */
     BasicBlock* exit_false; /**< pointer to the next basic block, false branch. If null_ptr, the basic block ends with
                                an unconditional jump */
-    std::string label;      /**< label of the BB, also will be the label in the generated code */
     CFG* cfg;               /** < the CFG where this block belongs */
+    std::string label;      /**< label of the BB, also will be the label in the generated code */
     std::vector<IRInstr*> instrs; /** < the instructions themselves. */
     std::string test_var_name;    /** < when generating IR code for an if(expr) or while(expr) etc,
                                                        store here the name of the variable that holds the value of expr */
@@ -123,7 +130,7 @@ class CFG {
     friend class CodeGenVisitor;
 
 public:
-    CFG(std::map<std::string, VariableInfo>& variables_, std::string entry_block_label_);
+    CFG(std::unordered_map<std::string, VariableInfo>& variables_, std::string entry_block_label_);
 
     void add_bb(BasicBlock* bb);
 
@@ -141,9 +148,9 @@ public:
     // basic block management
     std::string new_BB_name();
     BasicBlock* current_bb;
-
+    int memoryUse;
 protected:
-    std::map<std::string, VariableInfo>& variables;
+    std::unordered_map<std::string, VariableInfo>& variables;
     string entry_block_label;
     int nextBBnumber; /**< just for naming */
 

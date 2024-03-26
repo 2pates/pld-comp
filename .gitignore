@@ -3,9 +3,11 @@
 compiler/build
 compiler/generated
 tests/ifcc-test-output
+antlr
 
 # generated test file
 tests/test-output.txt
+tests/output.txt
 
 # code editor
 .vscode

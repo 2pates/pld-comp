@@ -18,37 +18,47 @@ Here we put the non-programming choices we made
 ## TODO
 ### Mandatory
 
-- [ ] Data type char : Bachir
+- [ ] Data type char : *Roua & Gaspard*
 - [x] Data type int
 - [x] Variables
 - [x] Integer constants
-- [ ] Character (with single quote)
 - [x] Basic arithmetic operations: +,-, *
+- [ ] Division and modulo (in IR) : *Bachir*
 - [x] Bit-by-bit logical operations: |, &,ˆ
-- [x] Comparison operations: ==, !=, <, >.
+- [x] Comparison operations: ==, !=, <, >
 - [x] Unary operations: ! and - and ~ (bonus)
 - [x] Declaration of variables anywhere
-- [ ] Assignment (which, in C, also returns a value)
+- [ ] Assignment (which, in C, also returns a value) : *Mathieu*
 - [x] Possibility of initializing a variable when declaring it
-- [ ] Use of standard putchar and getchar functions for I/O: James
-- [ ] Define functions with parameters, and int, char or void return type
-- [ ] Check consistency of function calls and parameters (reserved names) : Gaspard & Benjamin
-- [ ] Block structure using { and } : Roua & bachir
-- [ ] Support for variable scopes and shadowing
-- [ ] If, else, while control structures : Mathieu
-- [ ] Support for return expression anywhere
-- [ ] Check that a variable used in an expression has been declared
-- [ ] Check that a variable is not declared more than once
-- [ ] Check that a declared variable is used at least once
+- [x] Use of standard putchar and getchar functions for I/O
+- [ ] Define functions with parameters, and int, char or void return type : *James*
+- [x] Check consistency of function calls and parameters (reserved names)
+- [x] Block structure using { and }
+- [x] Support for variable scopes and shadowing
+- [x] If, else, while control structures
+- [ ] Support for return expression anywhere : *Mathieu*
+- [x] Check that a variable used in an expression has been declared
+- [x] Check that a variable is not declared more than once
+- [x] Check that a declared variable is used at least once
 
 ### Optional
 
-- [ ] Division and modulo (in IR): Bachir
-- [ ] Assignment operators +=, -= etc., increment ++ and decrement - - - [ ] Arrays (one-dimensional): Bachir
+- [ ] Retargeting to multiple architectures: x86, MSP430, ARM
+- [ ] Double support with all implicit conversions
+- [ ] Simple constant propagation
+- [ ] Propagation of constant variables (with data-flow analysis)
 - [ ] Arrays (one-dimensional)
 - [ ] Pointers
 - [ ] Break and continue
-- [ ] Strings re
+- [ ] Char data type width support (8-bit integer)
+- [ ] Character strings represented by char arrays
+- [ ] Switch...case
+- [x] Lazy operators ||, && : *Myriam*
+- [ ] Assignment operators +=, -= etc., increment ++ and decrement -- : *Myriam*
+
+
+
+
 
 ## Ressources
 

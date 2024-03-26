@@ -1,4 +1,4 @@
-PYTHON=python
+PYTHON=python3
 PROGRAM=ifcc-test.py
 FOLDER=testfiles
 OUTPUT=ifcc-test-output

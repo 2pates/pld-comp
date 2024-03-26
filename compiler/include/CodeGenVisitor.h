@@ -9,16 +9,19 @@
 
 class CodeGenVisitor : public ifccBaseVisitor {
 public:
-    CodeGenVisitor(CFG* cfg_) : tmp_index(0), cfg(cfg_), variables(cfg->variables) {}
+    CodeGenVisitor(CFG* cfg_, std::unordered_map<int, int>& blocks_)
+        : current_block(0), tmp_block_index(0), blocks(blocks_), tmp_index(0), cfg(cfg_), variables(cfg->variables),
+          declaration_mode(false) {}
     virtual antlrcpp::Any visitProg(ifccParser::ProgContext* ctx) override;
+    virtual antlrcpp::Any visitBlock(ifccParser::BlockContext* ctx) override;
     virtual antlrcpp::Any visitInstruction(ifccParser::InstructionContext* ctx) override;
     virtual antlrcpp::Any visitReturn_stmt(ifccParser::Return_stmtContext* ctx) override;
     virtual antlrcpp::Any visitDeclare_stmt(ifccParser::Declare_stmtContext* ctx) override;
     virtual antlrcpp::Any visitDeclare(ifccParser::DeclareContext* ctx) override;
     virtual antlrcpp::Any visitAssignment_stmt(ifccParser::Assignment_stmtContext* ctx) override;
     virtual antlrcpp::Any visitRvalue(ifccParser::RvalueContext* ctx) override;
-
     virtual antlrcpp::Any visitExpr_parenthesis(ifccParser::Expr_parenthesisContext* ctx) override;
+    virtual antlrcpp::Any visitExpr_function(ifccParser::Expr_functionContext* ctx) override;
     virtual antlrcpp::Any visitExpr_unaire(ifccParser::Expr_unaireContext* ctx) override;
     virtual antlrcpp::Any visitExpr_mult(ifccParser::Expr_multContext* ctx) override;
     virtual antlrcpp::Any visitExpr_add(ifccParser::Expr_addContext* ctx) override;
@@ -30,17 +33,18 @@ public:
     virtual antlrcpp::Any visitExpr_lazy_and(ifccParser::Expr_lazy_andContext* ctx) override;
     virtual antlrcpp::Any visitExpr_lazy_or(ifccParser::Expr_lazy_orContext* ctx) override;
     virtual antlrcpp::Any visitExpr_atom(ifccParser::Expr_atomContext* ctx) override;
+    virtual antlrcpp::Any visitFunction_call(ifccParser::Function_callContext *ctx) override;
+    virtual antlrcpp::Any visitSelection_if(ifccParser::Selection_ifContext* ctx) override;
+    virtual antlrcpp::Any visitIteration_while(ifccParser::Iteration_whileContext* ctx) override;
 
-    // std::map<std::string, VariableInfo> variables;
-    CFG* cfg;
-    std::map<std::string, VariableInfo>& variables;
+    std::string get_unique_var_name(std::string varname);
+
+    int current_block;
+    int tmp_block_index;
+    std::unordered_map<int, int> blocks; // id current block, id parent block
+
     int tmp_index;
-    bool declaration_mode = false;
-
-    antlrcpp::Any visitBitwise(std::string l_var, char OP, std::string r_var);
-
-    int push_stack(int source, int dest);
-    int push_stack(std::string source, int dest, int size);
-
-    int mov(std::string source, std::string dest, int size);
+    CFG* cfg;
+    std::unordered_map<std::string, VariableInfo>& variables;
+    bool declaration_mode;
 };

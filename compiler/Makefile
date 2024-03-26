@@ -2,10 +2,15 @@
 # Each student should have a config.mk corresponding to her system.
 # Examples are  ubuntu.mk, DI.mk, fedora.mk
 # Then config.mk should be in the .gitignore of your project
-include config/config.mk
+ifeq ($(shell uname -s), Darwin)
+include config/DI.mk
+else
+include config/ubuntu.mk
+endif
 
 CC=g++
-CCFLAGS=-g -c -std=c99 -I$(ANTLRINC) -Wno-attributes -DTRACE# -Wno-defaulted-function-deleted -Wno-unknown-warning-option
+ANTLR_FLAGS=-g -c -std=c++17 -I$(ANTLRINC) -Wno-attributes# -Wno-defaulted-function-deleted -Wno-unknown-warning-option
+CCFLAGS=-g -c -std=c++17 -I$(ANTLRINC) -Wno-attributes -Wall -Wextra -DTRACE# -Wno-defaulted-function-deleted -Wno-unknown-warning-option
 LDFLAGS=-g
 T=
 
@@ -45,7 +50,7 @@ build/%.o: src/%.cpp generated/ifccParser.cpp
 # compile all the antlr-generated C++
 build/%.o: generated/%.cpp
 	@mkdir -p build
-	$(CC) $(CCFLAGS) -MMD -o $@ $< 
+	$(CC) $(ANTLR_FLAGS) -MMD -o $@ $< 
 
 # automagic dependency management: `gcc -MMD` generates all the .d files for us
 -include build/*.d
@@ -70,10 +75,16 @@ generated/ifccParser.cpp: ifcc.g4
 FILE ?= ../tests/testfiles/1_return42.c
 
 gui: ## graphical interface
-	@mkdir -p generated build
-	$(ANTLR) -Dlanguage=Java -o generated ifcc.g4
-	javac -cp $(ANTLRJAR) -d build generated/*.java
-	java -cp $(ANTLRJAR):build org.antlr.v4.gui.TestRig ifcc axiom -gui $(FILE)
+	@read -p "Enter a number: " num; \
+    files=$$(ls ../tests/testfiles/*/$$num\_*.c 2>/dev/null); \
+    if [ -n "$$files" ]; then \
+		mkdir -p generated build; \
+		$(ANTLR) -Dlanguage=Java -o generated ifcc.g4; \
+		javac -cp $(ANTLRJAR) -d build generated/*.java; \
+		java -cp $(ANTLRJAR):build org.antlr.v4.gui.TestRig ifcc axiom -gui $$files; \
+    else \
+        echo "No file found for number $$num"; \
+    fi
 
 ##########################################
 # delete all machine-generated files
@@ -93,7 +104,7 @@ tests: ## start all tests with python
 
 verify: ## check a specific compilation
 	@read -p "Enter a number: " num; \
-    files=$$(ls ../tests/testfiles/$$num\_*.c 2>/dev/null); \
+    files=$$(ls ../tests/testfiles/*/$$num\_*.c 2>/dev/null); \
     if [ -n "$$files" ]; then \
 		./build/ifcc "$$files"; \
     else \

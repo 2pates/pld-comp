@@ -1,19 +1,26 @@
 grammar ifcc;
 
-axiom : prog EOF ;
+axiom: prog EOF ;
 
-prog : 'int' 'main' '(' ')' '{' instruction* return_stmt '}' ;
+prog: 'int' 'main' '(' ')' '{' statement* return_stmt '}' ;
 
-function_def: TYPE FUNCNAME '(' declare_only_stmt? ')' '{' instruction* return_stmt? '}' ;
-function_call: FUNCNAME '(' expr* ')' ';' ;
+function_def: type VARNAME '(' declare_only_stmt? ')' '{' statement* return_stmt? '}' ;
+function_call: VARNAME '(' expr* ')' ;
 
-instruction: declare_stmt ';' | assignment_stmt ';' ;
+statement: instruction | block ;
+instruction: declare_stmt ';' | assignment_stmt ';' | function_call ';'| selection_stmt | iterationStatement ;
+block: '{' statement* '}' ;
 
 assignment_stmt: lvalue '=' rvalue ;
-declare_stmt: TYPE declare;
+
+selection_stmt: 'if' '(' expr ')' statement ('else' statement)? #selection_if ;
+
+iterationStatement: 'while' '(' expr ')' statement #iteration_while ;
+
+declare_stmt: type declare;
 declare: (lvalue | assignment_stmt) (',' declare)? ;
 
-declare_only_stmt: TYPE lvalue (',' declare_only_stmt)? ;
+declare_only_stmt: type lvalue (',' declare_only_stmt)? ;
 return_stmt: RETURN expr ';' ;
 
 rvalue: expr ;
@@ -31,13 +38,16 @@ expr: '(' expr ')'					# expr_parenthesis
 | expr '&&' expr					# expr_lazy_and
 | expr '||' expr					# expr_lazy_or
 | (CONST | VARNAME)					# expr_atom
+| function_call                     # expr_function
 ;
 
-TYPE: 'int' ;
+type: 'int'|'char';
 RETURN : 'return' ;
 VARNAME: [_a-zA-Z][_a-zA-Z0-9]*;
+FUNCNAME: [_a-zA-Z][_a-zA-Z0-9]*;
 CONST : [0-9]+ ;
 COMMENT : '/*' .*? '*/' -> skip ;
+ONE_LINE_COMMENT : '//' .*? '\n' -> skip ;
 DIRECTIVE : '#' .*? '\n' -> skip ;
 WS    : [ \t\r\n] -> channel(HIDDEN);
 
