@@ -81,6 +81,11 @@ void IRInstr::gen_asm(ostream& o, Target target) {
             }
             break;
         }
+        case jump: {
+          string jumpLabel = params[0];
+          o<< "jmp "<<jumpLabel<<endl;
+          break;
+        }
         case cmp_const: {
             VariableInfo destination = bb->cfg->get_var_info(params[2]);
             VariableInfo source = bb->cfg->get_var_info(params[0]);
