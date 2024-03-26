@@ -304,12 +304,23 @@ void IRInstr::gen_asm(ostream& o, Target target) {
                   << "(%rbp)" << endl;
             }
             break;
-        
+        }
+        case call: {
+          string fctName = params[0];
+
+          if (target == Target::x86) {
+              o << "call "<<fctName<<endl;
+          }
+
+          break;
         }
     }
 }
 
-BasicBlock::BasicBlock(CFG* cfg, string entry_label) : cfg(cfg), label(entry_label) {}
+BasicBlock::BasicBlock(CFG* cfg, string entry_label) : cfg(cfg), label(entry_label) {
+  exit_false = nullptr;
+  exit_true = nullptr;  
+}
 
 void BasicBlock::gen_asm(ostream& o, Target target) {
     if (target == Target::x86) {
