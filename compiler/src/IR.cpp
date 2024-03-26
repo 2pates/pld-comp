@@ -416,7 +416,7 @@ void BasicBlock::add_IRInstr(IRInstr::Operation op, Type t, vector<string> param
     instrs.push_back(instruction);
 }
 
-CFG::CFG(std::map<std::string, VariableInfo>& variables_, string entry_block_label_)
+CFG::CFG(std::unordered_map<std::string, VariableInfo>& variables_, string entry_block_label_)
     : variables(variables_), entry_block_label(entry_block_label_), nextBBnumber(0) {}
 
 void CFG::add_bb(BasicBlock* bb) {

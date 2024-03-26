@@ -127,7 +127,7 @@ class CFG {
     friend class CodeGenVisitor;
 
 public:
-    CFG(std::map<std::string, VariableInfo>& variables_, std::string entry_block_label_);
+    CFG(std::unordered_map<std::string, VariableInfo>& variables_, std::string entry_block_label_);
 
     void add_bb(BasicBlock* bb);
 
@@ -147,7 +147,7 @@ public:
     BasicBlock* current_bb;
 
 protected:
-    std::map<std::string, VariableInfo>& variables;
+    std::unordered_map<std::string, VariableInfo>& variables;
     string entry_block_label;
     int nextBBnumber; /**< just for naming */
 

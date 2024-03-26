@@ -1,13 +1,15 @@
 grammar ifcc;
 
-axiom : prog EOF ;
+axiom: prog EOF ;
 
-prog : 'int' 'main' '(' ')' '{' instruction* return_stmt '}' ;
+prog: 'int' 'main' '(' ')' '{' statement* return_stmt '}' ;
 
-function_def: type VARNAME '(' declare_only_stmt? ')' '{' instruction* return_stmt? '}' ;
+function_def: type VARNAME '(' declare_only_stmt? ')' '{' statement* return_stmt? '}' ;
 function_call: VARNAME '(' expr* ')' ;
 
-instruction: declare_stmt ';' | assignment_stmt ';'| function_call ';'| selection_stmt | iterationStatement ;
+statement: instruction | block ;
+instruction: declare_stmt ';' | assignment_stmt ';' | function_call ';'| selection_stmt | iterationStatement ;
+block: '{' statement* '}' ;
 
 assignment_stmt: lvalue '=' rvalue ;
 
@@ -44,8 +46,10 @@ expr: '(' expr ')'					# expr_parenthesis
 type: 'int'|'char';
 RETURN : 'return' ;
 VARNAME: [_a-zA-Z][_a-zA-Z0-9]*;
+FUNCNAME: [_a-zA-Z][_a-zA-Z0-9]*;
 CONST : [0-9]+ ;
 COMMENT : '/*' .*? '*/' -> skip ;
+ONE_LINE_COMMENT : '//' .*? '\n' -> skip ;
 DIRECTIVE : '#' .*? '\n' -> skip ;
 WS    : [ \t\r\n] -> channel(HIDDEN);
 

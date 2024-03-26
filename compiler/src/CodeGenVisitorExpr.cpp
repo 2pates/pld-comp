@@ -202,7 +202,7 @@ antlrcpp::Any CodeGenVisitor::visitExpr_atom(ifccParser::Expr_atomContext* ctx) 
             return PROGRAMER_ERROR;
         }
     } else if (ctx->VARNAME() != nullptr) {
-        var_name = ctx->VARNAME()->getText();
+        var_name = get_unique_var_name(ctx->VARNAME()->getText());
         debug(var_name);
     }
     return var_name;
