@@ -18,7 +18,7 @@ Here we put the non-programming choices we made
 ## TODO
 ### Mandatory
 
-- [ ] Data type char : Bachir
+- [ ] Data type char : *Roua & Bachir*
 - [x] Data type int
 - [x] Variables
 - [x] Integer constants
@@ -30,25 +30,25 @@ Here we put the non-programming choices we made
 - [x] Declaration of variables anywhere
 - [ ] Assignment (which, in C, also returns a value)
 - [x] Possibility of initializing a variable when declaring it
-- [ ] Use of standard putchar and getchar functions for I/O: James
+- [ ] Use of standard putchar and getchar functions for I/O : *James*
 - [ ] Define functions with parameters, and int, char or void return type
 - [x] Check consistency of function calls and parameters (reserved names)
-- [ ] Block structure using { and } : Roua & bachir
+- [ ] Block structure using { and } : *Gaspard & Benjamin*
 - [ ] Support for variable scopes and shadowing
-- [ ] If, else, while control structures : Mathieu
+- [ ] If, else, while control structures : *Mathieu*
 - [ ] Support for return expression anywhere
-- [ ] Check that a variable used in an expression has been declared
-- [ ] Check that a variable is not declared more than once
-- [ ] Check that a declared variable is used at least once
+- [x] Check that a variable used in an expression has been declared
+- [x] Check that a variable is not declared more than once
+- [x] Check that a declared variable is used at least once
 
 ### Optional
 
-- [ ] Division and modulo (in IR): Bachir
-- [ ] Assignment operators +=, -= etc., increment ++ and decrement - - - [ ] Arrays (one-dimensional): Bachir
+- [ ] Division and modulo (in IR) : *Bachir*
+- [ ] Assignment operators +=, -= etc., increment ++ and decrement
 - [ ] Arrays (one-dimensional)
 - [ ] Pointers
 - [ ] Break and continue
-- [ ] Strings re
+- [ ] compilation vers plusieurs architectures
 
 ## Ressources
 

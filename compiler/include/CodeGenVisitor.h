@@ -33,10 +33,8 @@ public:
     virtual antlrcpp::Any visitSelection_if(ifccParser::Selection_ifContext* ctx) override;
     virtual antlrcpp::Any visitIteration_while(ifccParser::Iteration_whileContext* ctx) override;
 
-    // std::map<std::string, VariableInfo> variables;
+    int tmp_index;
     CFG* cfg;
     std::map<std::string, VariableInfo>& variables;
-    int tmp_index;
     bool declaration_mode = false;
-
 };
