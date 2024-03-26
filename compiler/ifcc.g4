@@ -7,9 +7,17 @@ prog : 'int' 'main' '(' ')' '{' instruction* return_stmt '}' ;
 function_def: TYPE FUNCNAME '(' declare_only_stmt? ')' '{' instruction* return_stmt? '}' ;
 function_call: FUNCNAME '(' expr* ')' ';' ;
 
-instruction: declare_stmt ';' | assignment_stmt ';' ;
+instruction: declare_stmt ';' | assignment_stmt ';' | selection_stmt | iterationStatement ;
 
 assignment_stmt: lvalue '=' rvalue ;
+
+selection_stmt: 'if' '(' expr ')' instruction ('else' instruction)? #selection_if
+    ;
+
+iterationStatement
+    : 'while' '(' expr ')' instruction #iteration_while
+    ;
+
 declare_stmt: TYPE declare;
 declare: (lvalue | assignment_stmt) (',' declare)? ;
 

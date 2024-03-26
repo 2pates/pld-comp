@@ -26,6 +26,8 @@ public:
     virtual antlrcpp::Any visitDeclare_stmt(ifccParser::Declare_stmtContext* ctx) override;
     virtual antlrcpp::Any visitDeclare(ifccParser::DeclareContext* ctx) override;
     virtual antlrcpp::Any visitAssignment_stmt(ifccParser::Assignment_stmtContext* ctx) override;
+    virtual antlrcpp::Any visitSelection_if(ifccParser::Selection_ifContext* ctx) override;
+    virtual antlrcpp::Any visitIteration_while(ifccParser::Iteration_whileContext* ctx) override;
     virtual antlrcpp::Any visitLvalue(ifccParser::LvalueContext* ctx) override;
     virtual antlrcpp::Any visitExpr_atom(ifccParser::Expr_atomContext* ctx) override;
     virtual antlrcpp::Any visitExpr_and(ifccParser::Expr_andContext* ctx) override;
@@ -37,6 +39,7 @@ public:
     virtual antlrcpp::Any visitExpr_add(ifccParser::Expr_addContext* ctx) override;
     virtual antlrcpp::Any visitExpr_mult(ifccParser::Expr_multContext* ctx) override;
     virtual antlrcpp::Any visitExpr_parenthesis(ifccParser::Expr_parenthesisContext* ctx) override;
+
 
     std::map<std::string, VariableInfo> variables;
     long int memory_offset;
