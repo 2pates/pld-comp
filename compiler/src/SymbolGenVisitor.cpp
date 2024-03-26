@@ -64,6 +64,7 @@ antlrcpp::Any SymbolGenVisitor::visitAssignment_stmt(ifccParser::Assignment_stmt
     std::string unique_name = create_unique_var_name(name);
     if (declaration_mode) {
         if (check_exist_in_current_block(name) == GOOD) {
+            error("Error: double declared variable " + name);
             exit(DOUBLE_DECLARATION);
         } else {
             visit(ctx->lvalue());
@@ -152,6 +153,14 @@ antlrcpp::Any SymbolGenVisitor::visitExpr_add(ifccParser::Expr_addContext* ctx) 
     variables.insert({"#tmp" + std::to_string(tmp_index), VariableInfo(memory_offset, 4)});
     debug("Inserted (Expr_add) #tmp" + std::to_string(tmp_index) + " (address " + std::to_string(memory_offset) + ")");
     visit(ctx->expr()[1]);
+    return GOOD;
+}
+
+antlrcpp::Any SymbolGenVisitor::visitExpr_assignment(ifccParser::Expr_assignmentContext* ctx) {
+    bool prev_declaration_mode = declaration_mode;
+    declaration_mode = false;
+    visit(ctx->assignment_stmt());
+    declaration_mode = prev_declaration_mode;
     return GOOD;
 }
 antlrcpp::Any SymbolGenVisitor::visitExpr_function(ifccParser::Expr_functionContext* ctx) {

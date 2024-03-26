@@ -105,7 +105,7 @@ antlrcpp::Any CodeGenVisitor::visitAssignment_stmt(ifccParser::Assignment_stmtCo
         std::string r_name = visit(ctx->rvalue());
         if (variables.find(r_name) != variables.end()) {
             cfg->current_bb->add_IRInstr(IRInstr::Operation::copy, Type::INT32, {r_name, lvalue_unique_name});
-            return 0;
+            return r_name;
         } else {
             debug("Variable " + r_name + " not found");
             return PROGRAMER_ERROR;

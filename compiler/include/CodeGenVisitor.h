@@ -37,6 +37,7 @@ public:
     virtual antlrcpp::Any visitFunction_def(ifccParser::Function_defContext *ctx) override;
     virtual antlrcpp::Any visitSelection_if(ifccParser::Selection_ifContext* ctx) override;
     virtual antlrcpp::Any visitIteration_while(ifccParser::Iteration_whileContext* ctx) override;
+    virtual antlrcpp::Any visitExpr_assignment(ifccParser::Expr_assignmentContext* ctx) override;
 
     std::string get_unique_var_name(std::string varname);
 
