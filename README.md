@@ -35,8 +35,8 @@ Here we put the non-programming choices we made
 - [x] Check consistency of function calls and parameters (reserved names)
 - [ ] Block structure using { and } : *Gaspard & Benjamin*
 - [ ] Support for variable scopes and shadowing
-- [ ] If, else, while control structures : *Mathieu*
-- [ ] Support for return expression anywhere
+- [x] If, else, while control structures : *Mathieu*
+- [ ] Support for return expression anywhere : *Mathieu*
 - [x] Check that a variable used in an expression has been declared
 - [x] Check that a variable is not declared more than once
 - [x] Check that a declared variable is used at least once
