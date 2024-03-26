@@ -122,8 +122,6 @@ antlrcpp::Any SymbolGenVisitor::visitExpr_add(ifccParser::Expr_addContext* ctx) 
     tmp_index++;
     variables.insert({"#tmp" + std::to_string(tmp_index), VariableInfo(memory_offset, 4)});
     debug("Inserted (Expr_add) #tmp" + std::to_string(tmp_index) + " (address " + std::to_string(memory_offset) + ")");
-
-    visit(ctx->expr()[0]);
     visit(ctx->expr()[1]);
     return GOOD;
 }
@@ -184,15 +182,6 @@ int SymbolGenVisitor::check_exist(std::string varname) {
         return GOOD;
     else
         return UNDECLARED;
-}
-
-antlrcpp::Any SymbolGenVisitor::visitExpr_add(ifccParser::Expr_addContext* ctx){
-    this->visit(ctx->expr(0));
-    this->visit(ctx->expr(1));
-    memory_offset -= 4;
-    tmp_index++;
-    variables.insert({"#tmp" + std::to_string(tmp_index), VariableInfo(memory_offset, 4)});
-    return 0;
 }
 
 antlrcpp::Any SymbolGenVisitor::visitExpr_mult(ifccParser::Expr_multContext* ctx){
