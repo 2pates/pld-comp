@@ -5,4 +5,3 @@ int main() {
 	b=12;
 	return a<b;
 }
-
