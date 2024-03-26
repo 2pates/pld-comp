@@ -70,7 +70,18 @@ antlrcpp::Any CodeGenVisitor::visitAssignment_stmt(ifccParser::Assignment_stmtCo
             return PROGRAMER_ERROR;
         }
     } else {
-        error("Error : undeclared error variable " + lvalue_unique_name);
+        error("Error: undeclared variable " + lvalue_unique_name);
         return UNDECLARED;
     }
+}
+
+std::string CodeGenVisitor::get_unique_var_name(std::string varname) {
+    int block = current_block;
+    while (block != -1) { // finds in blocks starting from the upper ones
+        std::string unique_var_name = varname + "_" + std::to_string(block);
+        if (variables.find(unique_var_name) != variables.end())
+            return unique_var_name;
+        block = blocks.at(block); // decrease block lvl
+    }
+    return "";
 }

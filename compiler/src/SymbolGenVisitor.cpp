@@ -25,7 +25,7 @@ antlrcpp::Any SymbolGenVisitor::visitDeclare(ifccParser::DeclareContext* ctx) {
     if (ctx->lvalue() != nullptr) {
         visit(ctx->lvalue());
         std::string name = ctx->lvalue()->getText();
-        std::string unique_name = get_unique_var_name(name);
+        std::string unique_name = create_unique_var_name(name);
         if (check_exist_in_current_block(name) != GOOD) {
             memory_offset -= 4; // decrement index first !
             VariableInfo var(memory_offset, 4, false);
@@ -47,7 +47,7 @@ antlrcpp::Any SymbolGenVisitor::visitDeclare(ifccParser::DeclareContext* ctx) {
 
 antlrcpp::Any SymbolGenVisitor::visitAssignment_stmt(ifccParser::Assignment_stmtContext* ctx) {
     std::string name = ctx->lvalue()->VARNAME()->getText();
-    std::string unique_name = get_unique_var_name(name);
+    std::string unique_name = create_unique_var_name(name);
     if (declaration_mode) {
         if (check_exist_in_current_block(name) == GOOD) {
             exit(DOUBLE_DECLARATION);
@@ -137,7 +137,7 @@ antlrcpp::Any SymbolGenVisitor::visitExpr_unaire(ifccParser::Expr_unaireContext*
 }
 
 int SymbolGenVisitor::check_exist_in_current_block(std::string varname) {
-    if (variables.find(get_unique_var_name(varname)) != variables.end())
+    if (variables.find(create_unique_var_name(varname)) != variables.end())
         return GOOD;
     else
         return UNDECLARED;
@@ -159,6 +159,7 @@ std::string SymbolGenVisitor::get_new_tmp_varname() {
     return "#tmp" + std::to_string(tmp_index);
 }
 
-std::string SymbolGenVisitor::get_unique_var_name(std::string name) {
+std::string SymbolGenVisitor::create_unique_var_name(std::string name) {
     return name + "_" + std::to_string(current_block);
 }
+

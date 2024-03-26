@@ -34,7 +34,7 @@ public:
     virtual antlrcpp::Any visitExpr_lazy_or(ifccParser::Expr_lazy_orContext* ctx) override;
     virtual antlrcpp::Any visitExpr_atom(ifccParser::Expr_atomContext* ctx) override;
 
-    std::string get_unique_var_name(std::string name) { return name + "_" + std::to_string(current_block); }
+    std::string get_unique_var_name(std::string varname);
 
     int current_block;
     int tmp_block_index;
