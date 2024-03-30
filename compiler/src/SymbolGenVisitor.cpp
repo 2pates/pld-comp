@@ -34,7 +34,30 @@ antlrcpp::Any SymbolGenVisitor::visitDeclare_stmt(ifccParser::Declare_stmtContex
     declaration_mode = false;
     return GOOD;
 }
-
+antlrcpp::Any SymbolGenVisitor::visitFunction_def(ifccParser::Function_defContext *ctx) {
+    currentFunction=ctx->VARNAME()->getText();
+    return visitChildren(ctx);
+}
+antlrcpp::Any SymbolGenVisitor::visitDeclare_only_stmt(ifccParser::Declare_only_stmtContext *ctx){
+    if (ctx->lvalue() != nullptr) {
+        visit(ctx->lvalue());
+        std::string name = ctx->lvalue()->getText();
+        std::string unique_name = create_unique_var_name(name); //+"#"+currentFunction to make the name unique
+        if (check_exist_in_current_block(name) != GOOD) {
+            memory_offset -= 4; // decrement index first !
+            VariableInfo var(memory_offset, 4, false);
+            variables.insert({unique_name, var});
+            debug("Declaration: " + unique_name + " (address " + std::to_string(var.address) + ")");
+        } else {
+            error("Error: already used name" + unique_name);
+            exit(DOUBLE_DECLARATION);
+        }
+    }
+    if (ctx->declare_only_stmt() != nullptr) {
+        visit(ctx->declare_only_stmt());
+    }
+    return GOOD;    
+}
 antlrcpp::Any SymbolGenVisitor::visitDeclare(ifccParser::DeclareContext* ctx) {
     if (ctx->lvalue() != nullptr) {
         visit(ctx->lvalue());

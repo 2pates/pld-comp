@@ -49,11 +49,13 @@ public:
         bitwise_or,
         bitwise_xor,
         bitwise_not,
+        retfct,
         neg,
         jump,
         l_not,
         lazy_and,
-        lazy_or } Operation;
+        lazy_or,
+        startfct } Operation;
 
     /**  constructor */
     IRInstr(BasicBlock* bb_, Operation op, Type t, std::vector<std::string> params);
