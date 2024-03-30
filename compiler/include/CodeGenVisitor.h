@@ -40,6 +40,7 @@ public:
     virtual antlrcpp::Any visitExpr_assignment(ifccParser::Expr_assignmentContext* ctx) override;
     virtual antlrcpp::Any visitReturn_stmt_fct(ifccParser::Return_stmt_fctContext* ctx) override;
 
+    virtual antlrcpp::Any visitDeclare_only_stmt(ifccParser::Declare_only_stmtContext* ctx) override;
 
     std::string get_unique_var_name(std::string varname);
 
@@ -51,4 +52,6 @@ public:
     CFG* cfg;
     std::unordered_map<std::string, VariableInfo>& variables;
     bool declaration_mode;
+    int varInFunctionDef=0;
+    std::string repList[6]={"%edi", "%esi", "%edx", "%ecx", "%e8", "%e9"};
 };
