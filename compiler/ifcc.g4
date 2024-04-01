@@ -2,13 +2,13 @@ grammar ifcc;
 
 axiom: prog EOF ;
 
-prog: 'int' 'main' '(' ')' '{' statement* return_stmt '}' function_def*;
+prog: 'int' 'main' '(' ')' '{' statement* '}' function_def*;
 
 function_def: type VARNAME '(' declare_only_stmt? ')' '{' statement* return_stmt_fct? '}' ;
 function_call: VARNAME '(' ((expr',')*expr|) ')' ;
 
 statement: instruction | block ;
-instruction: declare_stmt ';' | assignment_stmt ';' | function_call ';'| selection_stmt | iterationStatement ;
+instruction: declare_stmt ';' | assignment_stmt ';' | function_call ';'| return_stmt | selection_stmt | iterationStatement ;
 block: '{' statement* '}' ;
 
 assignment_stmt: lvalue '=' rvalue ;

@@ -10,7 +10,6 @@ antlrcpp::Any CodeGenVisitor::visitProg(ifccParser::ProgContext* ctx) {
     for (auto instr : ctx->statement()) {
         this->visit(instr);
     }
-    this->visit(ctx->return_stmt());
     for (auto function : ctx->function_def()) {
         this->visit(function);
     }    
@@ -79,9 +78,10 @@ antlrcpp::Any CodeGenVisitor::visitInstruction(ifccParser::InstructionContext* c
         this->visit(ctx->assignment_stmt());
     if (ctx->declare_stmt() != nullptr)
         this->visit(ctx->declare_stmt());
-    if (ctx->function_call() != nullptr) {
+    if (ctx->function_call() != nullptr) 
         this->visit(ctx->function_call());
-    }
+    if (ctx->return_stmt() != nullptr)
+        this->visit(ctx->return_stmt());
     if (ctx->selection_stmt() != nullptr)
         this->visit(ctx->selection_stmt());
     if (ctx->iterationStatement() != nullptr)
