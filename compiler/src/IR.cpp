@@ -77,8 +77,8 @@ void IRInstr::gen_asm(ostream& o, Target target) {
 			std::cerr << params[1] << ":	" << destination.size << "	" << destination.address << std::endl;
 
 			if (target == Target::x86) {
-				o << "	mov" << size_to_letter(source.size) << "	" << to_string(source.address) << "(%rbp), %eax" << endl;
-				o << "	mov" << size_to_letter(destination.size,source.size) << "	%eax," << to_string(destination.address) << "(%rbp)"
+				o << "	mov" << size_to_letter(source.size,destination.size) << "	" << to_string(source.address) << "(%rbp), %eax" << endl;
+				o << "	mov" << size_to_letter(destination.size) << "	%eax, " << to_string(destination.address) << "(%rbp)"
 				  << endl;
 			}
 			break;
@@ -476,7 +476,7 @@ void CFG::gen_asm(ostream& o, Target target) {
 
 void CFG::gen_asm_prologue(ostream& o, Target target) {
 	if (target == Target::x86) {
-		o << ".globl main" << endl;
+		o << ".globl	main" << endl;
 		o << "main:" << endl;
 		o << "	pushq	%rbp" << endl;				// Save the old base pointer
 		o << "	movq	%rsp, %rbp" << endl;		   // Set up a new base pointer
