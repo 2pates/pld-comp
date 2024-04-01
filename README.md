@@ -18,8 +18,10 @@ Here we put the non-programming choices we made
 ## TODO
 ### Mandatory
 
-- [ ] Data type char : *Roua & Bachir*
+- [x] Data type char : *Gaspard*
 - [x] Data type int
+- [ ] Data type void
+- [ ] Data type pointer adress
 - [x] Variables
 - [x] Integer constants
 - [x] Basic arithmetic operations: +,-, *

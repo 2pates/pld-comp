@@ -42,7 +42,7 @@ expr: '(' expr ')'					# expr_parenthesis
 | (CONST_INT | CONST_CHAR | VARNAME)# expr_atom
 ;
 
-type: 'int'|'char';
+type: 'int'|'char'|'void';
 RETURN: 'return' ;
 VARNAME: [_a-zA-Z][_a-zA-Z0-9]*;
 FUNCNAME: [_a-zA-Z][_a-zA-Z0-9]*;
