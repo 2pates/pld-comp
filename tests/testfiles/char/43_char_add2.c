@@ -2,7 +2,7 @@ int main() {
 	char a = 'c';
 	a = a + 'a';
 	int b;
-	b = a
+	b = a;
 	return b;
 }
 

@@ -17,7 +17,7 @@ antlrcpp::Any SymbolGenVisitor::visitFunction_call(ifccParser::Function_callCont
     //needs to be implemented to say that variables are used
     //assigns memory in case it's being used in an expression
 
-    for(int i=0;i<ctx->expr().size();i++){
+    for(long unsigned int i=0;i<ctx->expr().size();i++){
         visit(ctx->expr()[i]);
     }
     memory_offset -= 4;
@@ -37,12 +37,18 @@ antlrcpp::Any SymbolGenVisitor::visitDeclare_stmt(ifccParser::Declare_stmtContex
         name = it->getText();
         unique_name = create_unique_var_name(name);
         if (check_exist_in_current_block(name) != GOOD) {
-            if (ctx->type()->getText() == "int") {
+            if (it->pointer_type() != nullptr) {
+                memory_offset -= 8; // decrement index first !
+                var = VariableInfo(memory_offset, 8, false);
+            } else if (ctx->type()->getText() == "int") {
                 memory_offset -= 4; // decrement index first !
                 var = VariableInfo(memory_offset, 4, false);
             } else if (ctx->type()->getText() == "char") {
                 memory_offset -= 1; // decrement index first !
                 var = VariableInfo(memory_offset, 1, false);
+                memory_offset -= 3;
+            } else if (ctx->type()->getText() == "void") {
+                exit(VOID_VARIABLE);
             }
             variables.insert({unique_name, var});
 
@@ -59,12 +65,18 @@ antlrcpp::Any SymbolGenVisitor::visitDeclare_stmt(ifccParser::Declare_stmtContex
             exit(DOUBLE_DECLARATION);
         } else {
             visit(it->lvalue());
-            if (ctx->type()->getText() == "int") {
+            if (it->lvalue()->pointer_type() != nullptr) {
+                memory_offset -= 8; // decrement index first !
+                var = VariableInfo(memory_offset, 8, false);
+            } else if (ctx->type()->getText() == "int") {
                 memory_offset -= 4; // decrement index first !
                 var = VariableInfo(memory_offset, 4, false);
             } else if (ctx->type()->getText() == "char") {
                 memory_offset -= 1; // decrement index first !
                 var = VariableInfo(memory_offset, 1, false);
+                memory_offset -= 3;
+            } else if (ctx->type()->getText() == "void") {
+                exit(VOID_VARIABLE);
             }
             variables.insert({unique_name, var});
 
@@ -78,14 +90,18 @@ antlrcpp::Any SymbolGenVisitor::visitDeclare_stmt(ifccParser::Declare_stmtContex
 antlrcpp::Any SymbolGenVisitor::visitAssignment_stmt(ifccParser::Assignment_stmtContext* ctx) {
     std::string name = ctx->lvalue()->VARNAME()->getText();
     std::string unique_name = create_unique_var_name(name);
+    VariableInfo var;
+
     if (declaration_mode) {
         debug("Normally it doesn't append now");
         if (check_exist_in_current_block(name) == GOOD) {
             exit(DOUBLE_DECLARATION);
         } else {
             visit(ctx->lvalue());
+            
             memory_offset -= 4; // decrement index first !
-            VariableInfo var(memory_offset, 4, false);
+            var = VariableInfo(memory_offset, 4, false);
+            
             variables.insert({unique_name, var});
 
             visit(ctx->rvalue());
@@ -150,6 +166,11 @@ antlrcpp::Any SymbolGenVisitor::visitExpr_atom(ifccParser::Expr_atomContext* ctx
     } else if (ctx->CONST_CHAR() != nullptr) {
         memory_offset -= 1;
         variables.insert({get_new_tmp_varname(), VariableInfo(memory_offset, 1)});
+        memory_offset -= 3;
+    } else if (ctx->CONST_VOID() != nullptr) {
+        memory_offset -= 1;
+        variables.insert({get_new_tmp_varname(), VariableInfo(memory_offset, 1)});
+        memory_offset -= 3;
     } else if (ctx->VARNAME() != nullptr) {
         // nothing
     } else {
@@ -259,4 +280,5 @@ antlrcpp::Any SymbolGenVisitor::visitExpr_parenthesis(ifccParser::Expr_parenthes
     variables.insert({"#tmp" + std::to_string(tmp_index), VariableInfo(memory_offset, 4)});
     return 0;
 }
+
 

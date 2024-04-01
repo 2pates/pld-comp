@@ -1,7 +1,7 @@
 int main() {
 	void a;
 	int b;
-	b = a
+	b = a;
 	return b;
 }
 

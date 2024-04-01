@@ -1,8 +1,8 @@
 int main() {
 	void a = 'c';
-	a = a+1;
+	a = a + 'a';
 	int b;
-	b = a
+	b = a;
 	return b;
 }
 
