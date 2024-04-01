@@ -45,7 +45,6 @@ antlrcpp::Any CodeGenVisitor::visitBlock(ifccParser::BlockContext* ctx) {
 
 antlrcpp::Any CodeGenVisitor::visitFunction_call(ifccParser::Function_callContext *ctx){
     std::string s=ctx->VARNAME()->getText();
-    std::string repList[6]={"%edi", "%esi", "%edx", "%ecx", "%e8", "%e9"};
     if(s=="putchar" && ctx->expr().size()==1 && ctx->expr()[0]!=nullptr){
         std::string var_name = visit(ctx->expr()[0]);
         cfg->current_bb->add_IRInstr(IRInstr::Operation::copyIn, Type::INT32, {var_name, "%edi"});
@@ -143,15 +142,16 @@ antlrcpp::Any CodeGenVisitor::visitDeclare_only_stmt(ifccParser::Declare_only_st
     std::string lvalue_unique_name = get_unique_var_name(lvalue_name);
     if (variables.find(lvalue_unique_name) != cfg->variables.end()) {
         cfg->current_bb->add_IRInstr(IRInstr::Operation::copyOut, Type::INT32, {repList[varInFunctionDef], lvalue_unique_name});
+        if(ctx->declare_only_stmt()!=nullptr){
+            varInFunctionDef++;
+            visit(ctx->declare_only_stmt());
+        }
         return 0;
     } else {
         error("Error: undeclared variable " + lvalue_unique_name);
         return UNDECLARED;
     }
-    if(ctx->declare_only_stmt()!=nullptr){
-        varInFunctionDef++;
-        visit(ctx->declare_only_stmt());
-    }
+
     return GOOD;
 }
 std::string CodeGenVisitor::get_unique_var_name(std::string varname) {

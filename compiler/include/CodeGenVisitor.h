@@ -53,5 +53,5 @@ public:
     std::unordered_map<std::string, VariableInfo>& variables;
     bool declaration_mode;
     int varInFunctionDef=0;
-    std::string repList[6]={"%edi", "%esi", "%edx", "%ecx", "%e8", "%e9"};
+    std::string repList[6]={"%edi", "%esi", "%edx", "%ecx", "%r8d", "%r9d"};
 };
