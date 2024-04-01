@@ -18,7 +18,7 @@ Here we put the non-programming choices we made
 ## TODO
 ### Mandatory
 
-- [ ] Data type char : *Roua & Bachir*
+- [ ] Data type char : *Roua & Gaspard*
 - [x] Data type int
 - [x] Variables
 - [x] Integer constants
@@ -30,12 +30,12 @@ Here we put the non-programming choices we made
 - [x] Declaration of variables anywhere
 - [ ] Assignment (which, in C, also returns a value) : *Mathieu*
 - [x] Possibility of initializing a variable when declaring it
-- [ ] Use of standard putchar and getchar functions for I/O : *James*
+- [x] Use of standard putchar and getchar functions for I/O
 - [ ] Define functions with parameters, and int, char or void return type : *James*
 - [x] Check consistency of function calls and parameters (reserved names)
-- [ ] Block structure using { and } : *Gaspard & Benjamin*
-- [ ] Support for variable scopes and shadowing
-- [x] If, else, while control structures : *Mathieu*
+- [x] Block structure using { and }
+- [x] Support for variable scopes and shadowing
+- [x] If, else, while control structures
 - [ ] Support for return expression anywhere : *Mathieu*
 - [x] Check that a variable used in an expression has been declared
 - [x] Check that a variable is not declared more than once

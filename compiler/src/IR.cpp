@@ -72,6 +72,15 @@ void IRInstr::gen_asm(ostream& o, Target target) {
             }
             break;
         }
+        case copyOut: {
+            string  source = params[0];
+            VariableInfo destination = bb->cfg->get_var_info(params[1]);
+
+            if (target == Target::x86) {
+                o << "mov" << size_to_letter(destination.size) << " "<<source << ", " << to_string(destination.address) << "(%rbp)"<< endl;
+            }
+            break;
+        }
         case cmp_const: {
             VariableInfo destination = bb->cfg->get_var_info(params[2]);
             VariableInfo source = bb->cfg->get_var_info(params[0]);
@@ -444,7 +453,7 @@ void BasicBlock::add_IRInstr(IRInstr::Operation op, Type t, vector<string> param
     instrs.push_back(instruction);
 }
 
-CFG::CFG(std::map<std::string, VariableInfo>& variables_, string entry_block_label_)
+CFG::CFG(std::unordered_map<std::string, VariableInfo>& variables_, string entry_block_label_)
     : variables(variables_), entry_block_label(entry_block_label_), nextBBnumber(0) {}
 
 void CFG::add_bb(BasicBlock* bb) {
@@ -466,7 +475,7 @@ void CFG::gen_asm_prologue(ostream& o, Target target) {
         o << "main:" << endl;
         o << "pushq %rbp" << endl;                // Save the old base pointer
         o << "movq %rsp, %rbp" << endl;           // Set up a new base pointer
-	      o<<" subq	$"<<160<<", %rsp"<<endl;        //Set up potential function call Needs improvement
+        o<<" subq	$"<<(-memoryUse/16+2)*16<<", %rsp"<<endl;        //Set up potential function call
         o << "jmp " << entry_block_label << endl; // Jump to entry block
     }
 }
