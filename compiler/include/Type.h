@@ -1,3 +1,4 @@
 typedef enum {
-    INT32
+    INT32,
+    CHAR8
 } Type;

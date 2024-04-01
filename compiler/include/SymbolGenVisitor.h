@@ -27,7 +27,6 @@ public:
     }
     virtual antlrcpp::Any visitBlock(ifccParser::BlockContext* ctx) override;
     virtual antlrcpp::Any visitDeclare_stmt(ifccParser::Declare_stmtContext* ctx) override;
-    virtual antlrcpp::Any visitDeclare(ifccParser::DeclareContext* ctx) override;
     virtual antlrcpp::Any visitAssignment_stmt(ifccParser::Assignment_stmtContext* ctx) override;
     virtual antlrcpp::Any visitSelection_if(ifccParser::Selection_ifContext* ctx) override;
     virtual antlrcpp::Any visitIteration_while(ifccParser::Iteration_whileContext* ctx) override;
@@ -45,7 +44,7 @@ public:
     virtual antlrcpp::Any visitFunction_call(ifccParser::Function_callContext* ctx) override;  
     virtual antlrcpp::Any visitExpr_lazy_and(ifccParser::Expr_lazy_andContext* ctx) override;
     virtual antlrcpp::Any visitExpr_lazy_or(ifccParser::Expr_lazy_orContext* ctx) override;
-  
+
     std::unordered_map<int, int> blocks; // id current block, id parent block
     int current_block;
     int tmp_block_index;
