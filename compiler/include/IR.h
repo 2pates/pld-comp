@@ -103,7 +103,7 @@ Possible optimization:
 
 class BasicBlock {
 public:
-    BasicBlock(CFG* cfg, string entry_label);
+    BasicBlock(CFG* cfg, string entry_label, string test_label = "");
     void gen_asm(ostream& o, Target target); /**< x86 assembly code generation for this basic block (very simple) */
 
     void add_IRInstr(IRInstr::Operation op, Type t, std::vector<std::string> params);
@@ -117,6 +117,7 @@ public:
     std::vector<IRInstr*> instrs; /** < the instructions themselves. */
     std::string test_var_name;    /** < when generating IR code for an if(expr) or while(expr) etc,
                                                        store here the name of the variable that holds the value of expr */
+    std::string test_label; /** < test label in case we are in a loop*/
 protected:
 };
 

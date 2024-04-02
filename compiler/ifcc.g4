@@ -8,7 +8,7 @@ function_def: type VARNAME '(' declare_only_stmt? ')' '{' statement* return_stmt
 function_call: VARNAME '(' ((expr',')*expr|) ')' ;
 
 statement: instruction | block ;
-instruction: declare_stmt ';' | assignment_stmt ';' | function_call ';'| return_stmt | selection_stmt | iterationStatement ;
+instruction: declare_stmt ';' | assignment_stmt ';' | function_call ';'| return_stmt | selection_stmt | iterationStatement | jump_stmt ;
 block: '{' statement* '}' ;
 
 assignment_stmt: lvalue '=' rvalue ;
@@ -22,6 +22,12 @@ declare: (lvalue | assignment_stmt) (',' declare)? ;
 
 declare_only_stmt: type lvalue (',' declare_only_stmt)? ;
 return_stmt: RETURN expr ';' ;
+
+jump_stmt: 
+'break' ';'                         # jump_break
+| 'continue' ';'                    # jump_continue
+;
+
 rvalue: expr ;
 lvalue: VARNAME ;
 
