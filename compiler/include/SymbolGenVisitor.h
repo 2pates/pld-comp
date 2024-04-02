@@ -27,7 +27,7 @@ SymbolGenVisitor() : current_block(0), tmp_block_index(0), memory_offset(0), tmp
     }
     virtual antlrcpp::Any visitBlock(ifccParser::BlockContext* ctx) override;
     virtual antlrcpp::Any visitDeclare_stmt(ifccParser::Declare_stmtContext* ctx) override;
-    virtual antlrcpp::Any visitDeclare(ifccParser::DeclareContext* ctx) override;
+    //virtual antlrcpp::Any visitDeclare(ifccParser::DeclareContext* ctx) override;
     virtual antlrcpp::Any visitAssignment_equal(ifccParser::Assignment_equalContext* ctx) override;
     virtual antlrcpp::Any visitAssignment_add(ifccParser::Assignment_addContext* ctx) override;
     virtual antlrcpp::Any visitAssignment_mult(ifccParser::Assignment_multContext* ctx) override;

@@ -17,8 +17,9 @@ public:
     virtual antlrcpp::Any visitInstruction(ifccParser::InstructionContext* ctx) override;
     virtual antlrcpp::Any visitReturn_stmt(ifccParser::Return_stmtContext* ctx) override;
     virtual antlrcpp::Any visitDeclare_stmt(ifccParser::Declare_stmtContext* ctx) override;
-    virtual antlrcpp::Any visitDeclare(ifccParser::DeclareContext* ctx) override;
-    irtual antlrcpp::Any visitAssignment_equal(ifccParser::Assignment_equalContext* ctx) override;
+    //virtual antlrcpp::Any visitDeclare(ifccParser::DeclareContext* ctx) override;
+    virtual antlrcpp::Any visitDeclare_only_stmt(ifccParser::Declare_only_stmtContext* ctx) override;
+    virtual antlrcpp::Any visitAssignment_equal(ifccParser::Assignment_equalContext* ctx) override;
     virtual antlrcpp::Any visitAssignment_add(ifccParser::Assignment_addContext* ctx) override;
     virtual antlrcpp::Any visitAssignment_mult(ifccParser::Assignment_multContext* ctx) override;
     virtual antlrcpp::Any visitPre_incrementation(ifccParser::Pre_incrementationContext* ctx) override;
