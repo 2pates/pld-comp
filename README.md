@@ -49,7 +49,7 @@ Here we put the non-programming choices we made
 - [ ] Propagation of constant variables (with data-flow analysis)
 - [ ] Arrays (one-dimensional)
 - [ ] Pointers
-- [ ] Break and continue
+- [ ] Break and continue : *Mathieu*
 - [ ] Char data type width support (8-bit integer)
 - [ ] Character strings represented by char arrays
 - [ ] Switch...case
