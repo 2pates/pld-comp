@@ -310,11 +310,12 @@ void IRInstr::gen_asm(ostream& o, Target target) {
         }
         case ret: {
             if (target == Target::x86) {
-                VariableInfo variable = bb->cfg->get_var_info(params[0]);
                 string location = params[1];
-
+                if(location.compare("voidFunction")!=0){
+                  VariableInfo variable = bb->cfg->get_var_info(params[0]);
                 o << "mov" << size_to_letter(variable.size) << " " << to_string(variable.address) << "(%rbp), %eax"
                   << endl;
+                }
                 if(location.compare("main")==0){
                   o << "leave" << endl;
                 }

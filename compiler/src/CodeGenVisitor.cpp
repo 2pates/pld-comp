@@ -25,6 +25,9 @@ antlrcpp::Any CodeGenVisitor::visitFunction_def(ifccParser::Function_defContext*
         visit(ctx->declare_only_stmt());
     }
     this->visit(ctx->block());
+    if(ctx->type()->getText().compare("void")==0){
+        cfg->current_bb->add_IRInstr(IRInstr::Operation::ret, Type::INT32, {"void","voidFunction"});
+    }
     return 0;    
 }
 
