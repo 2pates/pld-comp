@@ -2,10 +2,10 @@ grammar ifcc;
 
 axiom: prog EOF ;
 
-prog: 'int' 'main' '(' ')' '{' statement* return_stmt '}' ;
+prog: 'int' 'main' '(' ')' '{' statement* return_stmt '}' function_def*;
 
 function_def: type VARNAME '(' declare_only_stmt? ')' '{' statement* return_stmt? '}' ;
-function_call: VARNAME '(' expr* ')' ;
+function_call: VARNAME '(' ((expr',')*expr|) ')' ;
 
 statement: instruction | block ;
 instruction: declare_stmt ';' | assignment_stmt ';' | function_call ';'| selection_stmt | iterationStatement ;
@@ -13,13 +13,14 @@ block: '{' statement* '}' ;
 
 assignment_stmt: lvalue '=' rvalue ;
 
+selection_stmt: 'if' '(' expr ')' statement ('else' statement)? #selection_if ;
+
+iterationStatement: 'while' '(' expr ')' statement #iteration_while ;
+
 declare_stmt: type (lvalue | assignment_stmt) (',' (lvalue | assignment_stmt))* ;
 declare_only_stmt: type lvalue (',' declare_only_stmt)? ;
+
 return_stmt: RETURN expr ';' ;
-
-selection_stmt: 'if' '(' expr ')' instruction ('else' instruction)? #selection_if ;
-iterationStatement: 'while' '(' expr ')' instruction #iteration_while ;
-
 rvalue: expr ;
 lvalue: pointer_type? VARNAME ;
 
@@ -34,9 +35,9 @@ expr: '(' expr ')'					        # expr_parenthesis
 | expr '|' expr						        # expr_or
 | expr '&&' expr					        # expr_lazy_and
 | expr '||' expr					        # expr_lazy_or
-| (CONST_INT|CONST_CHAR|CONST_VOID|VARNAME) # expr_atom
-;
-
+| assignment_stmt                           # expr_assignment
+| function_call                             # expr_function
+| (CONST_INT|CONST_CHAR|CONST_VOID|VARNAME) # expr_atom;
 
 pointer_type: '*';
 type: 'int'|'char'|'void';
