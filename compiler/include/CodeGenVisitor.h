@@ -53,5 +53,4 @@ public:
     bool declaration_mode;
     bool inmain=false;
     int varInFunctionDef=0;
-    std::string repList[6]={"%edi", "%esi", "%edx", "%ecx", "%r8d", "%r9d"};
 };

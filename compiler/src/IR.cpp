@@ -65,19 +65,18 @@ void IRInstr::gen_asm(ostream& o, Target target) {
         }
         case copyIn: {
             VariableInfo source = bb->cfg->get_var_info(params[0]);
-            string destination = params[1];
-
+            int destination = stoi(params[1]);
             if (target == Target::x86) {
-                o << "mov" << size_to_letter(source.size) << " " << to_string(source.address) << "(%rbp), "<< destination << endl;
+                o << "mov" << size_to_letter(source.size) << " " << to_string(source.address) << "(%rbp), "<< repList[destination] << endl;
             }
             break;
         }
         case copyOut: {
-            string  source = params[0];
+            int  source = stoi(params[0]);
             VariableInfo destination = bb->cfg->get_var_info(params[1]);
 
             if (target == Target::x86) {
-                o << "mov" << size_to_letter(destination.size) << " "<<source << ", " << to_string(destination.address) << "(%rbp)"<< endl;
+                o << "mov" << size_to_letter(destination.size) << " "<<repList[source] << ", " << to_string(destination.address) << "(%rbp)"<< endl;
             }
             break;
         }
@@ -316,7 +315,7 @@ void IRInstr::gen_asm(ostream& o, Target target) {
 
                 o << "mov" << size_to_letter(variable.size) << " " << to_string(variable.address) << "(%rbp), %eax"
                   << endl;
-                if(strcmp(location,"main")==0){
+                if(location.compare("main")==0){
                   o << "leave" << endl;
                 }
                 else{
