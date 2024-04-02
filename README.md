@@ -41,7 +41,7 @@ Here we put the non-programming choices we made
 - [x] Support for return expression anywhere
 - [x] Check that a variable used in an expression has been declared
 - [x] Check that a variable is not declared more than once
-- [x] Check that a declared variable is used at least once
+- [] Check that a declared variable is used at least once: I don't think this has been implemented (James)
 
 ### Optional
 
