@@ -44,9 +44,8 @@ antlrcpp::Any SymbolGenVisitor::visitDeclare_stmt(ifccParser::Declare_stmtContex
                 memory_offset -= 4; // decrement index first !
                 var = VariableInfo(memory_offset, 4, false);
             } else if (ctx->type()->getText() == "char") {
-                memory_offset -= 1; // decrement index first !
-                var = VariableInfo(memory_offset, 1, false);
-                memory_offset -= 3;
+                memory_offset -= 4; // decrement index first !
+                var = VariableInfo(memory_offset, 4, false);
             } else if (ctx->type()->getText() == "void") {
                 exit(VOID_VARIABLE);
             }
@@ -73,7 +72,7 @@ antlrcpp::Any SymbolGenVisitor::visitDeclare_stmt(ifccParser::Declare_stmtContex
                 var = VariableInfo(memory_offset, 4, false);
             } else if (ctx->type()->getText() == "char") {
                 memory_offset -= 1; // decrement index first !
-                var = VariableInfo(memory_offset, 1, false);
+                var = VariableInfo(memory_offset, 4, false);
                 memory_offset -= 3;
             } else if (ctx->type()->getText() == "void") {
                 exit(VOID_VARIABLE);
@@ -164,13 +163,11 @@ antlrcpp::Any SymbolGenVisitor::visitExpr_atom(ifccParser::Expr_atomContext* ctx
         memory_offset -= 4;
         variables.insert({get_new_tmp_varname(), VariableInfo(memory_offset, 4)});
     } else if (ctx->CONST_CHAR() != nullptr) {
-        memory_offset -= 1;
-        variables.insert({get_new_tmp_varname(), VariableInfo(memory_offset, 1)});
-        memory_offset -= 3;
+        memory_offset -= 4;
+        variables.insert({get_new_tmp_varname(), VariableInfo(memory_offset, 4)});
     } else if (ctx->CONST_VOID() != nullptr) {
-        memory_offset -= 1;
-        variables.insert({get_new_tmp_varname(), VariableInfo(memory_offset, 1)});
-        memory_offset -= 3;
+        memory_offset -= 8;
+        variables.insert({get_new_tmp_varname(), VariableInfo(memory_offset, 8)});
     } else if (ctx->VARNAME() != nullptr) {
         // nothing
     } else {

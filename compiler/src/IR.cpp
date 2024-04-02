@@ -9,8 +9,6 @@ IRInstr::IRInstr(BasicBlock* bb_, Operation op, Type t, vector<string> params)
 
 string size_to_letter(int size) {
 	switch (size) {
-		case 1:
-			return "b";
 		case 4:
 			return "l";
 		case 8:
@@ -20,14 +18,14 @@ string size_to_letter(int size) {
 	}
 }
 
-string size_to_letter(int size_left, int size_right) {
-	if (size_left == size_right)
-		return size_to_letter(size_left);
-	else if (size_left == 1 && size_right == 4) {
-		return "sbl";
-	} else
-		exit(NOT_IMPLEMENTED_YET);
-}
+// string size_to_letter(int size_left, int size_right) {
+// 	if (size_left == size_right)
+// 		return size_to_letter(size_left);
+// 	else if (size_left == 1 && size_right == 4) {
+// 		return "sbl";
+// 	} else
+// 		exit(NOT_IMPLEMENTED_YET);
+// }
 
 /*
 ldconst : valeur_constante, variable_destination
@@ -56,18 +54,9 @@ void IRInstr::gen_asm(ostream& o, Target target) {
 	switch (op) {
 		case ldconst: {
 			VariableInfo variable = bb->cfg->get_var_info(params[1]);
-			if (variable.size == 4) {
-			  if (target == Target::x86) {
-				  o << "	mov" << size_to_letter(variable.size) << "	$" << params[0] << "," << to_string(variable.address)
+			if (target == Target::x86) {
+				o << "	mov" << size_to_letter(variable.size) << "	$" << params[0] << "," << to_string(variable.address)
 					<< "(%rbp)" << endl;
-			  } else if (variable.size == 1) {
-				int numerical_value = int(params[0][1]);
-				std::string value = std::to_string(numerical_value);
-				o << "	mov" << size_to_letter(variable.size) << "	$" << value << "," << to_string(variable.address)
-					<< "(%rbp)" << endl;
-			  } else {
-				exit(PROGRAMER_ERROR);
-			  }
 			}
 			break;
 		}
@@ -77,7 +66,7 @@ void IRInstr::gen_asm(ostream& o, Target target) {
 			std::cerr << params[1] << ":	" << destination.size << "	" << destination.address << std::endl;
 
 			if (target == Target::x86) {
-				o << "	mov" << size_to_letter(source.size,destination.size) << "	" << to_string(source.address) << "(%rbp), %eax" << endl;
+				o << "	mov" << size_to_letter(source.size) << "	" << to_string(source.address) << "(%rbp), %eax" << endl;
 				o << "	mov" << size_to_letter(destination.size) << "	%eax, " << to_string(destination.address) << "(%rbp)"
 				  << endl;
 			}
@@ -96,14 +85,7 @@ void IRInstr::gen_asm(ostream& o, Target target) {
 			VariableInfo destination = bb->cfg->get_var_info(params[2]);
 			VariableInfo source = bb->cfg->get_var_info(params[0]);
 			std::string constante;
-			if (source.size == 4) {
-			  constante = params[1];
-			} else if (source.size == 1) {
-			  int numerical_constante = int(params[1][1]);
-			  constante = std::to_string(numerical_constante);
-			} else {
-			  exit(PROGRAMER_ERROR);
-			}
+			constante = params[1];
 			o << "	cmp" << size_to_letter(source.size) << "	$" << constante << ", " << to_string(source.address)
 			  << "(%rbp)" << endl;
 			o << "	sete " << to_string(destination.address) << "(%rbp)" << endl;
