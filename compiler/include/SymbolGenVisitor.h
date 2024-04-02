@@ -45,11 +45,11 @@ SymbolGenVisitor() : current_block(0), tmp_block_index(0), memory_offset(0), tmp
     virtual antlrcpp::Any visitExpr_parenthesis(ifccParser::Expr_parenthesisContext* ctx) override;
     virtual antlrcpp::Any visitFunction_call(ifccParser::Function_callContext* ctx) override;  
     virtual antlrcpp::Any visitExpr_assignment(ifccParser::Expr_assignmentContext* ctx) override;
+    virtual antlrcpp::Any visitDeclare_only_stmt(ifccParser::Declare_only_stmtContext* ctx) override;
 
     virtual antlrcpp::Any visitExpr_lazy_and(ifccParser::Expr_lazy_andContext* ctx) override;
     virtual antlrcpp::Any visitExpr_lazy_or(ifccParser::Expr_lazy_orContext* ctx) override;
     virtual antlrcpp::Any visitFunction_def(ifccParser::Function_defContext *ctx) override;
-    virtual antlrcpp::Any visitDeclare_only_stmt(ifccParser::Declare_only_stmtContext *ctx) override;
 
     std::string currentFunction="";
     std::unordered_map<int, int> blocks; // id current block, id parent block
