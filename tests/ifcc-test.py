@@ -18,6 +18,12 @@ def natural_sort_key(s): # to sort in natural order (ls -v equivalent)
     import re
     return [int(text) if text.isdigit() else text.lower() for text in re.split(r'(\d+)', s)]
 
+RED="\033[0;31m"
+GREEN="\033[0;32m"
+ORANGE="\033[0;33m"
+BLUE="\033[0;34m"
+NC="\033[0m" # No Color
+
 import argparse
 import glob
 import os
@@ -85,7 +91,7 @@ inputfilenames=[]
 for path in args.input:
     path=os.path.normpath(path) # collapse redundant slashes etc.
     if os.path.isfile(path):
-        if path[-2:] == '.c':
+        if path[-2:] == '.c' :
             inputfilenames.append(path)
         else:
             print("error: incorrect filename suffix (should be '.c'): "+path)
@@ -96,6 +102,11 @@ for path in args.input:
     else:
         print("error: cannot read input path `"+path+"'")
         sys.exit(1)
+
+## don't test hidden files
+for inputfilename in inputfilenames:
+    if '/.' in inputfilename or '-.' in inputfilename:
+        inputfilenames.remove(inputfilename)
 
 ## debug: after treewalk
 if args.debug:
@@ -188,15 +199,15 @@ for jobname in jobs:
     
     if gccstatus != 0 and ifccstatus != 0:
         ## ifcc correctly rejects invalid program -> test-case ok
-        print("TEST OK")
+        print(BLUE+"TEST OK"+NC)
         continue
     elif gccstatus != 0 and ifccstatus == 0:
         ## ifcc wrongly accepts invalid program -> error
-        print("TEST FAIL (your compiler accepts an invalid program)")
+        print(RED+"TEST FAIL"+NC+" (your compiler accepts an invalid program)")
         continue
     elif gccstatus == 0 and ifccstatus != 0:
         ## ifcc wrongly rejects valid program -> error
-        print("TEST FAIL (your compiler rejects a valid program)")
+        print(RED+"TEST FAIL"+NC+" (your compiler rejects a valid program)")
         if args.verbose:
             dumpfile("ifcc-compile.txt")
         continue
@@ -204,7 +215,7 @@ for jobname in jobs:
         ## ifcc accepts to compile valid program -> let's link it
         ldstatus=command("gcc -o exe-ifcc asm-ifcc.s", "ifcc-link.txt")
         if ldstatus:
-            print("TEST FAIL (your compiler produces incorrect assembly)")
+            print(RED+"TEST FAIL"+NC+" (your compiler produces incorrect assembly)")
             if args.verbose:
                 dumpfile("ifcc-link.txt")
             continue
@@ -214,7 +225,7 @@ for jobname in jobs:
         
     command("./exe-ifcc","ifcc-execute.txt")
     if open("gcc-execute.txt").read() != open("ifcc-execute.txt").read() :
-        print("TEST FAIL (different results at execution)")
+        print(ORANGE+"TEST FAIL"+NC+" (different results at execution)")
         if args.verbose:
             print("GCC:")
             dumpfile("gcc-execute.txt")
@@ -223,6 +234,6 @@ for jobname in jobs:
         continue
 
     ## last but not least
-    print("TEST OK")
+    print(GREEN+"TEST OK"+NC)
 
 
