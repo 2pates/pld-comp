@@ -9,7 +9,7 @@ Here we put the non-programming choices we made
 - variables can be only constitued of letters, `_` and numbers
 - for the moment we can do multiple affectations
 - we choose to change the memory_offset and the tmp_index before the actions
-- 
+- the char have size 4
 - 
 - 
 - 
@@ -18,8 +18,10 @@ Here we put the non-programming choices we made
 ## TODO
 ### Mandatory
 
-- [ ] Data type char : *Roua & Gaspard*
+- [x] Data type char
 - [x] Data type int
+- [ ] Data type void
+- [ ] Data type pointer address :
 - [x] Variables
 - [x] Integer constants
 - [x] Basic arithmetic operations: +,-, *
