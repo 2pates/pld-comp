@@ -1,6 +1,6 @@
 #include "IR.h"
 #include <iostream>
-
+#include <cstring>
 using namespace std;
 
 IRInstr::IRInstr(BasicBlock* bb_, Operation op, Type t, vector<string> params)
@@ -312,22 +312,19 @@ void IRInstr::gen_asm(ostream& o, Target target) {
         case ret: {
             if (target == Target::x86) {
                 VariableInfo variable = bb->cfg->get_var_info(params[0]);
+                string location = params[1];
 
                 o << "mov" << size_to_letter(variable.size) << " " << to_string(variable.address) << "(%rbp), %eax"
                   << endl;
-                o << "leave" << endl;
-                o << "ret" << endl;
-            }
-            break;
-        }
-        case retfct: {
-            if (target == Target::x86) {
-                VariableInfo variable = bb->cfg->get_var_info(params[0]);
+                if(strcmp(location,"main")==0){
+                  o << "leave" << endl;
+                }
+                else{
+                  o << "popq %rbp" << endl;
 
-                o << "mov" << size_to_letter(variable.size) << " " << to_string(variable.address) << "(%rbp), %eax"
-                  << endl;
-                o << "popq %rbp" << endl;
+                }
                 o << "ret" << endl;
+
             }
             break;
         }

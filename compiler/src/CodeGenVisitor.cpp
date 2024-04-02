@@ -6,11 +6,12 @@ antlrcpp::Any CodeGenVisitor::visitProg(ifccParser::ProgContext* ctx) {
     BasicBlock* bb = new BasicBlock(cfg, cfg->entry_block_label);
     cfg->current_bb = bb;
     cfg->add_bb(bb);
-
+    inmain=true;
     for (auto instr : ctx->statement()) {
         this->visit(instr);
     }
     this->visit(ctx->return_stmt());
+    inmain=false;
     for (auto function : ctx->function_def()) {
         this->visit(function);
     }    
@@ -29,7 +30,7 @@ antlrcpp::Any CodeGenVisitor::visitFunction_def(ifccParser::Function_defContext*
     for (auto instr : ctx->statement()) {
         this->visit(instr);
     }
-    this->visit(ctx->return_stmt_fct());
+    this->visit(ctx->return_stmt());
     return 0;    
 }
 
@@ -112,14 +113,16 @@ antlrcpp::Any CodeGenVisitor::visitDeclare(ifccParser::DeclareContext* ctx) {
 
 antlrcpp::Any CodeGenVisitor::visitReturn_stmt(ifccParser::Return_stmtContext* ctx) {
     std::string var_name = visit(ctx->expr());
-    cfg->current_bb->add_IRInstr(IRInstr::Operation::ret, Type::INT32, {var_name});
+    if(inmain){
+        cfg->current_bb->add_IRInstr(IRInstr::Operation::ret, Type::INT32, {var_name,"main"});
+    }
+    else{
+        cfg->current_bb->add_IRInstr(IRInstr::Operation::ret, Type::INT32, {var_name,"fonction"});
+
+    }
     return 0;
 }
-antlrcpp::Any CodeGenVisitor::visitReturn_stmt_fct(ifccParser::Return_stmt_fctContext* ctx) {
-    std::string var_name = visit(ctx->expr());
-    cfg->current_bb->add_IRInstr(IRInstr::Operation::retfct, Type::INT32, {var_name});
-    return 0;
-}
+
 antlrcpp::Any CodeGenVisitor::visitAssignment_stmt(ifccParser::Assignment_stmtContext* ctx) {
     std::string lvalue_name = ctx->lvalue()->getText();
     std::string lvalue_unique_name = get_unique_var_name(lvalue_name);
