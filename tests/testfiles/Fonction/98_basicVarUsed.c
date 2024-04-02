@@ -1,10 +1,9 @@
 #include <stdio.h>
+
 int main() {
-int z;
-z=585453;
-z=f(z);
-return z;
+    int z = 5;
+    z = f(1);
+    return z;
 }
-int f(int q){
-return q;
-}
+
+int f(int q) {}
