@@ -104,9 +104,11 @@ for path in args.input:
         sys.exit(1)
 
 ## don't test hidden files
-for inputfilename in inputfilenames:
-    if '/.' in inputfilename or '-.' in inputfilename:
-        inputfilenames.remove(inputfilename)
+for inputfilename in inputfilenames: # don't know why we have to do that multiple times    
+    for inputfilename in inputfilenames:
+        if ('/.' in inputfilename) or ('-.' in inputfilename):
+            inputfilenames.remove(inputfilename)
+            # print(inputfilename)
 
 ## debug: after treewalk
 if args.debug:
