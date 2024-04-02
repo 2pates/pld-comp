@@ -117,7 +117,7 @@ antlrcpp::Any CodeGenVisitor::visitReturn_stmt(ifccParser::Return_stmtContext* c
         cfg->current_bb->add_IRInstr(IRInstr::Operation::ret, Type::INT32, {var_name,"main"});
     }
     else{
-        cfg->current_bb->add_IRInstr(IRInstr::Operation::ret, Type::INT32, {var_name,"fonction"});
+        cfg->current_bb->add_IRInstr(IRInstr::Operation::ret, Type::INT32, {var_name,"function"});
 
     }
     return 0;
