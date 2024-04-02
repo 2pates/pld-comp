@@ -38,7 +38,6 @@ public:
     virtual antlrcpp::Any visitSelection_if(ifccParser::Selection_ifContext* ctx) override;
     virtual antlrcpp::Any visitIteration_while(ifccParser::Iteration_whileContext* ctx) override;
     virtual antlrcpp::Any visitExpr_assignment(ifccParser::Expr_assignmentContext* ctx) override;
-    virtual antlrcpp::Any visitReturn_stmt_fct(ifccParser::Return_stmt_fctContext* ctx) override;
 
     virtual antlrcpp::Any visitDeclare_only_stmt(ifccParser::Declare_only_stmtContext* ctx) override;
 
@@ -52,6 +51,6 @@ public:
     CFG* cfg;
     std::unordered_map<std::string, VariableInfo>& variables;
     bool declaration_mode;
+    bool inmain=false;
     int varInFunctionDef=0;
-    std::string repList[6]={"%edi", "%esi", "%edx", "%ecx", "%r8d", "%r9d"};
 };

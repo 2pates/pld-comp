@@ -4,7 +4,7 @@ axiom: prog EOF ;
 
 prog: 'int' 'main' '(' ')' '{' statement* return_stmt '}' function_def*;
 
-function_def: type VARNAME '(' declare_only_stmt? ')' '{' statement* return_stmt_fct? '}' ;
+function_def: type VARNAME '(' declare_only_stmt? ')' '{' statement* return_stmt? '}' ;
 function_call: VARNAME '(' ((expr',')*expr|) ')' ;
 
 statement: instruction | block ;
@@ -22,7 +22,6 @@ declare: (lvalue | assignment_stmt) (',' declare)? ;
 
 declare_only_stmt: type lvalue (',' declare_only_stmt)? ;
 return_stmt: RETURN expr ';' ;
-return_stmt_fct: RETURN expr ';' ;
 rvalue: expr ;
 lvalue: VARNAME ;
 

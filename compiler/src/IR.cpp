@@ -1,6 +1,6 @@
 #include "IR.h"
 #include <iostream>
-
+#include <cstring>
 using namespace std;
 
 IRInstr::IRInstr(BasicBlock* bb_, Operation op, Type t, vector<string> params)
@@ -65,19 +65,18 @@ void IRInstr::gen_asm(ostream& o, Target target) {
         }
         case copyIn: {
             VariableInfo source = bb->cfg->get_var_info(params[0]);
-            string destination = params[1];
-
+            int destination = stoi(params[1]);
             if (target == Target::x86) {
-                o << "mov" << size_to_letter(source.size) << " " << to_string(source.address) << "(%rbp), "<< destination << endl;
+                o << "mov" << size_to_letter(source.size) << " " << to_string(source.address) << "(%rbp), "<< repList[destination] << endl;
             }
             break;
         }
         case copyOut: {
-            string  source = params[0];
+            int  source = stoi(params[0]);
             VariableInfo destination = bb->cfg->get_var_info(params[1]);
 
             if (target == Target::x86) {
-                o << "mov" << size_to_letter(destination.size) << " "<<source << ", " << to_string(destination.address) << "(%rbp)"<< endl;
+                o << "mov" << size_to_letter(destination.size) << " "<<repList[source] << ", " << to_string(destination.address) << "(%rbp)"<< endl;
             }
             break;
         }
@@ -312,22 +311,19 @@ void IRInstr::gen_asm(ostream& o, Target target) {
         case ret: {
             if (target == Target::x86) {
                 VariableInfo variable = bb->cfg->get_var_info(params[0]);
+                string location = params[1];
 
                 o << "mov" << size_to_letter(variable.size) << " " << to_string(variable.address) << "(%rbp), %eax"
                   << endl;
-                o << "leave" << endl;
-                o << "ret" << endl;
-            }
-            break;
-        }
-        case retfct: {
-            if (target == Target::x86) {
-                VariableInfo variable = bb->cfg->get_var_info(params[0]);
+                if(location.compare("main")==0){
+                  o << "leave" << endl;
+                }
+                else{
+                  o << "popq %rbp" << endl;
 
-                o << "mov" << size_to_letter(variable.size) << " " << to_string(variable.address) << "(%rbp), %eax"
-                  << endl;
-                o << "popq %rbp" << endl;
+                }
                 o << "ret" << endl;
+
             }
             break;
         }
