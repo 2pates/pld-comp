@@ -9,6 +9,7 @@ antlrcpp::Any CodeGenVisitor::visitProg(ifccParser::ProgContext* ctx) {
     inmain=true;
     visit(ctx->block());
     inmain=false;
+    cfg->current_bb->add_IRInstr(IRInstr::Operation::ret, Type::INT32, {"","main"});
     for (auto function : ctx->function_def()) {
         this->visit(function);
     }    
@@ -27,6 +28,8 @@ antlrcpp::Any CodeGenVisitor::visitFunction_def(ifccParser::Function_defContext*
     this->visit(ctx->block());
     if(ctx->type()->getText().compare("void")==0){
         cfg->current_bb->add_IRInstr(IRInstr::Operation::ret, Type::INT32, {"void","voidFunction"});
+    } else {
+        cfg->current_bb->add_IRInstr(IRInstr::Operation::ret, Type::INT32, {"","function"});
     }
     return 0;    
 }
