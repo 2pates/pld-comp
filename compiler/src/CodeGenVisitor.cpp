@@ -7,9 +7,7 @@ antlrcpp::Any CodeGenVisitor::visitProg(ifccParser::ProgContext* ctx) {
     cfg->current_bb = bb;
     cfg->add_bb(bb);
     inmain=true;
-    for (auto instr : ctx->statement()) {
-        this->visit(instr);
-    }
+    visit(ctx->block());
     inmain=false;
     for (auto function : ctx->function_def()) {
         this->visit(function);
@@ -26,10 +24,7 @@ antlrcpp::Any CodeGenVisitor::visitFunction_def(ifccParser::Function_defContext*
     if(ctx->declare_only_stmt()!=nullptr){
         visit(ctx->declare_only_stmt());
     }
-    for (auto instr : ctx->statement()) {
-        this->visit(instr);
-    }
-    this->visit(ctx->return_stmt());
+    this->visit(ctx->block());
     return 0;    
 }
 
