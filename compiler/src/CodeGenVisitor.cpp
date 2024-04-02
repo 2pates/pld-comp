@@ -11,8 +11,26 @@ antlrcpp::Any CodeGenVisitor::visitProg(ifccParser::ProgContext* ctx) {
         this->visit(instr);
     }
     this->visit(ctx->return_stmt());
-
+    for (auto function : ctx->function_def()) {
+        this->visit(function);
+    }    
     return 0;
+}
+antlrcpp::Any CodeGenVisitor::visitFunction_def(ifccParser::Function_defContext* ctx) {
+    varInFunctionDef=0;
+
+    BasicBlock* bb = new BasicBlock(cfg, "function_"+ctx->VARNAME()->getText());
+    cfg->current_bb = bb;
+    cfg->add_bb(bb);
+    cfg->current_bb->add_IRInstr(IRInstr::Operation::startfct, Type::INT32, {});
+    if(ctx->declare_only_stmt()!=nullptr){
+        visit(ctx->declare_only_stmt());
+    }
+    for (auto instr : ctx->statement()) {
+        this->visit(instr);
+    }
+    this->visit(ctx->return_stmt_fct());
+    return 0;    
 }
 
 antlrcpp::Any CodeGenVisitor::visitBlock(ifccParser::BlockContext* ctx) {
@@ -31,17 +49,31 @@ antlrcpp::Any CodeGenVisitor::visitFunction_call(ifccParser::Function_callContex
         std::string var_name = visit(ctx->expr()[0]);
         cfg->current_bb->add_IRInstr(IRInstr::Operation::copyIn, Type::INT32, {var_name, "%edi"});
         cfg->current_bb->add_IRInstr(IRInstr::Operation::call, Type::INT32, {"putchar@PLT"});
+        tmp_index++;
         std::string tmp_var_name_return = "#tmp" + std::to_string(tmp_index);
         cfg->current_bb->add_IRInstr(IRInstr::Operation::copyOut, Type::INT32, {"%eax",tmp_var_name_return});
         return tmp_var_name_return;
     }    
     if(s=="getchar" && ctx->expr().size()==0){
         cfg->current_bb->add_IRInstr(IRInstr::Operation::call, Type::INT32, {"getchar@PLT"});
+        tmp_index++;
         std::string tmp_var_name_return = "#tmp" + std::to_string(tmp_index);
         cfg->current_bb->add_IRInstr(IRInstr::Operation::copyOut, Type::INT32, {"%eax",tmp_var_name_return});
         return tmp_var_name_return;        
     }
-    return "0";
+    for(long unsigned int i=0;i<ctx->expr().size();i++){
+        if(i>=6){
+            std::cerr<<"to many var"<<std::endl;
+            exit(1);
+        }
+        std::string var_name = visit(ctx->expr()[i]);
+        cfg->current_bb->add_IRInstr(IRInstr::Operation::copyIn, Type::INT32, {var_name, repList[i]});
+    }
+    cfg->current_bb->add_IRInstr(IRInstr::Operation::call, Type::INT32, {"function_"+s});
+    tmp_index++;
+    std::string tmp_var_name_return = "#tmp" + std::to_string(tmp_index);
+    cfg->current_bb->add_IRInstr(IRInstr::Operation::copyOut, Type::INT32, {"%eax",tmp_var_name_return});
+    return tmp_var_name_return;
 }
 
 antlrcpp::Any CodeGenVisitor::visitRvalue(ifccParser::RvalueContext* ctx) { return visit(ctx->expr()); }
@@ -83,13 +115,23 @@ antlrcpp::Any CodeGenVisitor::visitReturn_stmt(ifccParser::Return_stmtContext* c
     cfg->current_bb->add_IRInstr(IRInstr::Operation::ret, Type::INT32, {var_name});
     return 0;
 }
+antlrcpp::Any CodeGenVisitor::visitReturn_stmt_fct(ifccParser::Return_stmt_fctContext* ctx) {
+    std::string var_name = visit(ctx->expr());
+    cfg->current_bb->add_IRInstr(IRInstr::Operation::retfct, Type::INT32, {var_name});
+    return 0;
+}
 
 antlrcpp::Any CodeGenVisitor::visitAssignment_equal(ifccParser::Assignment_equalContext* ctx) {
     if (declaration_mode || variables.find(ctx->lvalue()->getText()) != cfg->variables.end()) {
         std::string r_name = visit(ctx->rvalue());
         if (variables.find(r_name) != variables.end()) {
+<<<<<<<<< Temporary merge branch 1
+            cfg->current_bb->add_IRInstr(IRInstr::Operation::copy, Type::INT32, {r_name, lvalue_unique_name});
+            return 0;
+=========
             cfg->current_bb->add_IRInstr(IRInstr::Operation::copy, Type::INT32, {r_name, ctx->lvalue()->getText()});
             return r_name;
+>>>>>>>>> Temporary merge branch 2
         } else {
             debug("Variable " + r_name + " not found");
             return PROGRAMER_ERROR;
@@ -98,6 +140,18 @@ antlrcpp::Any CodeGenVisitor::visitAssignment_equal(ifccParser::Assignment_equal
         error("Error: undeclared variable " + lvalue_unique_name);
         return UNDECLARED;
     }
+}
+
+<<<<<<<<< Temporary merge branch 1
+std::string CodeGenVisitor::get_unique_var_name(std::string varname) {
+    int block = current_block;
+    while (block != -1) { // finds in blocks starting from the upper ones
+        std::string unique_var_name = varname + "_" + std::to_string(block);
+        if (variables.find(unique_var_name) != variables.end())
+            return unique_var_name;
+        block = blocks.at(block); // decrease block lvl
+    }
+    return "";
 }
 
 antlrcpp::Any CodeGenVisitor::visitAssignment_add(ifccParser::Assignment_addContext* ctx) {
@@ -160,16 +214,6 @@ antlrcpp::Any CodeGenVisitor::visitPost_incrementation(ifccParser::Post_incremen
 }
 
 
-std::string CodeGenVisitor::get_unique_var_name(std::string varname) {
-    int block = current_block;
-    while (block != -1) { // finds in blocks starting from the upper ones
-        std::string unique_var_name = varname + "_" + std::to_string(block);
-        if (variables.find(unique_var_name) != variables.end())
-            return unique_var_name;
-        block = blocks.at(block); // decrease block lvl
-    }
-    return "";
-}
 
 antlrcpp::Any CodeGenVisitor::visitSelection_if(ifccParser::Selection_ifContext* ctx) {
     BasicBlock* nextBB = new BasicBlock(cfg, cfg->new_BB_name());

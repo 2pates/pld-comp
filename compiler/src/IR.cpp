@@ -81,6 +81,11 @@ void IRInstr::gen_asm(ostream& o, Target target) {
             }
             break;
         }
+        case jump: {
+          string jumpLabel = params[0];
+          o<< "jmp "<<jumpLabel<<endl;
+          break;
+        }
         case cmp_const: {
             VariableInfo destination = bb->cfg->get_var_info(params[2]);
             VariableInfo source = bb->cfg->get_var_info(params[0]);
@@ -167,6 +172,53 @@ void IRInstr::gen_asm(ostream& o, Target target) {
             }
             break;
         }
+        
+        case div: {
+            // Assuming params[0] and params[1] hold the variable names/identifiers for the dividend and divisor
+            // and that params[2] holds the destination variable identifier.
+            VariableInfo dividend = bb->cfg->get_var_info(params[0]);
+            VariableInfo divisor = bb->cfg->get_var_info(params[1]);
+            VariableInfo destination = bb->cfg->get_var_info(params[2]);
+
+            if (target == Target::x86) {
+                // Load the dividend into eax. In your provided assembly, variables are directly accessed via their stack addresses.
+                o << "movl " << to_string(dividend.address) << "(%rbp), %eax" << endl;
+                
+                // Prepare %edx:%eax for division by sign-extending %eax into %edx. This is analogous to the 'cltd' instruction.
+                o << "cltd" << endl;
+                
+                // Perform the division. The 'idivl' instruction divides %edx:%eax by the divisor, with the quotient stored in %eax.
+                // The divisor is accessed directly from its stack address.
+                o << "idivl " << to_string(divisor.address) << "(%rbp)" << endl;
+                
+                // Store the quotient (result of the division) at the destination variable's stack address.
+                o << "movl %eax, " << to_string(destination.address) << "(%rbp)" << endl;
+            }
+            break;
+        }
+
+
+
+        case mod: {
+            VariableInfo membreGauche = bb->cfg->get_var_info(params[0]); // Operand for dividend
+            VariableInfo membreDroit = bb->cfg->get_var_info(params[1]); // Operand for divisor
+            VariableInfo destination = bb->cfg->get_var_info(params[2]); // Result of modulo
+
+            if (target == Target::x86) {
+                // Load the dividend into eax
+                o << "mov" << size_to_letter(membreGauche.size) << " " << to_string(membreGauche.address) << "(%rbp), %eax" << endl;
+                // Sign-extend eax into edx to prepare edx:eax for division
+                o << "cdq" << endl;
+                // Load the divisor into a register, using ebx for example
+                o << "mov" << size_to_letter(membreDroit.size) << " " << to_string(membreDroit.address) << "(%rbp), %ebx" << endl;
+                // Perform the division with idiv; quotient in eax, remainder in edx
+                o << "idivl %ebx" << endl;
+                // For modulo, the interest is in the remainder, which is now in edx. Move it to the destination.
+                o << "mov" << size_to_letter(destination.size) << " %edx, " << to_string(destination.address) << "(%rbp)" << endl;
+            }
+            break;
+        }
+
         case l_not: {
             VariableInfo variableInitiale = bb->cfg->get_var_info(params[0]);
             VariableInfo destination = bb->cfg->get_var_info(params[1]);
@@ -294,6 +346,17 @@ void IRInstr::gen_asm(ostream& o, Target target) {
             }
             break;
         }
+        case retfct: {
+            if (target == Target::x86) {
+                VariableInfo variable = bb->cfg->get_var_info(params[0]);
+
+                o << "mov" << size_to_letter(variable.size) << " " << to_string(variable.address) << "(%rbp), %eax"
+                  << endl;
+                o << "popq %rbp" << endl;
+                o << "ret" << endl;
+            }
+            break;
+        }
         case bitwise_and: {
             VariableInfo membreGauche = bb->cfg->get_var_info(params[0]);
             VariableInfo membreDroit = bb->cfg->get_var_info(params[1]);
@@ -414,6 +477,10 @@ void IRInstr::gen_asm(ostream& o, Target target) {
           if (target == Target::x86) {
               o << "call "<<fctName<<endl;
           }
+          break;
+        }
+        case startfct: {
+          o<<"pushq %rbp"<<endl;
           break;
         }
     }

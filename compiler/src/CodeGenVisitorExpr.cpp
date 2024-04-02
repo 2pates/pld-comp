@@ -22,6 +22,7 @@ antlrcpp::Any CodeGenVisitor::visitExpr_function(ifccParser::Expr_functionContex
     return tmp_var_name;
 }
 
+
 antlrcpp::Any CodeGenVisitor::visitExpr_unaire(ifccParser::Expr_unaireContext* ctx) {
     std::string var_name = visit(ctx->expr());
     tmp_index++;
@@ -48,8 +49,14 @@ antlrcpp::Any CodeGenVisitor::visitExpr_mult(ifccParser::Expr_multContext* ctx) 
     string b = this->visit(ctx->expr(1));
     tmp_index++;
     std::string tmp_var_name = "#tmp" + std::to_string(tmp_index);
-    if (s == "*")
+    int tmp_var_address = variables.at(tmp_var_name).address;
+    if (s == "*") {
         cfg->current_bb->add_IRInstr(IRInstr::Operation::mul, Type::INT32, {a, b, tmp_var_name});
+    } else if (s == "/") {
+        cfg->current_bb->add_IRInstr(IRInstr::Operation::div, Type::INT32, {a, b, tmp_var_name});
+    } else if (s == "%") {
+        cfg->current_bb->add_IRInstr(IRInstr::Operation::mod, Type::INT32, {a, b, tmp_var_name});
+    }
     return tmp_var_name;
 }
 
