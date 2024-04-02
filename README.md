@@ -28,7 +28,7 @@ Here we put the non-programming choices we made
 - [x] Comparison operations: ==, !=, <, >
 - [x] Unary operations: ! and - and ~ (bonus)
 - [x] Declaration of variables anywhere
-- [ ] Assignment (which, in C, also returns a value) : *Mathieu*
+- [x] Assignment (which, in C, also returns a value)
 - [x] Possibility of initializing a variable when declaring it
 - [x] Use of standard putchar and getchar functions for I/O
 - [ ] Define functions with parameters, and int, char or void return type : *James*
@@ -36,7 +36,7 @@ Here we put the non-programming choices we made
 - [x] Block structure using { and }
 - [x] Support for variable scopes and shadowing
 - [x] If, else, while control structures
-- [ ] Support for return expression anywhere : *Mathieu*
+- [x] Support for return expression anywhere
 - [x] Check that a variable used in an expression has been declared
 - [x] Check that a variable is not declared more than once
 - [x] Check that a declared variable is used at least once
