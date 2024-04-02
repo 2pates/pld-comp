@@ -20,12 +20,10 @@ Here we put the non-programming choices we made
 
 - [x] Data type char
 - [x] Data type int
-- [ ] Data type void
-- [ ] Data type pointer address :
 - [x] Variables
 - [x] Integer constants
 - [x] Basic arithmetic operations: +,-, *
-- [x] Division and modulo (in IR) : *Bachir*
+- [x] Division and modulo (in IR)
 - [x] Bit-by-bit logical operations: |, &,ˆ
 - [x] Comparison operations: ==, !=, <, >
 - [x] Unary operations: ! and - and ~ (bonus)
@@ -41,7 +39,7 @@ Here we put the non-programming choices we made
 - [x] Support for return expression anywhere
 - [x] Check that a variable used in an expression has been declared
 - [x] Check that a variable is not declared more than once
-- [] Check that a declared variable is used at least once: I don't think this has been implemented (James)
+- [ ] Check that a declared variable is used at least once: I don't think this has been implemented ~James
 
 ### Optional
 
@@ -51,14 +49,16 @@ Here we put the non-programming choices we made
 - [ ] Propagation of constant variables (with data-flow analysis)
 - [ ] Arrays (one-dimensional)
 - [ ] Pointers
-- [ ] Break and continue
+- [ ] Break and continue : *Mathieu*
 - [ ] Char data type width support (8-bit integer)
 - [ ] Character strings represented by char arrays
-- [ ] Switch...case
-- [x] Lazy operators ||, && : *Myriam*
-- [ ] Assignment operators +=, -= etc., increment ++ and decrement -- : *Myriam*
+- [ ] Switch...case : *Bachir*
+- [x] Lazy operators ||, &&
+- [x] Assignment operators +=, -= etc., increment ++ and decrement --
 
-
+### Bonus
+- [ ] Data type void
+- [ ] Data type pointer address
 
 
 
