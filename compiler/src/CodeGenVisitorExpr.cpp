@@ -205,12 +205,37 @@ antlrcpp::Any CodeGenVisitor::visitExpr_lazy_or(ifccParser::Expr_lazy_orContext*
 
 antlrcpp::Any CodeGenVisitor::visitExpr_atom(ifccParser::Expr_atomContext* ctx) {
     std::string var_name;
-    if (ctx->CONST() != nullptr) {
+    if (ctx->CONST_INT() != nullptr) {
         tmp_index++;
         var_name = "#tmp" + std::to_string(tmp_index); // we hope that it's the same #tmp number
         debug(var_name);
         if (variables.find(var_name) != variables.end()) {
-            cfg->current_bb->add_IRInstr(IRInstr::Operation::ldconst, Type::INT32, {ctx->CONST()->getText(), var_name});
+            cfg->current_bb->add_IRInstr(IRInstr::Operation::ldconst, Type::INT32, {ctx->CONST_INT()->getText(), var_name});
+        } else {
+            debug("Error: variable " + var_name + " not found");
+            return PROGRAMER_ERROR;
+        }
+    } else if (ctx->CONST_CHAR() != nullptr) {
+        tmp_index++;
+        var_name = "#tmp" + std::to_string(tmp_index); // we hope that it's the same #tmp number
+        debug(var_name);
+        if (variables.find(var_name) != variables.end()) {
+            int numerical_value = int(ctx->CONST_CHAR()->getText()[1]);
+			std::string value = std::to_string(numerical_value);
+            debug(value);
+            cfg->current_bb->add_IRInstr(IRInstr::Operation::ldconst, Type::INT32, {value, var_name});
+        } else {
+            debug("Error: variable " + var_name + " not found");
+            return PROGRAMER_ERROR;
+        }
+    } else if (ctx->CONST_VOID() != nullptr) {
+        tmp_index++;
+        var_name = "#tmp" + std::to_string(tmp_index); // we hope that it's the same #tmp number
+        debug(var_name);
+        if (variables.find(var_name) != variables.end()) {
+            if (ctx->CONST_VOID()->getText() == "NULL") {
+                cfg->current_bb->add_IRInstr(IRInstr::Operation::ldconst, Type::POINTER, {"0", var_name});
+            }
         } else {
             debug("Error: variable " + var_name + " not found");
             return PROGRAMER_ERROR;
@@ -226,3 +251,4 @@ antlrcpp::Any CodeGenVisitor::visitExpr_assignment(ifccParser::Expr_assignmentCo
     string var_name = visit(ctx->assignment_stmt());
     return var_name;
 }
+

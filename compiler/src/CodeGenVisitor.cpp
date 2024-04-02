@@ -97,18 +97,13 @@ antlrcpp::Any CodeGenVisitor::visitInstruction(ifccParser::InstructionContext* c
 
 antlrcpp::Any CodeGenVisitor::visitDeclare_stmt(ifccParser::Declare_stmtContext* ctx) {
     declaration_mode = true;
-    visit(ctx->declare());
+    for (auto it : ctx->lvalue()) {
+        visit(it);
+    }
+    for (auto it : ctx->assignment_stmt()) {
+        visit(it);
+    }
     declaration_mode = false;
-    return 0;
-}
-
-antlrcpp::Any CodeGenVisitor::visitDeclare(ifccParser::DeclareContext* ctx) {
-    if (ctx->assignment_stmt() != nullptr) {
-        visit(ctx->assignment_stmt());
-    }
-    if (ctx->declare() != nullptr) {
-        visit(ctx->declare());
-    }
     return 0;
 }
 
