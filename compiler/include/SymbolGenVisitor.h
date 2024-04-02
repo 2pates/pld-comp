@@ -68,7 +68,9 @@ SymbolGenVisitor() : current_block(0), tmp_block_index(0), memory_offset(0), tmp
                                            "default", "break",  "int",      "float",    "char",    "double",   "long",
                                            "for",     "while",  "do",       "void",     "goto",    "auto",     "signed",
                                            "const",   "extern", "register", "unsigned", "return",  "continue", "enum",
-                                           "sizeof",  "struct", "typedef",  "union",    "volatile"};
+                                           "sizeof",  "struct", "typedef",  "union",    "volatile",
+                                           "NULL" // manually added
+                                           };
 
     int check_exist_in_current_block(std::string varname);
     int check_exist_in_current_or_parent_block(std::string varname);

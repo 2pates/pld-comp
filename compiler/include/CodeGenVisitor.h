@@ -18,7 +18,7 @@ public:
     virtual antlrcpp::Any visitReturn_stmt(ifccParser::Return_stmtContext* ctx) override;
     virtual antlrcpp::Any visitDeclare_stmt(ifccParser::Declare_stmtContext* ctx) override;
     virtual antlrcpp::Any visitDeclare(ifccParser::DeclareContext* ctx) override;
-    virtual antlrcpp::Any visitAssignment_equal(ifccParser::Assignment_equalContext* ctx) override;
+    irtual antlrcpp::Any visitAssignment_equal(ifccParser::Assignment_equalContext* ctx) override;
     virtual antlrcpp::Any visitAssignment_add(ifccParser::Assignment_addContext* ctx) override;
     virtual antlrcpp::Any visitAssignment_mult(ifccParser::Assignment_multContext* ctx) override;
     virtual antlrcpp::Any visitPre_incrementation(ifccParser::Pre_incrementationContext* ctx) override;
@@ -43,7 +43,6 @@ public:
     virtual antlrcpp::Any visitSelection_if(ifccParser::Selection_ifContext* ctx) override;
     virtual antlrcpp::Any visitIteration_while(ifccParser::Iteration_whileContext* ctx) override;
     virtual antlrcpp::Any visitExpr_assignment(ifccParser::Expr_assignmentContext* ctx) override;
-    virtual antlrcpp::Any visitReturn_stmt_fct(ifccParser::Return_stmt_fctContext* ctx) override;
 
     std::string get_unique_var_name(std::string varname);
 
@@ -55,6 +54,6 @@ public:
     CFG* cfg;
     std::unordered_map<std::string, VariableInfo>& variables;
     bool declaration_mode;
+    bool inmain=false;
     int varInFunctionDef=0;
-    std::string repList[6]={"%edi", "%esi", "%edx", "%ecx", "%r8d", "%r9d"};
 };

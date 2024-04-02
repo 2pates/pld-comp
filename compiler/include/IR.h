@@ -58,6 +58,7 @@ public:
         lazy_and,
         lazy_or,
         startfct } Operation;
+    string repList[7]={"%edi", "%esi", "%edx", "%ecx", "%r8d", "%r9d", "%eax"};
 
     /**  constructor */
     IRInstr(BasicBlock* bb_, Operation op, Type t, std::vector<std::string> params);

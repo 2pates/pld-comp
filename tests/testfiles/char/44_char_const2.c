@@ -1,7 +1,5 @@
 int main() {
-	int a;
-	a=3-(3+2);
+	char a = 'd';
 	return a;
 }
-
 

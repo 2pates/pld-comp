@@ -9,7 +9,7 @@ all:
 
 check:
 	rm -rf $(OUTPUT)
-	$(PYTHON) $(PROGRAM) $(FOLDER) > $(TMP_OUTPUT_FILE)
+	$(PYTHON) $(PROGRAM) $(FOLDER) | tee $(TMP_OUTPUT_FILE)
 	@if grep -q "FAIL" $(TMP_OUTPUT_FILE) ; \
 	then \
 		echo "Some tests failed" ; \
