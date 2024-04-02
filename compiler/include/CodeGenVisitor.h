@@ -45,8 +45,6 @@ public:
     virtual antlrcpp::Any visitExpr_assignment(ifccParser::Expr_assignmentContext* ctx) override;
     virtual antlrcpp::Any visitReturn_stmt_fct(ifccParser::Return_stmt_fctContext* ctx) override;
 
-    virtual antlrcpp::Any visitDeclare_only_stmt(ifccParser::Declare_only_stmtContext* ctx) override;
-
     std::string get_unique_var_name(std::string varname);
 
     int current_block;

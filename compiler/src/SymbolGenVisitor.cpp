@@ -86,6 +86,7 @@ antlrcpp::Any SymbolGenVisitor::visitDeclare(ifccParser::DeclareContext* ctx) {
 antlrcpp::Any SymbolGenVisitor::visitAssignment_equal(ifccParser::Assignment_equalContext* ctx) {
     std::string name = ctx->lvalue()->VARNAME()->getText();
     std::string unique_name = create_unique_var_name(name);
+    debug("Affectation "+unique_name);
     if (declaration_mode) {
         if (check_exist_in_current_block(name) == GOOD) {
             error("Error: double declared variable " + name);

@@ -16,7 +16,7 @@ lvalue OP=('++' | '--')                     # post_incrementation
 | OP=('++' | '--') lvalue                   # pre_incrementation
 | lvalue '=' rvalue                         # assignment_equal
 | lvalue OP=('+=' | '-=') rvalue            # assignment_add
-| lvalue OP=('*=' | '/=' | '*/') rvalue     # assignment_mult
+| lvalue OP=('*=' | '/=' | '%=') rvalue     # assignment_mult
 ;
 
 selection_stmt: 'if' '(' expr ')' statement ('else' statement)? #selection_if ;

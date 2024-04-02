@@ -122,27 +122,23 @@ antlrcpp::Any CodeGenVisitor::visitReturn_stmt_fct(ifccParser::Return_stmt_fctCo
 }
 
 antlrcpp::Any CodeGenVisitor::visitAssignment_equal(ifccParser::Assignment_equalContext* ctx) {
-    if (declaration_mode || variables.find(ctx->lvalue()->getText()) != cfg->variables.end()) {
+    std::string lvalue_name = ctx->lvalue()->getText();
+    std::string lvalue_unique_name = get_unique_var_name(lvalue_name);
+    if (declaration_mode || variables.find(lvalue_unique_name) != cfg->variables.end()) {
         std::string r_name = visit(ctx->rvalue());
         if (variables.find(r_name) != variables.end()) {
-<<<<<<<<< Temporary merge branch 1
             cfg->current_bb->add_IRInstr(IRInstr::Operation::copy, Type::INT32, {r_name, lvalue_unique_name});
-            return 0;
-=========
-            cfg->current_bb->add_IRInstr(IRInstr::Operation::copy, Type::INT32, {r_name, ctx->lvalue()->getText()});
-            return r_name;
->>>>>>>>> Temporary merge branch 2
+            return r_name; 
         } else {
             debug("Variable " + r_name + " not found");
             return PROGRAMER_ERROR;
         }
     } else {
-        error("Error: undeclared variable " + lvalue_unique_name);
+        error("Error : undeclared error variable" + lvalue_unique_name);
         return UNDECLARED;
     }
 }
 
-<<<<<<<<< Temporary merge branch 1
 std::string CodeGenVisitor::get_unique_var_name(std::string varname) {
     int block = current_block;
     while (block != -1) { // finds in blocks starting from the upper ones
@@ -156,33 +152,35 @@ std::string CodeGenVisitor::get_unique_var_name(std::string varname) {
 
 antlrcpp::Any CodeGenVisitor::visitAssignment_add(ifccParser::Assignment_addContext* ctx) {
     std::string s = ctx->OP->getText();
-    string a = ctx->lvalue()->getText();
+    string lvalue_name = ctx->lvalue()->getText();
+    std::string lvalue_unique_name = get_unique_var_name(lvalue_name);
     string b = this->visit(ctx->rvalue());
 
     if (s == "+=")
-        cfg->current_bb->add_IRInstr(IRInstr::Operation::add, Type::INT32, {a, b, a});
+        cfg->current_bb->add_IRInstr(IRInstr::Operation::add, Type::INT32, {lvalue_unique_name, b, lvalue_unique_name});
     else
-        cfg->current_bb->add_IRInstr(IRInstr::Operation::sub, Type::INT32, {a, b, a});
-    return a;
+        cfg->current_bb->add_IRInstr(IRInstr::Operation::sub, Type::INT32, {lvalue_unique_name, b, lvalue_unique_name});
+    return lvalue_unique_name;
 }
-
 
 antlrcpp::Any CodeGenVisitor::visitAssignment_mult(ifccParser::Assignment_multContext* ctx) {
     std::string s = ctx->OP->getText();
-    string a = ctx->lvalue()->getText();
+    string lvalue_name = ctx->lvalue()->getText();
+    std::string a = get_unique_var_name(lvalue_name);
     string b = this->visit(ctx->rvalue());
 
     if (s == "*=")
-        cfg->current_bb->add_IRInstr(IRInstr::Operation::mul, Type::INT32, {a, b, a});/*
+        cfg->current_bb->add_IRInstr(IRInstr::Operation::mul, Type::INT32, {a, b, a});
     else if (s== "/=")
         cfg->current_bb->add_IRInstr(IRInstr::Operation::div, Type::INT32, {a, b, a});
     else
-        cfg->current_bb->add_IRInstr(IRInstr::Operation::mod, Type::INT32, {a, b, a});*/
+        cfg->current_bb->add_IRInstr(IRInstr::Operation::mod, Type::INT32, {a, b, a});
     return a;
 }
 
 antlrcpp::Any CodeGenVisitor::visitPre_incrementation(ifccParser::Pre_incrementationContext* ctx) {
-    string a = ctx->lvalue()->getText();
+    string lvalue_name = ctx->lvalue()->getText();
+    std::string a = get_unique_var_name(lvalue_name);
     string s = ctx->OP->getText();
 
     if (s == "++"){
@@ -196,7 +194,8 @@ antlrcpp::Any CodeGenVisitor::visitPre_incrementation(ifccParser::Pre_incrementa
 }
 
 antlrcpp::Any CodeGenVisitor::visitPost_incrementation(ifccParser::Post_incrementationContext* ctx) {
-    string a = ctx->lvalue()->getText();
+    string lvalue_name = ctx->lvalue()->getText();
+    std::string a = get_unique_var_name(lvalue_name);
     string s = ctx->OP->getText();
     
     tmp_index++;
