@@ -540,8 +540,8 @@ void CFG::gen_asm(ostream& o, Target target) {
 
 void CFG::gen_asm_prologue(ostream& o, Target target) {
     if (target == Target::x86) {
-        o << "	.globl	_main" << endl;
-        o << "	_main:" << endl;
+        o << "	.globl	main" << endl;
+        o << "	main:" << endl;
         o << "	pushq	%rbp" << endl;                // Save the old base pointer
         o << "	movq	%rsp, %rbp" << endl;           // Set up a new base pointer
         o << "	subq	$"<<(-memoryUse/16+2)*16<<", %rsp"<<endl;        //Set up potential function call
