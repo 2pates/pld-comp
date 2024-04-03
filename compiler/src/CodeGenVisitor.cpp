@@ -231,7 +231,9 @@ antlrcpp::Any CodeGenVisitor::visitPost_incrementation(ifccParser::Post_incremen
 antlrcpp::Any CodeGenVisitor::visitSelection_if(ifccParser::Selection_ifContext* ctx) {
     BasicBlock* nextBB = new BasicBlock(cfg, cfg->new_BB_name());
     cfg->add_bb(nextBB);
-    BasicBlock* testBlock = new BasicBlock(cfg, cfg->new_BB_name());
+    if(cfg->current_bb->next_block != nullptr)
+        nextBB->exit_true = cfg->current_bb->next_block; // We go back to the previous next block at the end of this next block
+    BasicBlock* testBlock = new BasicBlock(cfg, cfg->new_BB_name(), nextBB);
     cfg->add_bb(testBlock);
     
     string testVarName = visit(ctx->expr());
@@ -239,7 +241,7 @@ antlrcpp::Any CodeGenVisitor::visitSelection_if(ifccParser::Selection_ifContext*
 
     cfg->current_bb->exit_true = testBlock; // After current block, jump to testBlock
     
-    BasicBlock* thenBB = new BasicBlock(cfg, cfg->new_BB_name());
+    BasicBlock* thenBB = new BasicBlock(cfg, cfg->new_BB_name(), nextBB);
     cfg->add_bb(thenBB);
     //After then block, jump to nextBB, might be overwritten during visit(ctx->instruction(0))
     thenBB->exit_true = nextBB;
@@ -253,7 +255,7 @@ antlrcpp::Any CodeGenVisitor::visitSelection_if(ifccParser::Selection_ifContext*
 
     if (ctx->statement()[1] != nullptr) {
         //If else statement
-        BasicBlock* elseBB = new BasicBlock(cfg, cfg->new_BB_name());
+        BasicBlock* elseBB = new BasicBlock(cfg, cfg->new_BB_name(), nextBB);
         cfg->add_bb(elseBB);
         //After else block, jump to nextBB, might be overwritten during visit(ctx->instruction(1))
         elseBB->exit_true = nextBB;
@@ -273,12 +275,14 @@ antlrcpp::Any CodeGenVisitor::visitSelection_if(ifccParser::Selection_ifContext*
 antlrcpp::Any CodeGenVisitor::visitIteration_while(ifccParser::Iteration_whileContext* ctx) {
     BasicBlock* nextBB = new BasicBlock(cfg, cfg->new_BB_name());
     cfg->add_bb(nextBB);
-    BasicBlock* testBlock = new BasicBlock(cfg, cfg->new_BB_name());
+    if(cfg->current_bb->next_block != nullptr)
+        nextBB->exit_true = cfg->current_bb->next_block; // We go back to the previous next block at the end of this next block
+    BasicBlock* testBlock = new BasicBlock(cfg, cfg->new_BB_name(), nextBB);
     cfg->add_bb(testBlock);
 
     cfg->current_bb->exit_true = testBlock; // After current block, jump to testBlock
     
-    BasicBlock* thenBB = new BasicBlock(cfg, cfg->new_BB_name());
+    BasicBlock* thenBB = new BasicBlock(cfg, cfg->new_BB_name(), nextBB);
     cfg->add_bb(thenBB);
     //After then block, jump to nextBB, might be overwritten during visit(ctx->instruction(0))
     thenBB->exit_true = testBlock;
