@@ -229,11 +229,10 @@ antlrcpp::Any CodeGenVisitor::visitPost_incrementation(ifccParser::Post_incremen
 
 
 antlrcpp::Any CodeGenVisitor::visitSelection_if(ifccParser::Selection_ifContext* ctx) {
-    BasicBlock* nextBB = new BasicBlock(cfg, cfg->new_BB_name());
+    BasicBlock* nextBB = new BasicBlock(cfg, cfg->new_BB_name(), cfg->current_bb->next_block);
     cfg->add_bb(nextBB);
-    if(cfg->current_bb->next_block != nullptr)
-        nextBB->exit_true = cfg->current_bb->next_block; // We go back to the previous next block at the end of this next block
-    BasicBlock* testBlock = new BasicBlock(cfg, cfg->new_BB_name(), nextBB);
+    nextBB->exit_true = cfg->current_bb->next_block; // After next block go back to the previous next block
+    BasicBlock* testBlock = new BasicBlock(cfg, cfg->new_BB_name());
     cfg->add_bb(testBlock);
     
     string testVarName = visit(ctx->expr());
@@ -273,10 +272,9 @@ antlrcpp::Any CodeGenVisitor::visitSelection_if(ifccParser::Selection_ifContext*
 }
 
 antlrcpp::Any CodeGenVisitor::visitIteration_while(ifccParser::Iteration_whileContext* ctx) {
-    BasicBlock* nextBB = new BasicBlock(cfg, cfg->new_BB_name());
+    BasicBlock* nextBB = new BasicBlock(cfg, cfg->new_BB_name(), cfg->current_bb->next_block);
     cfg->add_bb(nextBB);
-    if(cfg->current_bb->next_block != nullptr)
-        nextBB->exit_true = cfg->current_bb->next_block; // We go back to the previous next block at the end of this next block
+    nextBB->exit_true = cfg->current_bb->next_block; // After next block go back to the previous next block
     BasicBlock* testBlock = new BasicBlock(cfg, cfg->new_BB_name(), nextBB);
     cfg->add_bb(testBlock);
 
