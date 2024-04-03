@@ -1,6 +1,15 @@
 #include "SymbolGenVisitor.h"
 #include "Error.h"
 
+antlrcpp::Any SymbolGenVisitor::visitProg(ifccParser::ProgContext* ctx) {
+    currentFunction = "main";
+    visit(ctx->block());
+
+    for (auto function : ctx->function_def()) {
+        visit(function);
+    }
+    return GOOD;
+}
 
 antlrcpp::Any SymbolGenVisitor::visitBlock(ifccParser::BlockContext* ctx) {
     tmp_block_index++;                               // we increase the number of blocks
@@ -26,8 +35,8 @@ antlrcpp::Any SymbolGenVisitor::visitFunction_call(ifccParser::Function_callCont
     return 0;
 }
 
-antlrcpp::Any SymbolGenVisitor::visitFunction_def(ifccParser::Function_defContext *ctx) {
-    currentFunction=ctx->VARNAME()->getText();
+antlrcpp::Any SymbolGenVisitor::visitFunction_def(ifccParser::Function_defContext* ctx) {
+    currentFunction = ctx->VARNAME()->getText(); // TODO: check if reserved keyword
     return visitChildren(ctx);
 }
 
@@ -351,7 +360,7 @@ int SymbolGenVisitor::check_exist_in_current_block(std::string varname) {
 int SymbolGenVisitor::check_exist_in_current_or_parent_block(std::string varname) {
     int block = current_block;
     while (block != -1) {
-        std::string unique_var_name = varname + "_" + std::to_string(block);
+        std::string unique_var_name = varname + "#" + currentFunction + "_" + std::to_string(block);
         if (variables.find(unique_var_name) != variables.end())
             return GOOD;
         block = blocks.at(block);
@@ -365,7 +374,7 @@ std::string SymbolGenVisitor::get_new_tmp_varname() {
 }
 
 std::string SymbolGenVisitor::create_unique_var_name(std::string name) {
-    return name + "_" + std::to_string(current_block);
+    return name + "#" + currentFunction + "_" + std::to_string(current_block);
 }
 
 

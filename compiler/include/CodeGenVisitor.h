@@ -52,4 +52,6 @@ public:
     bool declaration_mode;
     bool inmain=false;
     int varInFunctionDef=0;
+    std::string currentFunction = "";
+
 };
