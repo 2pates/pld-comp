@@ -488,7 +488,7 @@ void IRInstr::gen_asm(ostream& o, Target target) {
     }
 }
 
-BasicBlock::BasicBlock(CFG* cfg, string entry_label) : cfg(cfg), label(entry_label) {
+BasicBlock::BasicBlock(CFG* cfg, string entry_label, BasicBlock * next_block) : cfg(cfg), label(entry_label), next_block(next_block) {
     exit_false = nullptr;
     exit_true = nullptr;
 }
