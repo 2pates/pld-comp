@@ -280,7 +280,7 @@ antlrcpp::Any CodeGenVisitor::visitIteration_while(ifccParser::Iteration_whileCo
 
     cfg->current_bb->exit_true = testBlock; // After current block, jump to testBlock
     
-    BasicBlock* thenBB = new BasicBlock(cfg, cfg->new_BB_name(), nextBB);
+    BasicBlock* thenBB = new BasicBlock(cfg, cfg->new_BB_name(), testBlock);
     cfg->add_bb(thenBB);
     //After then block, jump to nextBB, might be overwritten during visit(ctx->instruction(0))
     thenBB->exit_true = testBlock;
