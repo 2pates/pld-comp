@@ -46,7 +46,6 @@ public:
     virtual antlrcpp::Any visitExpr_assignment(ifccParser::Expr_assignmentContext* ctx) override;
     virtual antlrcpp::Any visitJump_break(ifccParser::Jump_breakContext* ctx) override;
     virtual antlrcpp::Any visitJump_continue(ifccParser::Jump_continueContext* ctx) override;
-    virtual antlrcpp::Any visitDeclare_only_stmt(ifccParser::Declare_only_stmtContext* ctx) override;
 
     std::string get_unique_var_name(std::string varname);
 

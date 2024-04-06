@@ -317,6 +317,6 @@ antlrcpp::Any CodeGenVisitor::visitJump_continue(ifccParser::Jump_continueContex
 }
 
 antlrcpp::Any CodeGenVisitor::visitJump_break(ifccParser::Jump_breakContext* ctx) {
-    cfg->current_bb->add_IRInstr(IRInstr::Operation::jump, Type::INT32, {cfg->current_bb->parent_test->exit_false->label});
+    cfg->current_bb->add_IRInstr(IRInstr::Operation::jump, Type::INT32, {cfg->current_bb->next_block->label});
     return 0;
 }
