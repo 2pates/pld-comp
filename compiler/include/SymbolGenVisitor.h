@@ -26,7 +26,7 @@ public:
     virtual antlrcpp::Any visitProg(ifccParser::ProgContext* ctx) override;
     virtual antlrcpp::Any visitBlock(ifccParser::BlockContext* ctx) override;
     virtual antlrcpp::Any visitDeclare_stmt(ifccParser::Declare_stmtContext* ctx) override;
-    //virtual antlrcpp::Any visitDeclare(ifccParser::DeclareContext* ctx) override;
+    // virtual antlrcpp::Any visitDeclare(ifccParser::DeclareContext* ctx) override;
     virtual antlrcpp::Any visitAssignment_equal(ifccParser::Assignment_equalContext* ctx) override;
     virtual antlrcpp::Any visitAssignment_add(ifccParser::Assignment_addContext* ctx) override;
     virtual antlrcpp::Any visitAssignment_mult(ifccParser::Assignment_multContext* ctx) override;
@@ -46,30 +46,30 @@ public:
     virtual antlrcpp::Any visitExpr_add(ifccParser::Expr_addContext* ctx) override;
     virtual antlrcpp::Any visitExpr_function(ifccParser::Expr_functionContext* ctx) override;
     virtual antlrcpp::Any visitExpr_parenthesis(ifccParser::Expr_parenthesisContext* ctx) override;
-    virtual antlrcpp::Any visitFunction_call(ifccParser::Function_callContext* ctx) override;  
+    virtual antlrcpp::Any visitFunction_call(ifccParser::Function_callContext* ctx) override;
     virtual antlrcpp::Any visitExpr_assignment(ifccParser::Expr_assignmentContext* ctx) override;
     virtual antlrcpp::Any visitDeclare_only_stmt(ifccParser::Declare_only_stmtContext* ctx) override;
 
     virtual antlrcpp::Any visitExpr_lazy_and(ifccParser::Expr_lazy_andContext* ctx) override;
     virtual antlrcpp::Any visitExpr_lazy_or(ifccParser::Expr_lazy_orContext* ctx) override;
-    virtual antlrcpp::Any visitFunction_def(ifccParser::Function_defContext *ctx) override;
+    virtual antlrcpp::Any visitFunction_def(ifccParser::Function_defContext* ctx) override;
 
-    std::string currentFunction="";
+    std::string currentFunction = "";
     std::unordered_map<int, int> blocks; // id current block, id parent block
     int current_block;
     int tmp_block_index;
- 
+
     std::unordered_map<std::string, VariableInfo> variables;
     long int memory_offset;
     int tmp_index;
     bool declaration_mode = false;
-    std::vector<std::string> reserved_word{"if",      "else",   "switch",   "case", // to optimize later
-                                           "default", "break",  "int",      "float",    "char",    "double",   "long",
-                                           "for",     "while",  "do",       "void",     "goto",    "auto",     "signed",
-                                           "const",   "extern", "register", "unsigned", "return",  "continue", "enum",
-                                           "sizeof",  "struct", "typedef",  "union",    "volatile",
-                                           "NULL" // manually added
-                                           };
+    std::vector<std::string> reserved_word{
+        "if",      "else",     "switch", "case", // to optimize later
+        "default", "break",    "int",    "float",  "char",   "double",  "long",   "for",      "while",
+        "do",      "void",     "goto",   "auto",   "signed", "const",   "extern", "register", "unsigned",
+        "return",  "continue", "enum",   "sizeof", "struct", "typedef", "union",  "volatile",
+        "NULL" // manually added
+    };
 
     int check_exist_in_current_block(std::string varname);
     int check_exist_in_current_or_parent_block(std::string varname);
