@@ -7,6 +7,7 @@ antlrcpp::Any CodeGenVisitor::visitProg(ifccParser::ProgContext* ctx) {
     cfg->current_bb = bb;
     cfg->add_bb(bb);
     inmain=true;
+    currentFunction="main";
     visit(ctx->block());
     inmain=false;
     cfg->current_bb->add_IRInstr(IRInstr::Operation::ret, Type::INT32, {"","main"});
@@ -17,6 +18,7 @@ antlrcpp::Any CodeGenVisitor::visitProg(ifccParser::ProgContext* ctx) {
 }
 antlrcpp::Any CodeGenVisitor::visitFunction_def(ifccParser::Function_defContext* ctx) {
     varInFunctionDef=0;
+    currentFunction = ctx->VARNAME()->getText();
 
     BasicBlock* bb = new BasicBlock(cfg, "function_"+ctx->VARNAME()->getText());
     cfg->current_bb = bb;
@@ -156,7 +158,7 @@ antlrcpp::Any CodeGenVisitor::visitDeclare_only_stmt(ifccParser::Declare_only_st
 std::string CodeGenVisitor::get_unique_var_name(std::string varname) {
     int block = current_block;
     while (block != -1) { // finds in blocks starting from the upper ones
-        std::string unique_var_name = varname + "_" + std::to_string(block);
+        std::string unique_var_name = varname + "#" + currentFunction + "_"  + std::to_string(block);
         if (variables.find(unique_var_name) != variables.end())
             return unique_var_name;
         block = blocks.at(block); // decrease block lvl

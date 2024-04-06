@@ -22,7 +22,8 @@ public:
 
 class SymbolGenVisitor : public ifccBaseVisitor {
 public:
-    SymbolGenVisitor() : current_block(0), tmp_block_index(0), memory_offset(0), tmp_index(0) {}
+    SymbolGenVisitor() : current_block(0), tmp_block_index(0), memory_offset(0), tmp_index(0) { blocks.insert({0, -1}); }
+    virtual antlrcpp::Any visitProg(ifccParser::ProgContext* ctx) override;
     virtual antlrcpp::Any visitBlock(ifccParser::BlockContext* ctx) override;
     virtual antlrcpp::Any visitDeclare_stmt(ifccParser::Declare_stmtContext* ctx) override;
     //virtual antlrcpp::Any visitDeclare(ifccParser::DeclareContext* ctx) override;
