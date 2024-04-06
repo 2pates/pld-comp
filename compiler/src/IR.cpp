@@ -139,9 +139,9 @@ void IRInstr::gen_asm(ostream& o, Target target) {
             VariableInfo destination = bb->cfg->get_var_info(params[2]);
 
             if (target == Target::x86) {
-                o << "mov" << size_to_letter(membreGauche.size) << " " << to_string(membreGauche.address) << "(%rbp), %eax" << endl;
-                o << "sub" << size_to_letter(destination.size) << " $" << constante << ", %eax" << endl;
-                o << "mov" << size_to_letter(destination.size) << " %eax, " << to_string(destination.address) << "(%rbp)" << endl;
+                o << "  mov" << size_to_letter(membreGauche.size) << " " << to_string(membreGauche.address) << "(%rbp), %eax" << endl;
+                o << "  sub" << size_to_letter(destination.size) << " $" << constante << ", %eax" << endl;
+                o << "  mov" << size_to_letter(destination.size) << " %eax, " << to_string(destination.address) << "(%rbp)" << endl;
             }
             break;
         }
@@ -153,7 +153,7 @@ void IRInstr::gen_asm(ostream& o, Target target) {
             if (target == Target::x86) {
                 o << "	mov" << size_to_letter(membreGauche.size) << "	" << to_string(membreGauche.address) << "(%rbp), %eax" << endl;
                 o << "	mov" << size_to_letter(membreDroit.size) << "	" << to_string(membreDroit.address) << "(%rbp), %edx" << endl;
-                o << "imul" << size_to_letter(destination.size) << "	%edx, %eax" << endl;
+                o << "  imul" << size_to_letter(destination.size) << "	%edx, %eax" << endl;
                 o << "	mov" << size_to_letter(destination.size) << "	%eax, " << to_string(destination.address) << "(%rbp)" << endl;
             }
             break;
@@ -223,8 +223,8 @@ void IRInstr::gen_asm(ostream& o, Target target) {
 
             if (target == Target::x86) {
                 o << "	mov" << size_to_letter(membreGauche.size) << "	" << to_string(membreGauche.address) << "(%rbp), %eax" << endl;
-                o << "cmp" << size_to_letter(membreDroit.size) << "	" << to_string(membreDroit.address) << "(%rbp), %eax" << endl;
-                o << "sete %al" << endl;
+                o << "  cmp" << size_to_letter(membreDroit.size) << "	" << to_string(membreDroit.address) << "(%rbp), %eax" << endl;
+                o << "  sete %al" << endl;
                 o << "	movzb" << size_to_letter(destination.size) << "	%al, %eax" << endl;
                 o << "	mov" << size_to_letter(destination.size) << "	%eax, " << to_string(destination.address) << "(%rbp)" << endl;
             }
@@ -237,8 +237,8 @@ void IRInstr::gen_asm(ostream& o, Target target) {
 
             if (target == Target::x86) {
                 o << "	mov" << size_to_letter(membreGauche.size) << "	" << to_string(membreGauche.address) << "(%rbp), %eax" << endl;
-                o << "cmp" << size_to_letter(membreDroit.size) << "	" << to_string(membreDroit.address) << "(%rbp), %eax" << endl;
-                o << "setne %al" << endl;
+                o << "  cmp" << size_to_letter(membreDroit.size) << "	" << to_string(membreDroit.address) << "(%rbp), %eax" << endl;
+                o << "  setne %al" << endl;
                 o << "	movzb" << size_to_letter(destination.size) << "	%al, %eax" << endl;
                 o << "	mov" << size_to_letter(destination.size) << "	%eax, " << to_string(destination.address) << "(%rbp)" << endl;
             }
@@ -251,8 +251,8 @@ void IRInstr::gen_asm(ostream& o, Target target) {
 
             if (target == Target::x86) {
                 o << "	mov" << size_to_letter(membreGauche.size) << "	" << to_string(membreGauche.address) << "(%rbp), %eax" << endl;
-                o << "cmp" << size_to_letter(membreDroit.size) << "	" << to_string(membreDroit.address) << "(%rbp), %eax" << endl;
-                o << "setl %al" << endl;
+                o << "  cmp" << size_to_letter(membreDroit.size) << "	" << to_string(membreDroit.address) << "(%rbp), %eax" << endl;
+                o << "  setl %al" << endl;
                 o << "	movzb" << size_to_letter(destination.size) << "	%al, %eax" << endl;
                 o << "	mov" << size_to_letter(destination.size) << "	%eax, " << to_string(destination.address) << "(%rbp)" << endl;
             }
@@ -484,8 +484,8 @@ void CFG::gen_asm(ostream& o, Target target) {
 
 void CFG::gen_asm_prologue(ostream& o, Target target) {
     if (target == Target::x86) {
-        o << ".globl	_main" << endl;
-        o << "_main:" << endl;
+        o << ".globl main" << endl;
+        o << "main:" << endl;
         o << "pushq	%rbp" << endl;                                        // Save the old base pointer
         o << "movq	%rsp, %rbp" << endl;                                  // Set up a new base pointer
         o << "subq	$" << (-memoryUse / 16 + 2) * 16 << ", %rsp" << endl; // Set up potential function call
