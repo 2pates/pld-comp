@@ -1,4 +1,5 @@
 #include <stdio.h>
+int f(int z);
 int main() {
     int z;
     z = 2;

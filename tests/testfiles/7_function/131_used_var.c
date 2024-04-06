@@ -1,4 +1,5 @@
 #include <stdio.h>
+int f(int q);
 int main() {
     int z;
     z = 585453;

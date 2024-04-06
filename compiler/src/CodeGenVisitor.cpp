@@ -252,7 +252,7 @@ antlrcpp::Any CodeGenVisitor::visitSelection_if(ifccParser::Selection_ifContext*
     // If test is false jump to nextBB
     testBlock->exit_false = nextBB;
 
-    if (ctx->statement()[1] != nullptr) {
+    if (ctx->statement().size()>=2 && ctx->statement()[1] != nullptr) {
         // If else statement
         BasicBlock* elseBB = new BasicBlock(cfg, cfg->new_BB_name(), nextBB);
         cfg->add_bb(elseBB);

@@ -1,4 +1,7 @@
 #include <stdio.h>
+int f();
+int g(int b, int t);
+int h(int e, int h, int v, int y, int w, int x);
 int main() {
     int z;
     z = 2;

@@ -1,4 +1,5 @@
-
+int f();
+int g();
 int main() {
     int z;
     z = 2;

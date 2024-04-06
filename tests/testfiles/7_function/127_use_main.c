@@ -1,4 +1,6 @@
 #include <stdio.h>
+int f();
+main
 int main() {
     int z;
     z = 2;
