@@ -267,7 +267,7 @@ antlrcpp::Any SymbolGenVisitor::visitAssignment_equal(ifccParser::Assignment_equ
 antlrcpp::Any SymbolGenVisitor::visitSelection_if(ifccParser::Selection_ifContext* ctx) {
     this->visit(ctx->expr());
     this->visit(ctx->statement()[0]);
-    if (ctx->statement()[1] != nullptr) {
+    if (ctx->statement().size()>=2 && ctx->statement()[1] != nullptr) {
         this->visit(ctx->statement()[1]);
     }
     return 0;

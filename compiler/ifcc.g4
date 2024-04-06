@@ -2,8 +2,8 @@ grammar ifcc;
 
 axiom: prog EOF ;
 
-prog: 'int' 'main' '(' ')' block function_def*;
-
+prog: function_dec* 'int' 'main' '(' ')' block function_def*;
+function_dec: type VARNAME '(' declare_only_stmt? ')' ';' ;
 function_def: type VARNAME '(' declare_only_stmt? ')' block ;
 function_call: VARNAME '(' ((expr',')*expr|) ')' ;
 

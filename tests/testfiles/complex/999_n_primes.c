@@ -1,5 +1,7 @@
 #include <stdio.h>
-
+int isPrime(int num);
+void computePrimes(int m);
+void printNumber(int number);
 // simple programm for computing the n first prime numbers
 int main() {
     int n = 50;
