@@ -1,3 +1,1 @@
-typedef enum {
-    INT32
-} Type;
+typedef enum { INT32, CHAR8, POINTER } Type;

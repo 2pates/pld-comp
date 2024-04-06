@@ -17,8 +17,13 @@ public:
     virtual antlrcpp::Any visitInstruction(ifccParser::InstructionContext* ctx) override;
     virtual antlrcpp::Any visitReturn_stmt(ifccParser::Return_stmtContext* ctx) override;
     virtual antlrcpp::Any visitDeclare_stmt(ifccParser::Declare_stmtContext* ctx) override;
-    virtual antlrcpp::Any visitDeclare(ifccParser::DeclareContext* ctx) override;
-    virtual antlrcpp::Any visitAssignment_stmt(ifccParser::Assignment_stmtContext* ctx) override;
+    // virtual antlrcpp::Any visitDeclare(ifccParser::DeclareContext* ctx) override;
+    virtual antlrcpp::Any visitDeclare_only_stmt(ifccParser::Declare_only_stmtContext* ctx) override;
+    virtual antlrcpp::Any visitAssignment_equal(ifccParser::Assignment_equalContext* ctx) override;
+    virtual antlrcpp::Any visitAssignment_add(ifccParser::Assignment_addContext* ctx) override;
+    virtual antlrcpp::Any visitAssignment_mult(ifccParser::Assignment_multContext* ctx) override;
+    virtual antlrcpp::Any visitPre_incrementation(ifccParser::Pre_incrementationContext* ctx) override;
+    virtual antlrcpp::Any visitPost_incrementation(ifccParser::Post_incrementationContext* ctx) override;
     virtual antlrcpp::Any visitRvalue(ifccParser::RvalueContext* ctx) override;
     virtual antlrcpp::Any visitExpr_parenthesis(ifccParser::Expr_parenthesisContext* ctx) override;
     virtual antlrcpp::Any visitExpr_function(ifccParser::Expr_functionContext* ctx) override;
@@ -32,9 +37,10 @@ public:
     virtual antlrcpp::Any visitExpr_or(ifccParser::Expr_orContext* ctx) override;
     virtual antlrcpp::Any visitExpr_lazy_and(ifccParser::Expr_lazy_andContext* ctx) override;
     virtual antlrcpp::Any visitExpr_lazy_or(ifccParser::Expr_lazy_orContext* ctx) override;
+
     virtual antlrcpp::Any visitExpr_atom(ifccParser::Expr_atomContext* ctx) override;
-    virtual antlrcpp::Any visitFunction_call(ifccParser::Function_callContext *ctx) override;
-    virtual antlrcpp::Any visitFunction_def(ifccParser::Function_defContext *ctx) override;
+    virtual antlrcpp::Any visitFunction_call(ifccParser::Function_callContext* ctx) override;
+    virtual antlrcpp::Any visitFunction_def(ifccParser::Function_defContext* ctx) override;
     virtual antlrcpp::Any visitSelection_if(ifccParser::Selection_ifContext* ctx) override;
     virtual antlrcpp::Any visitIteration_while(ifccParser::Iteration_whileContext* ctx) override;
     virtual antlrcpp::Any visitExpr_assignment(ifccParser::Expr_assignmentContext* ctx) override;
@@ -52,6 +58,7 @@ public:
     CFG* cfg;
     std::unordered_map<std::string, VariableInfo>& variables;
     bool declaration_mode;
-    bool inmain=false;
-    int varInFunctionDef=0;
+    bool inmain = false;
+    int varInFunctionDef = 0;
+    std::string currentFunction = "";
 };

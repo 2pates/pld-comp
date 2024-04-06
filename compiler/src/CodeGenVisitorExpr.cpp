@@ -22,7 +22,6 @@ antlrcpp::Any CodeGenVisitor::visitExpr_function(ifccParser::Expr_functionContex
     return tmp_var_name;
 }
 
-
 antlrcpp::Any CodeGenVisitor::visitExpr_unaire(ifccParser::Expr_unaireContext* ctx) {
     std::string var_name = visit(ctx->expr());
     tmp_index++;
@@ -49,7 +48,6 @@ antlrcpp::Any CodeGenVisitor::visitExpr_mult(ifccParser::Expr_multContext* ctx) 
     string b = this->visit(ctx->expr(1));
     tmp_index++;
     std::string tmp_var_name = "#tmp" + std::to_string(tmp_index);
-    int tmp_var_address = variables.at(tmp_var_name).address;
     if (s == "*") {
         cfg->current_bb->add_IRInstr(IRInstr::Operation::mul, Type::INT32, {a, b, tmp_var_name});
     } else if (s == "/") {
@@ -83,17 +81,13 @@ antlrcpp::Any CodeGenVisitor::visitExpr_relational(ifccParser::Expr_relationalCo
 
     std::string ope = ctx->OP->getText();
     if (ope == "<") {
-        cfg->current_bb->add_IRInstr(IRInstr::Operation::cmp_lt, Type::INT32,
-                                     {left_var_name, right_var_name, tmp_var_name});
+        cfg->current_bb->add_IRInstr(IRInstr::Operation::cmp_lt, Type::INT32, {left_var_name, right_var_name, tmp_var_name});
     } else if (ope == "<=") {
-        cfg->current_bb->add_IRInstr(IRInstr::Operation::cmp_le, Type::INT32,
-                                     {left_var_name, right_var_name, tmp_var_name});
+        cfg->current_bb->add_IRInstr(IRInstr::Operation::cmp_le, Type::INT32, {left_var_name, right_var_name, tmp_var_name});
     } else if (ope == ">") {
-        cfg->current_bb->add_IRInstr(IRInstr::Operation::cmp_gt, Type::INT32,
-                                     {left_var_name, right_var_name, tmp_var_name});
+        cfg->current_bb->add_IRInstr(IRInstr::Operation::cmp_gt, Type::INT32, {left_var_name, right_var_name, tmp_var_name});
     } else if (ope == ">=") {
-        cfg->current_bb->add_IRInstr(IRInstr::Operation::cmp_ge, Type::INT32,
-                                     {left_var_name, right_var_name, tmp_var_name});
+        cfg->current_bb->add_IRInstr(IRInstr::Operation::cmp_ge, Type::INT32, {left_var_name, right_var_name, tmp_var_name});
     }
     return tmp_var_name;
 }
@@ -108,11 +102,9 @@ antlrcpp::Any CodeGenVisitor::visitExpr_equality(ifccParser::Expr_equalityContex
 
     std::string ope = ctx->OP->getText();
     if (ope == "==") {
-        cfg->current_bb->add_IRInstr(IRInstr::Operation::cmp_eq, Type::INT32,
-                                     {left_var_name, right_var_name, tmp_var_name});
+        cfg->current_bb->add_IRInstr(IRInstr::Operation::cmp_eq, Type::INT32, {left_var_name, right_var_name, tmp_var_name});
     } else if (ope == "!=") {
-        cfg->current_bb->add_IRInstr(IRInstr::Operation::cmp_ne, Type::INT32,
-                                     {left_var_name, right_var_name, tmp_var_name});
+        cfg->current_bb->add_IRInstr(IRInstr::Operation::cmp_ne, Type::INT32, {left_var_name, right_var_name, tmp_var_name});
     }
     return tmp_var_name;
 }
@@ -157,13 +149,13 @@ antlrcpp::Any CodeGenVisitor::visitExpr_lazy_and(ifccParser::Expr_lazy_andContex
     BasicBlock* rightBB = new BasicBlock(cfg, cfg->new_BB_name());
     cfg->add_bb(rightBB);
     rightBB->add_IRInstr(IRInstr::Operation::cmp_const, Type::INT32, {r_var_name, "0", tmp_var_name}); // IF right == false
-    rightBB->add_IRInstr(IRInstr::Operation::l_not, Type::INT32, {tmp_var_name, tmp_var_name}); // NOT (right == false)
+    rightBB->add_IRInstr(IRInstr::Operation::l_not, Type::INT32, {tmp_var_name, tmp_var_name});        // NOT (right == false)
     rightBB->exit_true = nextBB;
 
     BasicBlock* leftBB = new BasicBlock(cfg, cfg->new_BB_name());
     cfg->add_bb(leftBB);
     leftBB->add_IRInstr(IRInstr::Operation::cmp_const, Type::INT32, {l_var_name, "0", tmp_var_name}); // IF left == false
-    leftBB->add_IRInstr(IRInstr::Operation::l_not, Type::INT32, {tmp_var_name, tmp_var_name}); // NOT (left == false)
+    leftBB->add_IRInstr(IRInstr::Operation::l_not, Type::INT32, {tmp_var_name, tmp_var_name});        // NOT (left == false)
     leftBB->test_var_name = tmp_var_name;
     leftBB->exit_true = rightBB; // IF left == true then jump to right -> check if right is also true
     leftBB->exit_false = nextBB; // IF left == false then jump to next -> result = false
@@ -187,15 +179,15 @@ antlrcpp::Any CodeGenVisitor::visitExpr_lazy_or(ifccParser::Expr_lazy_orContext*
     BasicBlock* rightBB = new BasicBlock(cfg, cfg->new_BB_name());
     cfg->add_bb(rightBB);
     rightBB->add_IRInstr(IRInstr::Operation::cmp_const, Type::INT32, {r_var_name, "0", tmp_var_name}); // IF right == false
-    rightBB->add_IRInstr(IRInstr::Operation::l_not, Type::INT32, {tmp_var_name, tmp_var_name}); // NOT (right == false)
+    rightBB->add_IRInstr(IRInstr::Operation::l_not, Type::INT32, {tmp_var_name, tmp_var_name});        // NOT (right == false)
     rightBB->exit_true = nextBB;
 
     BasicBlock* leftBB = new BasicBlock(cfg, cfg->new_BB_name());
     cfg->add_bb(leftBB);
     leftBB->add_IRInstr(IRInstr::Operation::cmp_const, Type::INT32, {l_var_name, "0", tmp_var_name}); // IF left == false
-    leftBB->add_IRInstr(IRInstr::Operation::l_not, Type::INT32, {tmp_var_name, tmp_var_name}); // NOT (left == false)
+    leftBB->add_IRInstr(IRInstr::Operation::l_not, Type::INT32, {tmp_var_name, tmp_var_name});        // NOT (left == false)
     leftBB->test_var_name = tmp_var_name;
-    leftBB->exit_true = nextBB; // IF left == true then jump to next -> result = true
+    leftBB->exit_true = nextBB;   // IF left == true then jump to next -> result = true
     leftBB->exit_false = rightBB; // IF left == false then jump to right -> result = check if right is true
 
     cfg->current_bb->exit_true = leftBB;
@@ -205,12 +197,37 @@ antlrcpp::Any CodeGenVisitor::visitExpr_lazy_or(ifccParser::Expr_lazy_orContext*
 
 antlrcpp::Any CodeGenVisitor::visitExpr_atom(ifccParser::Expr_atomContext* ctx) {
     std::string var_name;
-    if (ctx->CONST() != nullptr) {
+    if (ctx->CONST_INT() != nullptr) {
         tmp_index++;
         var_name = "#tmp" + std::to_string(tmp_index); // we hope that it's the same #tmp number
         debug(var_name);
         if (variables.find(var_name) != variables.end()) {
-            cfg->current_bb->add_IRInstr(IRInstr::Operation::ldconst, Type::INT32, {ctx->CONST()->getText(), var_name});
+            cfg->current_bb->add_IRInstr(IRInstr::Operation::ldconst, Type::INT32, {ctx->CONST_INT()->getText(), var_name});
+        } else {
+            debug("Error: variable " + var_name + " not found");
+            return PROGRAMER_ERROR;
+        }
+    } else if (ctx->CONST_CHAR() != nullptr) {
+        tmp_index++;
+        var_name = "#tmp" + std::to_string(tmp_index); // we hope that it's the same #tmp number
+        debug(var_name);
+        if (variables.find(var_name) != variables.end()) {
+            int numerical_value = int(ctx->CONST_CHAR()->getText()[1]);
+            std::string value = std::to_string(numerical_value);
+            debug(value);
+            cfg->current_bb->add_IRInstr(IRInstr::Operation::ldconst, Type::INT32, {value, var_name});
+        } else {
+            debug("Error: variable " + var_name + " not found");
+            return PROGRAMER_ERROR;
+        }
+    } else if (ctx->CONST_VOID() != nullptr) {
+        tmp_index++;
+        var_name = "#tmp" + std::to_string(tmp_index); // we hope that it's the same #tmp number
+        debug(var_name);
+        if (variables.find(var_name) != variables.end()) {
+            if (ctx->CONST_VOID()->getText() == "NULL") {
+                cfg->current_bb->add_IRInstr(IRInstr::Operation::ldconst, Type::POINTER, {"0", var_name});
+            }
         } else {
             debug("Error: variable " + var_name + " not found");
             return PROGRAMER_ERROR;
