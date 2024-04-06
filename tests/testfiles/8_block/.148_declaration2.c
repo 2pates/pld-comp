@@ -1,8 +1,7 @@
-int main()
-{
+int main() {
     int a = 5;
-    if(a == 5){
-        int b;
+    {
+        int b = 12;
     }
     a = b;
     return a;

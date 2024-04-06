@@ -1,8 +1,7 @@
 #include <stdio.h>
 int main() {
-int x=17;
-int y=42+x;
-int z='s';
+int z;
+z=31;
 putchar(z+1);
-return y;
+return 1;
 }

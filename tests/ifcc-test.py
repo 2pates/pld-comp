@@ -91,7 +91,7 @@ inputfilenames=[]
 for path in args.input:
     path=os.path.normpath(path) # collapse redundant slashes etc.
     if os.path.isfile(path):
-        if path[-2:] == '.c':
+        if path[-2:] == '.c' :
             inputfilenames.append(path)
         else:
             print("error: incorrect filename suffix (should be '.c'): "+path)
@@ -102,6 +102,13 @@ for path in args.input:
     else:
         print("error: cannot read input path `"+path+"'")
         sys.exit(1)
+
+## don't test hidden files
+for inputfilename in inputfilenames: # don't know why we have to do that multiple times    
+    for inputfilename in inputfilenames:
+        if ('/.' in inputfilename) or ('-.' in inputfilename):
+            inputfilenames.remove(inputfilename)
+            # print(inputfilename)
 
 ## debug: after treewalk
 if args.debug:
@@ -220,7 +227,7 @@ for jobname in jobs:
         
     command("./exe-ifcc","ifcc-execute.txt")
     if open("gcc-execute.txt").read() != open("ifcc-execute.txt").read() :
-        print(RED+"TEST FAIL"+NC+" (different results at execution)")
+        print(ORANGE+"TEST FAIL"+NC+" (different results at execution)")
         if args.verbose:
             print("GCC:")
             dumpfile("gcc-execute.txt")

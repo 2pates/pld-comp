@@ -4,6 +4,6 @@ int main() {
     int b;
     b = 12;
     int c;
-	c = a == b;
+    c = a || b;
     return c;
 }
