@@ -3,5 +3,5 @@ int main() {
     int denominator = 4;
     int result;
     result = numerator % denominator;
-    return result; 
+    return result;
 }

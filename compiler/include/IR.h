@@ -25,8 +25,6 @@ public:
     typedef enum {
         ldconst,
         copy,
-        mov_eax,
-        mov_from_eax,
         cmp_const,
         add,
         add_const,
@@ -35,8 +33,6 @@ public:
         mul,
         div,
         mod,
-        rmem,
-        wmem,
         call,
         cmp_eq,
         cmp_ne,
@@ -51,14 +47,14 @@ public:
         bitwise_or,
         bitwise_xor,
         bitwise_not,
-        retfct,
         neg,
         jump,
         l_not,
         lazy_and,
         lazy_or,
-        startfct } Operation;
-    string repList[7]={"%edi", "%esi", "%edx", "%ecx", "%r8d", "%r9d", "%eax"};
+        startfct
+    } Operation;
+    string repList[7] = {"%edi", "%esi", "%edx", "%ecx", "%r8d", "%r9d", "%eax"};
 
     /**  constructor */
     IRInstr(BasicBlock* bb_, Operation op, Type t, std::vector<std::string> params);
@@ -67,8 +63,7 @@ public:
     void gen_asm(std::ostream& o, Target target); /**< x86 assembly code generation for this IR instruction */
 
 private:
-    BasicBlock*
-        bb; /**< The BB this instruction belongs to, which provides a pointer to the CFG this instruction belong to */
+    BasicBlock* bb; /**< The BB this instruction belongs to, which provides a pointer to the CFG this instruction belong to */
     Operation op;
     Type t;
     std::vector<std::string> params; /**< For 3-op instrs: d, x, y; for ldconst: d, c;  For call: label, d, params;  for
@@ -105,21 +100,21 @@ Possible optimization:
 
 class BasicBlock {
 public:
-    BasicBlock(CFG* cfg, string entry_label, BasicBlock * next_block = nullptr);
+    BasicBlock(CFG* cfg, string entry_label, BasicBlock* next_block = nullptr);
     void gen_asm(ostream& o, Target target); /**< x86 assembly code generation for this basic block (very simple) */
 
     void add_IRInstr(IRInstr::Operation op, Type t, std::vector<std::string> params);
 
     // No encapsulation whatsoever here. Feel free to do better.
-    BasicBlock* exit_true;  /**< pointer to the next basic block, true branch. If nullptr, return from procedure */
-    BasicBlock* exit_false; /**< pointer to the next basic block, false branch. If null_ptr, the basic block ends with
-                               an unconditional jump */
-    CFG* cfg;               /** < the CFG where this block belongs */
-    std::string label;      /**< label of the BB, also will be the label in the generated code */
+    BasicBlock* exit_true;        /**< pointer to the next basic block, true branch. If nullptr, return from procedure */
+    BasicBlock* exit_false;       /**< pointer to the next basic block, false branch. If null_ptr, the basic block ends with
+                                     an unconditional jump */
+    CFG* cfg;                     /** < the CFG where this block belongs */
+    std::string label;            /**< label of the BB, also will be the label in the generated code */
     std::vector<IRInstr*> instrs; /** < the instructions themselves. */
     std::string test_var_name;    /** < when generating IR code for an if(expr) or while(expr) etc,
                                                        store here the name of the variable that holds the value of expr */
-    BasicBlock * next_block; /**< pointer to the next basic block if we are in a branch */
+    BasicBlock* next_block;       /**< pointer to the next basic block if we are in a branch */
 protected:
 };
 
@@ -156,6 +151,7 @@ public:
     std::string new_BB_name();
     BasicBlock* current_bb;
     int memoryUse;
+
 protected:
     std::unordered_map<std::string, VariableInfo>& variables;
     string entry_block_label;

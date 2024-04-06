@@ -1,4 +1,4 @@
 int main() {
-	int a = 10;
-	else a = 12;
+    int a = 10;
+    else a = 12;
 }

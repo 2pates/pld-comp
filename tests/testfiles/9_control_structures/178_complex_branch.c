@@ -4,8 +4,7 @@ int main() {
         a = a - 1;
         if (a < 30)
             a = 12;
-        else 
-        {
+        else {
             while (a > 24)
                 a = a - 1;
         }

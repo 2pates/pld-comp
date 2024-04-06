@@ -1,6 +1,5 @@
 int main() {
-	int* a;
-	a = NULL;
-	return 0;
+    int* a;
+    a = NULL;
+    return 0;
 }
-

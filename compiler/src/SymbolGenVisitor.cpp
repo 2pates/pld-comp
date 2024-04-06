@@ -92,7 +92,7 @@ antlrcpp::Any SymbolGenVisitor::visitDeclare_stmt(ifccParser::Declare_stmtContex
         }
     }
     for (auto it : ctx->assignment_stmt()) {
-        if(ifccParser::Assignment_equalContext * child_ctx = dynamic_cast<ifccParser::Assignment_equalContext*>(it)){
+        if (ifccParser::Assignment_equalContext* child_ctx = dynamic_cast<ifccParser::Assignment_equalContext*>(it)) {
             name = child_ctx->lvalue()->VARNAME()->getText();
             unique_name = create_unique_var_name(name);
             if (check_exist_in_current_block(name) == GOOD) {
@@ -116,12 +116,9 @@ antlrcpp::Any SymbolGenVisitor::visitDeclare_stmt(ifccParser::Declare_stmtContex
 
                 visit(child_ctx->rvalue());
             }
-        }
-        else
-        {
+        } else {
             visit(it);
         }
-        
     }
     declaration_mode = false;
     return GOOD;

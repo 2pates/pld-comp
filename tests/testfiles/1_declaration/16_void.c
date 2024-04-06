@@ -1,7 +1,6 @@
 int main() {
-	void a;
-	int b;
-	b = a;
-	return b;
+    void a;
+    int b;
+    b = a;
+    return b;
 }
-

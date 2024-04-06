@@ -51,9 +51,9 @@ int main(int argn, const char** argv) {
     CFG cfg(s.variables, "entry_point");
     CodeGenVisitor v(&cfg, s.blocks);
     v.visit(tree);
-    cfg.memoryUse=s.memory_offset;
+    cfg.memoryUse = s.memory_offset;
     cfg.gen_asm(cout, Target::x86);
-    cerr<<EXIT_SUCCESS<<endl;
+    cerr << EXIT_SUCCESS << endl;
 
     return EXIT_SUCCESS;
 }
