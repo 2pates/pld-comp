@@ -1,4 +1,5 @@
 #include "IR.h"
+#include "Error.h"
 #include <iostream>
 #include <cstring>
 using namespace std;
@@ -342,7 +343,6 @@ void IRInstr::gen_asm(ostream& o, Target target) {
                 o << "mov" << size_to_letter(variable.size) << " " << to_string(variable.address) << "(%rbp), %eax"
                   << endl;
                 } else if(location.compare("voidFunction")!=0 && params[0].empty()){
-                  VariableInfo variable = bb->cfg->get_var_info(params[0]);
                 o << "mov" << size_to_letter(4) << " " << "$0, %eax"
                   << endl;
                 }
@@ -433,7 +433,6 @@ void IRInstr::gen_asm(ostream& o, Target target) {
         case lazy_and: {
             VariableInfo membreGauche = bb->cfg->get_var_info(params[0]);
             VariableInfo membreDroit = bb->cfg->get_var_info(params[1]);
-            VariableInfo destination = bb->cfg->get_var_info(params[2]);
             string bloc1Name = "";
             string bloc2Name = "";
 
@@ -485,6 +484,9 @@ void IRInstr::gen_asm(ostream& o, Target target) {
           o<<"	pushq	%rbp"<<endl;
           break;
         }
+        default:{
+          error("Instruction not implemented");
+        }
     }
 }
 
@@ -535,7 +537,6 @@ void CFG::gen_asm(ostream& o, Target target) {
     for (auto basicBlock : bbs) {
         basicBlock->gen_asm(o, target);
     }
-    gen_asm_epilogue(o, target);
 }
 
 void CFG::gen_asm_prologue(ostream& o, Target target) {
@@ -546,11 +547,6 @@ void CFG::gen_asm_prologue(ostream& o, Target target) {
         o << "	movq	%rsp, %rbp" << endl;           // Set up a new base pointer
         o << "	subq	$"<<(-memoryUse/16+2)*16<<", %rsp"<<endl;        //Set up potential function call
         o << "	jmp	" << entry_block_label << endl; // Jump to entry block
-    }
-}
-
-void CFG::gen_asm_epilogue(ostream& o, Target target) {
-    if (target == Target::x86) {
     }
 }
 

@@ -49,7 +49,6 @@ antlrcpp::Any CodeGenVisitor::visitExpr_mult(ifccParser::Expr_multContext* ctx) 
     string b = this->visit(ctx->expr(1));
     tmp_index++;
     std::string tmp_var_name = "#tmp" + std::to_string(tmp_index);
-    int tmp_var_address = variables.at(tmp_var_name).address;
     if (s == "*") {
         cfg->current_bb->add_IRInstr(IRInstr::Operation::mul, Type::INT32, {a, b, tmp_var_name});
     } else if (s == "/") {
