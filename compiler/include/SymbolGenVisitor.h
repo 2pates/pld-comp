@@ -77,6 +77,7 @@ public:
     int check_exist_in_current_or_parent_block(std::string varname);
     std::string get_new_tmp_varname();
     std::string create_unique_var_name(std::string name);
+    bool inExpr=false;
 };
 
 #endif
