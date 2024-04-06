@@ -324,7 +324,8 @@ antlrcpp::Any SymbolGenVisitor::visitExpr_atom(ifccParser::Expr_atomContext* ctx
         memory_offset -= 8;
         variables.insert({get_new_tmp_varname(), VariableInfo(memory_offset, 8)});
     } else if (ctx->VARNAME() != nullptr) {
-        // nothing
+        variables.at(get_unique_var_name(ctx->VARNAME()->getText())).used=true;
+        this->visit(ctx->VARNAME());
     } else {
         return PROGRAMER_ERROR;
     }
@@ -462,4 +463,14 @@ antlrcpp::Any SymbolGenVisitor::visitExpr_parenthesis(ifccParser::Expr_parenthes
     tmp_index++;
     variables.insert({"#tmp" + std::to_string(tmp_index), VariableInfo(memory_offset, 4)});
     return 0;
+}
+std::string SymbolGenVisitor::get_unique_var_name(std::string varname) {
+    int block = current_block;
+    while (block != -1) { // finds in blocks starting from the upper ones
+        std::string unique_var_name = varname + "#" + currentFunction + "_" + std::to_string(block);
+        if (variables.find(unique_var_name) != variables.end())
+            return unique_var_name;
+        block = blocks.at(block); // decrease block lvl
+    }
+    return "";
 }
