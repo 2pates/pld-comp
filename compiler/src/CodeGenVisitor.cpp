@@ -94,6 +94,8 @@ antlrcpp::Any CodeGenVisitor::visitInstruction(ifccParser::InstructionContext* c
         this->visit(ctx->selection_stmt());
     if (ctx->iterationStatement() != nullptr)
         this->visit(ctx->iterationStatement());
+    if (ctx->jump_stmt() != nullptr)
+        this->visit(ctx->jump_stmt());
     return 0;
 }
 
@@ -229,10 +231,20 @@ antlrcpp::Any CodeGenVisitor::visitPost_incrementation(ifccParser::Post_incremen
 }
 
 antlrcpp::Any CodeGenVisitor::visitSelection_if(ifccParser::Selection_ifContext* ctx) {
+    /**
+     * 
     BasicBlock* nextBB = new BasicBlock(cfg, cfg->new_BB_name(), cfg->current_bb->next_block);
     cfg->add_bb(nextBB);
     nextBB->exit_true = cfg->current_bb->next_block; // After next block go back to the previous next block
     BasicBlock* testBlock = new BasicBlock(cfg, cfg->new_BB_name());
+    cfg->add_bb(testBlock);
+    */
+    BasicBlock * parent_test = cfg->current_bb->parent_test;
+    BasicBlock * nextBB = new BasicBlock(cfg, cfg->new_BB_name(), parent_test, cfg->current_bb->next_block);
+    cfg->add_bb(nextBB);
+
+    nextBB->exit_true = cfg->current_bb->next_block; // After next block go back to the previous next block
+    BasicBlock* testBlock = new BasicBlock(cfg, cfg->new_BB_name(), parent_test);
     cfg->add_bb(testBlock);
 
     string testVarName = visit(ctx->expr());
@@ -240,7 +252,7 @@ antlrcpp::Any CodeGenVisitor::visitSelection_if(ifccParser::Selection_ifContext*
 
     cfg->current_bb->exit_true = testBlock; // After current block, jump to testBlock
 
-    BasicBlock* thenBB = new BasicBlock(cfg, cfg->new_BB_name(), nextBB);
+    BasicBlock* thenBB = new BasicBlock(cfg, cfg->new_BB_name(), parent_test, nextBB);
     cfg->add_bb(thenBB);
     // After then block, jump to nextBB, might be overwritten during visit(ctx->instruction(0))
     thenBB->exit_true = nextBB;
@@ -254,7 +266,7 @@ antlrcpp::Any CodeGenVisitor::visitSelection_if(ifccParser::Selection_ifContext*
 
     if (ctx->statement().size()>=2 && ctx->statement()[1] != nullptr) {
         // If else statement
-        BasicBlock* elseBB = new BasicBlock(cfg, cfg->new_BB_name(), nextBB);
+        BasicBlock* elseBB = new BasicBlock(cfg, cfg->new_BB_name(), testBlock, nextBB);
         cfg->add_bb(elseBB);
         // After else block, jump to nextBB, might be overwritten during visit(ctx->instruction(1))
         elseBB->exit_true = nextBB;
@@ -271,15 +283,17 @@ antlrcpp::Any CodeGenVisitor::visitSelection_if(ifccParser::Selection_ifContext*
 }
 
 antlrcpp::Any CodeGenVisitor::visitIteration_while(ifccParser::Iteration_whileContext* ctx) {
-    BasicBlock* nextBB = new BasicBlock(cfg, cfg->new_BB_name(), cfg->current_bb->next_block);
+    BasicBlock * parent_test = cfg->current_bb->parent_test;
+    BasicBlock * next_block = cfg->current_bb->next_block;
+    BasicBlock* nextBB = new BasicBlock(cfg, cfg->new_BB_name(), parent_test, next_block);
     cfg->add_bb(nextBB);
-    nextBB->exit_true = cfg->current_bb->next_block; // After next block go back to the previous next block
-    BasicBlock* testBlock = new BasicBlock(cfg, cfg->new_BB_name(), nextBB);
+    nextBB->exit_true = next_block; // After next block go back to the previous next block
+    BasicBlock* testBlock = new BasicBlock(cfg, cfg->new_BB_name(), parent_test, nextBB);
     cfg->add_bb(testBlock);
 
     cfg->current_bb->exit_true = testBlock; // After current block, jump to testBlock
 
-    BasicBlock* thenBB = new BasicBlock(cfg, cfg->new_BB_name(), testBlock);
+    BasicBlock* thenBB = new BasicBlock(cfg, cfg->new_BB_name(),testBlock, testBlock);
     cfg->add_bb(thenBB);
     // After then block, jump to nextBB, might be overwritten during visit(ctx->instruction(0))
     thenBB->exit_true = testBlock;
@@ -296,5 +310,15 @@ antlrcpp::Any CodeGenVisitor::visitIteration_while(ifccParser::Iteration_whileCo
     testBlock->test_var_name = testVarName;
 
     cfg->current_bb = nextBB;
+    return 0;
+}
+
+antlrcpp::Any CodeGenVisitor::visitJump_continue(ifccParser::Jump_continueContext* ctx) {
+    cfg->current_bb->add_IRInstr(IRInstr::Operation::jump, Type::INT32, {cfg->current_bb->parent_test->label});
+    return 0;
+}
+
+antlrcpp::Any CodeGenVisitor::visitJump_break(ifccParser::Jump_breakContext* ctx) {
+    cfg->current_bb->add_IRInstr(IRInstr::Operation::jump, Type::INT32, {cfg->current_bb->next_block->label});
     return 0;
 }
