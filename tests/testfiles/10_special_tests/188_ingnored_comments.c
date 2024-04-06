@@ -24,9 +24,8 @@ int
     @define here is a multiple
     lines
 test*/
-    return 0                ;
+    return 0;
 
-//
-///
+    //
+    ///
 }
-

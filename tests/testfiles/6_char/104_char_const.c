@@ -1,7 +1,6 @@
 int main() {
-	char a = 'd';
-	int b;
-	b = a;
-	return b;
+    char a = 'd';
+    int b;
+    b = a;
+    return b;
 }
-

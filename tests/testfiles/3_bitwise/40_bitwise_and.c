@@ -3,6 +3,6 @@ int main() {
     a = 42;
     int b = 12;
     int c;
-	c = a & b;
+    c = a & b;
     return c;
 }
