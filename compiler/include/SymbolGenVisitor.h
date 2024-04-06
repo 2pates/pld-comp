@@ -22,13 +22,15 @@ public:
 
 class SymbolGenVisitor : public ifccBaseVisitor {
 public:
-SymbolGenVisitor() : current_block(0), tmp_block_index(0), memory_offset(0), tmp_index(0) {
-        blocks.insert({0, -1});
-    }
+    SymbolGenVisitor() : current_block(0), tmp_block_index(0), memory_offset(0), tmp_index(0) {}
     virtual antlrcpp::Any visitBlock(ifccParser::BlockContext* ctx) override;
     virtual antlrcpp::Any visitDeclare_stmt(ifccParser::Declare_stmtContext* ctx) override;
-    virtual antlrcpp::Any visitDeclare(ifccParser::DeclareContext* ctx) override;
-    virtual antlrcpp::Any visitAssignment_stmt(ifccParser::Assignment_stmtContext* ctx) override;
+    //virtual antlrcpp::Any visitDeclare(ifccParser::DeclareContext* ctx) override;
+    virtual antlrcpp::Any visitAssignment_equal(ifccParser::Assignment_equalContext* ctx) override;
+    virtual antlrcpp::Any visitAssignment_add(ifccParser::Assignment_addContext* ctx) override;
+    virtual antlrcpp::Any visitAssignment_mult(ifccParser::Assignment_multContext* ctx) override;
+    virtual antlrcpp::Any visitPre_incrementation(ifccParser::Pre_incrementationContext* ctx) override;
+    virtual antlrcpp::Any visitPost_incrementation(ifccParser::Post_incrementationContext* ctx) override;
     virtual antlrcpp::Any visitSelection_if(ifccParser::Selection_ifContext* ctx) override;
     virtual antlrcpp::Any visitIteration_while(ifccParser::Iteration_whileContext* ctx) override;
     virtual antlrcpp::Any visitLvalue(ifccParser::LvalueContext* ctx) override;
@@ -64,7 +66,9 @@ SymbolGenVisitor() : current_block(0), tmp_block_index(0), memory_offset(0), tmp
                                            "default", "break",  "int",      "float",    "char",    "double",   "long",
                                            "for",     "while",  "do",       "void",     "goto",    "auto",     "signed",
                                            "const",   "extern", "register", "unsigned", "return",  "continue", "enum",
-                                           "sizeof",  "struct", "typedef",  "union",    "volatile"};
+                                           "sizeof",  "struct", "typedef",  "union",    "volatile",
+                                           "NULL" // manually added
+                                           };
 
     int check_exist_in_current_block(std::string varname);
     int check_exist_in_current_or_parent_block(std::string varname);

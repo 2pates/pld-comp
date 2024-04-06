@@ -7,10 +7,9 @@ antlrcpp::Any CodeGenVisitor::visitProg(ifccParser::ProgContext* ctx) {
     cfg->current_bb = bb;
     cfg->add_bb(bb);
     inmain=true;
-    for (auto instr : ctx->statement()) {
-        this->visit(instr);
-    }
+    visit(ctx->block());
     inmain=false;
+    cfg->current_bb->add_IRInstr(IRInstr::Operation::ret, Type::INT32, {"","main"});
     for (auto function : ctx->function_def()) {
         this->visit(function);
     }    
@@ -26,10 +25,12 @@ antlrcpp::Any CodeGenVisitor::visitFunction_def(ifccParser::Function_defContext*
     if(ctx->declare_only_stmt()!=nullptr){
         visit(ctx->declare_only_stmt());
     }
-    for (auto instr : ctx->statement()) {
-        this->visit(instr);
+    this->visit(ctx->block());
+    if(ctx->type()->getText().compare("void")==0){
+        cfg->current_bb->add_IRInstr(IRInstr::Operation::ret, Type::INT32, {"void","voidFunction"});
+    } else {
+        cfg->current_bb->add_IRInstr(IRInstr::Operation::ret, Type::INT32, {"","function"});
     }
-    this->visit(ctx->return_stmt());
     return 0;    
 }
 
@@ -96,18 +97,13 @@ antlrcpp::Any CodeGenVisitor::visitInstruction(ifccParser::InstructionContext* c
 
 antlrcpp::Any CodeGenVisitor::visitDeclare_stmt(ifccParser::Declare_stmtContext* ctx) {
     declaration_mode = true;
-    visit(ctx->declare());
+    for (auto it : ctx->lvalue()) {
+        visit(it);
+    }
+    for (auto it : ctx->assignment_stmt()) {
+        visit(it);
+    }
     declaration_mode = false;
-    return 0;
-}
-
-antlrcpp::Any CodeGenVisitor::visitDeclare(ifccParser::DeclareContext* ctx) {
-    if (ctx->assignment_stmt() != nullptr) {
-        visit(ctx->assignment_stmt());
-    }
-    if (ctx->declare() != nullptr) {
-        visit(ctx->declare());
-    }
     return 0;
 }
 
@@ -123,20 +119,20 @@ antlrcpp::Any CodeGenVisitor::visitReturn_stmt(ifccParser::Return_stmtContext* c
     return 0;
 }
 
-antlrcpp::Any CodeGenVisitor::visitAssignment_stmt(ifccParser::Assignment_stmtContext* ctx) {
+antlrcpp::Any CodeGenVisitor::visitAssignment_equal(ifccParser::Assignment_equalContext* ctx) {
     std::string lvalue_name = ctx->lvalue()->getText();
     std::string lvalue_unique_name = get_unique_var_name(lvalue_name);
     if (declaration_mode || variables.find(lvalue_unique_name) != cfg->variables.end()) {
         std::string r_name = visit(ctx->rvalue());
         if (variables.find(r_name) != variables.end()) {
             cfg->current_bb->add_IRInstr(IRInstr::Operation::copy, Type::INT32, {r_name, lvalue_unique_name});
-            return r_name; //why??
+            return r_name; 
         } else {
             debug("Variable " + r_name + " not found");
             return PROGRAMER_ERROR;
         }
     } else {
-        error("Error: undeclared variable " + lvalue_unique_name);
+        error("Error : undeclared error variable" + lvalue_unique_name);
         return UNDECLARED;
     }
 }
@@ -168,9 +164,74 @@ std::string CodeGenVisitor::get_unique_var_name(std::string varname) {
     return "";
 }
 
+antlrcpp::Any CodeGenVisitor::visitAssignment_add(ifccParser::Assignment_addContext* ctx) {
+    std::string s = ctx->OP->getText();
+    string lvalue_name = ctx->lvalue()->getText();
+    std::string lvalue_unique_name = get_unique_var_name(lvalue_name);
+    string b = this->visit(ctx->rvalue());
+
+    if (s == "+=")
+        cfg->current_bb->add_IRInstr(IRInstr::Operation::add, Type::INT32, {lvalue_unique_name, b, lvalue_unique_name});
+    else
+        cfg->current_bb->add_IRInstr(IRInstr::Operation::sub, Type::INT32, {lvalue_unique_name, b, lvalue_unique_name});
+    return lvalue_unique_name;
+}
+
+antlrcpp::Any CodeGenVisitor::visitAssignment_mult(ifccParser::Assignment_multContext* ctx) {
+    std::string s = ctx->OP->getText();
+    string lvalue_name = ctx->lvalue()->getText();
+    std::string a = get_unique_var_name(lvalue_name);
+    string b = this->visit(ctx->rvalue());
+
+    if (s == "*=")
+        cfg->current_bb->add_IRInstr(IRInstr::Operation::mul, Type::INT32, {a, b, a});
+    else if (s== "/=")
+        cfg->current_bb->add_IRInstr(IRInstr::Operation::div, Type::INT32, {a, b, a});
+    else
+        cfg->current_bb->add_IRInstr(IRInstr::Operation::mod, Type::INT32, {a, b, a});
+    return a;
+}
+
+antlrcpp::Any CodeGenVisitor::visitPre_incrementation(ifccParser::Pre_incrementationContext* ctx) {
+    string lvalue_name = ctx->lvalue()->getText();
+    std::string a = get_unique_var_name(lvalue_name);
+    string s = ctx->OP->getText();
+
+    if (s == "++"){
+        cfg->current_bb->add_IRInstr(IRInstr::Operation::add_const, Type::INT32, {a, "1", a});
+    }
+    else{
+        cfg->current_bb->add_IRInstr(IRInstr::Operation::sub_const, Type::INT32, {a, "1", a});
+    }
+
+    return a;
+}
+
+antlrcpp::Any CodeGenVisitor::visitPost_incrementation(ifccParser::Post_incrementationContext* ctx) {
+    string lvalue_name = ctx->lvalue()->getText();
+    std::string a = get_unique_var_name(lvalue_name);
+    string s = ctx->OP->getText();
+    
+    tmp_index++;
+    std::string tmp_var_name = "#tmp" + std::to_string(tmp_index);
+    cfg->current_bb->add_IRInstr(IRInstr::Operation::copy, Type::INT32, {a, tmp_var_name});
+
+    if (s == "++"){
+        cfg->current_bb->add_IRInstr(IRInstr::Operation::add_const, Type::INT32, {a, "1", a});
+    }
+    else{
+        cfg->current_bb->add_IRInstr(IRInstr::Operation::sub_const, Type::INT32, {a, "1", a});
+    }
+
+    return tmp_var_name;
+}
+
+
+
 antlrcpp::Any CodeGenVisitor::visitSelection_if(ifccParser::Selection_ifContext* ctx) {
-    BasicBlock* nextBB = new BasicBlock(cfg, cfg->new_BB_name());
+    BasicBlock* nextBB = new BasicBlock(cfg, cfg->new_BB_name(), cfg->current_bb->next_block);
     cfg->add_bb(nextBB);
+    nextBB->exit_true = cfg->current_bb->next_block; // After next block go back to the previous next block
     BasicBlock* testBlock = new BasicBlock(cfg, cfg->new_BB_name());
     cfg->add_bb(testBlock);
     
@@ -179,7 +240,7 @@ antlrcpp::Any CodeGenVisitor::visitSelection_if(ifccParser::Selection_ifContext*
 
     cfg->current_bb->exit_true = testBlock; // After current block, jump to testBlock
     
-    BasicBlock* thenBB = new BasicBlock(cfg, cfg->new_BB_name());
+    BasicBlock* thenBB = new BasicBlock(cfg, cfg->new_BB_name(), nextBB);
     cfg->add_bb(thenBB);
     //After then block, jump to nextBB, might be overwritten during visit(ctx->instruction(0))
     thenBB->exit_true = nextBB;
@@ -193,7 +254,7 @@ antlrcpp::Any CodeGenVisitor::visitSelection_if(ifccParser::Selection_ifContext*
 
     if (ctx->statement()[1] != nullptr) {
         //If else statement
-        BasicBlock* elseBB = new BasicBlock(cfg, cfg->new_BB_name());
+        BasicBlock* elseBB = new BasicBlock(cfg, cfg->new_BB_name(), nextBB);
         cfg->add_bb(elseBB);
         //After else block, jump to nextBB, might be overwritten during visit(ctx->instruction(1))
         elseBB->exit_true = nextBB;
@@ -211,14 +272,15 @@ antlrcpp::Any CodeGenVisitor::visitSelection_if(ifccParser::Selection_ifContext*
 }
 
 antlrcpp::Any CodeGenVisitor::visitIteration_while(ifccParser::Iteration_whileContext* ctx) {
-    BasicBlock* nextBB = new BasicBlock(cfg, cfg->new_BB_name());
+    BasicBlock* nextBB = new BasicBlock(cfg, cfg->new_BB_name(), cfg->current_bb->next_block);
     cfg->add_bb(nextBB);
-    BasicBlock* testBlock = new BasicBlock(cfg, cfg->new_BB_name());
+    nextBB->exit_true = cfg->current_bb->next_block; // After next block go back to the previous next block
+    BasicBlock* testBlock = new BasicBlock(cfg, cfg->new_BB_name(), nextBB);
     cfg->add_bb(testBlock);
 
     cfg->current_bb->exit_true = testBlock; // After current block, jump to testBlock
     
-    BasicBlock* thenBB = new BasicBlock(cfg, cfg->new_BB_name());
+    BasicBlock* thenBB = new BasicBlock(cfg, cfg->new_BB_name(), nextBB);
     cfg->add_bb(thenBB);
     //After then block, jump to nextBB, might be overwritten during visit(ctx->instruction(0))
     thenBB->exit_true = testBlock;
