@@ -126,6 +126,10 @@ antlrcpp::Any CodeGenVisitor::visitAssignment_equal(ifccParser::Assignment_equal
     std::string lvalue_unique_name = get_unique_var_name(lvalue_name);
     if (declaration_mode || variables.find(lvalue_unique_name) != cfg->variables.end()) {
         std::string r_name = visit(ctx->rvalue());
+        if (r_name.empty()) {
+            error("Error : undeclared error variable" + ctx->rvalue()->getText());
+            exit(UNDECLARED);
+        }
         if (variables.find(r_name) != variables.end()) {
             cfg->current_bb->add_IRInstr(IRInstr::Operation::copy, Type::INT32, {r_name, lvalue_unique_name});
             return r_name; 
