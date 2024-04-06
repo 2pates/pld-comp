@@ -29,7 +29,9 @@ public:
         mov_from_eax,
         cmp_const,
         add,
+        add_const,
         sub,
+        sub_const,
         mul,
         div,
         mod,
@@ -103,7 +105,7 @@ Possible optimization:
 
 class BasicBlock {
 public:
-    BasicBlock(CFG* cfg, string entry_label);
+    BasicBlock(CFG* cfg, string entry_label, BasicBlock * next_block = nullptr);
     void gen_asm(ostream& o, Target target); /**< x86 assembly code generation for this basic block (very simple) */
 
     void add_IRInstr(IRInstr::Operation op, Type t, std::vector<std::string> params);
@@ -117,6 +119,7 @@ public:
     std::vector<IRInstr*> instrs; /** < the instructions themselves. */
     std::string test_var_name;    /** < when generating IR code for an if(expr) or while(expr) etc,
                                                        store here the name of the variable that holds the value of expr */
+    BasicBlock * next_block; /**< pointer to the next basic block if we are in a branch */
 protected:
 };
 

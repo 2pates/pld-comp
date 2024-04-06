@@ -11,7 +11,13 @@ statement: instruction | block ;
 instruction: declare_stmt ';' | assignment_stmt ';' | function_call ';'| return_stmt | selection_stmt | iterationStatement ;
 block: '{' statement* '}' ;
 
-assignment_stmt: lvalue '=' rvalue ;
+assignment_stmt:
+lvalue OP=('++' | '--')                     # post_incrementation
+| OP=('++' | '--') lvalue                   # pre_incrementation
+| lvalue '=' rvalue                         # assignment_equal
+| lvalue OP=('+=' | '-=') rvalue            # assignment_add
+| lvalue OP=('*=' | '/=' | '%=') rvalue     # assignment_mult
+;
 
 selection_stmt: 'if' '(' expr ')' statement ('else' statement)? #selection_if ;
 

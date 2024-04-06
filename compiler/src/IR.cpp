@@ -111,8 +111,20 @@ void IRInstr::gen_asm(ostream& o, Target target) {
             }
             break;
         }
+        case add_const: {
+            VariableInfo membreGauche = bb->cfg->get_var_info(params[0]);
+            string constante = params[1];
+            VariableInfo destination = bb->cfg->get_var_info(params[2]);
 
-
+            if (target == Target::x86) {
+                o << "mov" << size_to_letter(membreGauche.size) << " " << to_string(membreGauche.address)
+                  << "(%rbp), %eax" << endl;
+                o << "add" << size_to_letter(destination.size) << " $"<< constante <<", %eax" << endl;
+                o << "mov" << size_to_letter(destination.size) << " %eax, " << to_string(destination.address)
+                  << "(%rbp)" << endl;
+            }
+            break;
+        }
         case sub: {
             VariableInfo membreGauche = bb->cfg->get_var_info(params[0]);
             VariableInfo membreDroit = bb->cfg->get_var_info(params[1]);
@@ -125,6 +137,20 @@ void IRInstr::gen_asm(ostream& o, Target target) {
                   << "(%rbp), %edx" << endl;
                 o << "sub" << size_to_letter(destination.size) << "	%edx, %eax" << endl;
                 o << "	mov" << size_to_letter(destination.size) << "	%eax, " << to_string(destination.address)
+                  << "(%rbp)" << endl;
+            }
+            break;
+        }
+        case sub_const:{
+            VariableInfo membreGauche = bb->cfg->get_var_info(params[0]);
+            string constante = params[1];
+            VariableInfo destination = bb->cfg->get_var_info(params[2]);
+
+            if (target == Target::x86) {
+                o << "mov" << size_to_letter(membreGauche.size) << " " << to_string(membreGauche.address)
+                  << "(%rbp), %eax" << endl;
+                o << "sub" << size_to_letter(destination.size) << " $" << constante << ", %eax" << endl;
+                o << "mov" << size_to_letter(destination.size) << " %eax, " << to_string(destination.address)
                   << "(%rbp)" << endl;
             }
             break;
@@ -462,7 +488,7 @@ void IRInstr::gen_asm(ostream& o, Target target) {
     }
 }
 
-BasicBlock::BasicBlock(CFG* cfg, string entry_label) : cfg(cfg), label(entry_label) {
+BasicBlock::BasicBlock(CFG* cfg, string entry_label, BasicBlock * next_block) : cfg(cfg), label(entry_label), next_block(next_block) {
     exit_false = nullptr;
     exit_true = nullptr;
 }
