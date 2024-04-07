@@ -1,7 +1,0 @@
-<map id="CFG" name="CFG">
-<area shape="rect" id="Node000001" title="The class for the control flow graph, also includes the symbol table." alt="" coords="27,5,77,31"/>
-<area shape="rect" id="Node000002" href="$class_basic_block.html" title="The class for a basic block." alt="" coords="5,110,99,135"/>
-<area shape="poly" id="edge3_Node000002_Node000001" title=" " alt="" coords="31,42,24,55,22,70,26,84,43,108,38,111,21,86,17,70,19,54,27,40"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="49,96,49,31,55,31,55,96"/>
-<area shape="poly" id="edge2_Node000002_Node000002" title=" " alt="" coords="113,111,122,115,125,123,117,133,99,136,98,131,114,128,120,122,118,119,111,116"/>
-</map>
