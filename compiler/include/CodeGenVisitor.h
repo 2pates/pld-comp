@@ -7,17 +7,27 @@
 #include "ifccBaseVisitor.h"
 #include <string.h>
 
+/**
+ * @brief Visitor class for generating code.
+ */
 class CodeGenVisitor : public ifccBaseVisitor {
 public:
+    /**
+     * @brief Constructor for CodeGenVisitor class.
+     * 
+     * @param cfg_ Pointer to the Control Flow Graph.
+     * @param blocks_ Mapping of block IDs to their parent block IDs.
+     */
     CodeGenVisitor(CFG* cfg_, std::unordered_map<int, int>& blocks_)
         : current_block(0), tmp_block_index(0), blocks(blocks_), tmp_index(0), cfg(cfg_), variables(cfg->variables),
           declaration_mode(false) {}
+
+    // Visit functions for different grammar rules
     virtual antlrcpp::Any visitProg(ifccParser::ProgContext* ctx) override;
     virtual antlrcpp::Any visitBlock(ifccParser::BlockContext* ctx) override;
     virtual antlrcpp::Any visitInstruction(ifccParser::InstructionContext* ctx) override;
     virtual antlrcpp::Any visitReturn_stmt(ifccParser::Return_stmtContext* ctx) override;
     virtual antlrcpp::Any visitDeclare_stmt(ifccParser::Declare_stmtContext* ctx) override;
-    // virtual antlrcpp::Any visitDeclare(ifccParser::DeclareContext* ctx) override;
     virtual antlrcpp::Any visitDeclare_only_stmt(ifccParser::Declare_only_stmtContext* ctx) override;
     virtual antlrcpp::Any visitAssignment_equal(ifccParser::Assignment_equalContext* ctx) override;
     virtual antlrcpp::Any visitAssignment_add(ifccParser::Assignment_addContext* ctx) override;
@@ -47,17 +57,23 @@ public:
     virtual antlrcpp::Any visitJump_break(ifccParser::Jump_breakContext* ctx) override;
     virtual antlrcpp::Any visitJump_continue(ifccParser::Jump_continueContext* ctx) override;
 
+    /**
+     * @brief Generate a unique variable name.
+     * 
+     * @param varname The variable name to make unique.
+     * @return A unique variable name.
+     */
     std::string get_unique_var_name(std::string varname);
 
-    int current_block;
-    int tmp_block_index;
-    std::unordered_map<int, int> blocks; // id current block, id parent block
+    int current_block; ///< ID of the current block.
+    int tmp_block_index; ///< Index for temporary block IDs.
+    std::unordered_map<int, int> blocks; ///< Mapping of block IDs to their parent block IDs.
 
-    int tmp_index;
-    CFG* cfg;
-    std::unordered_map<std::string, VariableInfo>& variables;
-    bool declaration_mode;
-    bool inmain = false;
-    int varInFunctionDef = 0;
-    std::string currentFunction = "";
+    int tmp_index; ///< Index for temporary variable names.
+    CFG* cfg; ///< Pointer to the Control Flow Graph.
+    std::unordered_map<std::string, VariableInfo>& variables; ///< Mapping of variable names to their information.
+    bool declaration_mode; ///< Flag indicating if in declaration mode.
+    bool inmain = false; ///< Flag indicating if inside main function.
+    int varInFunctionDef = 0; ///< Number of variables in a function definition.
+    std::string currentFunction = ""; ///< Name of the current function.
 };

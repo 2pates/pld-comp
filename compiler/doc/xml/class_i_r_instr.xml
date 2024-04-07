@@ -1,0 +1,497 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.9.8" xml:lang="en-US">
+  <compounddef id="class_i_r_instr" kind="class" language="C++" prot="public">
+    <compoundname>IRInstr</compoundname>
+    <includes refid="_i_r_8h" local="no">IR.h</includes>
+    <sectiondef kind="public-type">
+      <memberdef kind="enum" id="class_i_r_instr_1a4e228546957ed6096a45f48d7cfc7f15" prot="public" static="no" strong="no">
+        <type></type>
+        <name>Operation</name>
+        <qualifiedname>IRInstr::Operation</qualifiedname>
+        <enumvalue id="class_i_r_instr_1a4e228546957ed6096a45f48d7cfc7f15aca434b8ea2289b300adffe4d7177464b" prot="public">
+          <name>ldconst</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+<para>Load a constant value into a register. </para>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="class_i_r_instr_1a4e228546957ed6096a45f48d7cfc7f15ae1a39a175e0db60521741b775fcd77ec" prot="public">
+          <name>copy</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+<para>Copy the value from one register to another. </para>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="class_i_r_instr_1a4e228546957ed6096a45f48d7cfc7f15aa9b607646606d67933e8b00e8834e7c1" prot="public">
+          <name>cmp_const</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+<para>Compare a register value with a constant. </para>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="class_i_r_instr_1a4e228546957ed6096a45f48d7cfc7f15a5ea0d6cae2d2b73ce167042d2584aca8" prot="public">
+          <name>add</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+<para>Add two register values. </para>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="class_i_r_instr_1a4e228546957ed6096a45f48d7cfc7f15a6d6002b509969432274fe621bee4fa81" prot="public">
+          <name>add_const</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+<para>Add a constant value to a register value. </para>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="class_i_r_instr_1a4e228546957ed6096a45f48d7cfc7f15aa55951c56d52ea1ca49066e420be99c0" prot="public">
+          <name>sub</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+<para>Subtract one register value from another. </para>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="class_i_r_instr_1a4e228546957ed6096a45f48d7cfc7f15a246d3a2e1505ba85e0c2b232d46793f6" prot="public">
+          <name>sub_const</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+<para>Subtract a constant value from a register value. </para>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="class_i_r_instr_1a4e228546957ed6096a45f48d7cfc7f15a6636565bd433d10de6878d80f0b75546" prot="public">
+          <name>mul</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+<para>Multiply two register values. </para>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="class_i_r_instr_1a4e228546957ed6096a45f48d7cfc7f15a57a9112e2a510637354fe62dc5364454" prot="public">
+          <name>div</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+<para>Divide one register value by another. </para>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="class_i_r_instr_1a4e228546957ed6096a45f48d7cfc7f15a789b6016c462f6c6e5b1671107cd7d08" prot="public">
+          <name>mod</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+<para>Get the modulus of one register value by another. </para>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="class_i_r_instr_1a4e228546957ed6096a45f48d7cfc7f15a5ab1bfcb25f200319a570ae4d9967785" prot="public">
+          <name>call</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+<para>Call a function. </para>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="class_i_r_instr_1a4e228546957ed6096a45f48d7cfc7f15acce36d79a13e3cd29a613b23e61e7313" prot="public">
+          <name>cmp_eq</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+<para>Compare two register values for equality. </para>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="class_i_r_instr_1a4e228546957ed6096a45f48d7cfc7f15a45a3acfb454fc68c35403e9c7c6dde54" prot="public">
+          <name>cmp_ne</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+<para>Compare two register values for inequality. </para>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="class_i_r_instr_1a4e228546957ed6096a45f48d7cfc7f15abec19d69dcb94e11691886175a6d1473" prot="public">
+          <name>cmp_lt</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+<para>Compare two register values: less than. </para>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="class_i_r_instr_1a4e228546957ed6096a45f48d7cfc7f15a5105f7cb37d60048d2ffd2bc8261ec1d" prot="public">
+          <name>cmp_le</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+<para>Compare two register values: less than or equal. </para>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="class_i_r_instr_1a4e228546957ed6096a45f48d7cfc7f15a3d7c9a9592555029b0c37d7763f4b0e8" prot="public">
+          <name>cmp_gt</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+<para>Compare two register values: greater than. </para>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="class_i_r_instr_1a4e228546957ed6096a45f48d7cfc7f15a8094d29a10a1104909942c5ab8bd8839" prot="public">
+          <name>cmp_ge</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+<para>Compare two register values: greater than or equal. </para>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="class_i_r_instr_1a4e228546957ed6096a45f48d7cfc7f15adb082da0a7e054ba5118444bef248f0f" prot="public">
+          <name>copyIn</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+<para>Copy value into a register from memory. </para>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="class_i_r_instr_1a4e228546957ed6096a45f48d7cfc7f15a0164ea8315f2834f64794e426315679d" prot="public">
+          <name>ret</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+<para>Return from function. </para>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="class_i_r_instr_1a4e228546957ed6096a45f48d7cfc7f15ad1c9200d728ee94d0e9cff990133d31b" prot="public">
+          <name>copyOut</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+<para>Copy value out from register to memory. </para>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="class_i_r_instr_1a4e228546957ed6096a45f48d7cfc7f15a04d7257064ccde262f241be53e8ea6b6" prot="public">
+          <name>bitwise_and</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+<para>Perform bitwise AND operation. </para>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="class_i_r_instr_1a4e228546957ed6096a45f48d7cfc7f15a2a1ca2cc4e800428bfde5f59d88653e6" prot="public">
+          <name>bitwise_or</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+<para>Perform bitwise OR operation. </para>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="class_i_r_instr_1a4e228546957ed6096a45f48d7cfc7f15a307d81b7bf9ef660d656b084e90ef1e1" prot="public">
+          <name>bitwise_xor</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+<para>Perform bitwise XOR operation. </para>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="class_i_r_instr_1a4e228546957ed6096a45f48d7cfc7f15ab9ae7307714241dd91a0e5cad0a9345a" prot="public">
+          <name>bitwise_not</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+<para>Perform bitwise NOT operation. </para>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="class_i_r_instr_1a4e228546957ed6096a45f48d7cfc7f15a6317d64127aa707de4e9c8258f4be689" prot="public">
+          <name>neg</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+<para>Negate a register value. </para>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="class_i_r_instr_1a4e228546957ed6096a45f48d7cfc7f15a3bc40e9a2d509d46ecc344df94767012" prot="public">
+          <name>jump</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+<para>Jump to another instruction. </para>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="class_i_r_instr_1a4e228546957ed6096a45f48d7cfc7f15a4ad192fa5de350fb2fa084cd0948d15d" prot="public">
+          <name>l_not</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+<para>Perform logical NOT operation. </para>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="class_i_r_instr_1a4e228546957ed6096a45f48d7cfc7f15a080a2cd351bac2a442b25ab2ec726062" prot="public">
+          <name>lazy_and</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+<para>Perform lazy AND operation. </para>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="class_i_r_instr_1a4e228546957ed6096a45f48d7cfc7f15add139171ca8c943386b69b1efb3228a5" prot="public">
+          <name>lazy_or</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+<para>Perform lazy OR operation. </para>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="class_i_r_instr_1a4e228546957ed6096a45f48d7cfc7f15a32be33a33681269493d74199aa34ff3a" prot="public">
+          <name>startfct</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+<para>Start of a function. </para>
+          </detaileddescription>
+        </enumvalue>
+        <briefdescription>
+<para>The operation types for IR instructions. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/IR.h" line="30" column="5" bodyfile="include/IR.h" bodystart="30" bodyend="61"/>
+      </memberdef>
+    </sectiondef>
+    <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="class_i_r_instr_1ae1a18b0b16301d3791af64e053017e10" prot="public" static="no" mutable="no">
+        <type>string</type>
+        <definition>string IRInstr::repList[7]</definition>
+        <argsstring>[7]</argsstring>
+        <name>repList</name>
+        <qualifiedname>IRInstr::repList</qualifiedname>
+        <initializer>= {&quot;%edi&quot;, &quot;%esi&quot;, &quot;%edx&quot;, &quot;%ecx&quot;, &quot;%r8d&quot;, &quot;%r9d&quot;, &quot;%eax&quot;}</initializer>
+        <briefdescription>
+<para>Array representing register names used in x86 assembly. </para>
+        </briefdescription>
+        <detaileddescription>
+<para>The array contains the names of the registers used in x86 assembly instructions. These registers are commonly used in the IR instructions for code generation. </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/IR.h" line="69" column="12" bodyfile="include/IR.h" bodystart="69" bodyend="69"/>
+      </memberdef>
+    </sectiondef>
+    <sectiondef kind="private-attrib">
+      <memberdef kind="variable" id="class_i_r_instr_1a0bf0264847ab1c69e99495f1456e3adf" prot="private" static="no" mutable="no">
+        <type><ref refid="class_basic_block" kindref="compound">BasicBlock</ref> *</type>
+        <definition>BasicBlock* IRInstr::bb</definition>
+        <argsstring></argsstring>
+        <name>bb</name>
+        <qualifiedname>IRInstr::bb</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>The <ref refid="class_basic_block" kindref="compound">BasicBlock</ref> this instruction belongs to, providing a pointer to the <ref refid="class_c_f_g" kindref="compound">CFG</ref>. </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/IR.h" line="90" column="16" bodyfile="include/IR.h" bodystart="90" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="class_i_r_instr_1aa245c38629c572258e4b1e86febb5da6" prot="private" static="no" mutable="no">
+        <type><ref refid="class_i_r_instr_1a4e228546957ed6096a45f48d7cfc7f15" kindref="member">Operation</ref></type>
+        <definition>Operation IRInstr::op</definition>
+        <argsstring></argsstring>
+        <name>op</name>
+        <qualifiedname>IRInstr::op</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Operation type. </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/IR.h" line="91" column="15" bodyfile="include/IR.h" bodystart="91" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="class_i_r_instr_1a449e6b5f75d186ce7975dbb72c416a6b" prot="private" static="no" mutable="no">
+        <type><ref refid="_type_8h_1a1d1cfd8ffb84e947f82999c682b666a7" kindref="member">Type</ref></type>
+        <definition>Type IRInstr::t</definition>
+        <argsstring></argsstring>
+        <name>t</name>
+        <qualifiedname>IRInstr::t</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Type of the operands. </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/IR.h" line="92" column="10" bodyfile="include/IR.h" bodystart="92" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="class_i_r_instr_1afdf5e53969593927505c20e6acf19158" prot="private" static="no" mutable="no">
+        <type>std::vector&lt; std::string &gt;</type>
+        <definition>std::vector&lt;std::string&gt; IRInstr::params</definition>
+        <argsstring></argsstring>
+        <name>params</name>
+        <qualifiedname>IRInstr::params</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Vector of instruction parameters. </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/IR.h" line="93" column="17" bodyfile="include/IR.h" bodystart="93" bodyend="-1"/>
+      </memberdef>
+    </sectiondef>
+    <sectiondef kind="public-func">
+      <memberdef kind="function" id="class_i_r_instr_1a597d177c58ca8d836be819ef1520ebda" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>IRInstr::IRInstr</definition>
+        <argsstring>(BasicBlock *bb_, Operation op, Type t, std::vector&lt; std::string &gt; params)</argsstring>
+        <name>IRInstr</name>
+        <qualifiedname>IRInstr::IRInstr</qualifiedname>
+        <param>
+          <type><ref refid="class_basic_block" kindref="compound">BasicBlock</ref> *</type>
+          <declname>bb_</declname>
+        </param>
+        <param>
+          <type><ref refid="class_i_r_instr_1a4e228546957ed6096a45f48d7cfc7f15" kindref="member">Operation</ref></type>
+          <declname>op</declname>
+        </param>
+        <param>
+          <type><ref refid="_type_8h_1a1d1cfd8ffb84e947f82999c682b666a7" kindref="member">Type</ref></type>
+          <declname>t</declname>
+        </param>
+        <param>
+          <type>std::vector&lt; std::string &gt;</type>
+          <declname>params</declname>
+        </param>
+        <briefdescription>
+<para>Constructor for <ref refid="class_i_r_instr" kindref="compound">IRInstr</ref> class. </para>
+        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>bb_</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Pointer to the <ref refid="class_basic_block" kindref="compound">BasicBlock</ref> to which this instruction belongs. </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>op</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Operation type. </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>t</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Type of the operands. </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>params</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Vector of instruction parameters. </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/IR.h" line="79" column="5" bodyfile="src/IR.cpp" bodystart="7" bodyend="7"/>
+      </memberdef>
+      <memberdef kind="function" id="class_i_r_instr_1a7b48035fa80c3125e6192ef24dd0cebf" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void IRInstr::gen_asm</definition>
+        <argsstring>(std::ostream &amp;o, Target target)</argsstring>
+        <name>gen_asm</name>
+        <qualifiedname>IRInstr::gen_asm</qualifiedname>
+        <param>
+          <type>std::ostream &amp;</type>
+          <declname>o</declname>
+        </param>
+        <param>
+          <type><ref refid="_i_r_8h_1a31488d29805a596498c0234ae392d35d" kindref="member">Target</ref></type>
+          <declname>target</declname>
+        </param>
+        <briefdescription>
+<para>Generate x86 assembly code for this IR instruction. </para>
+        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>o</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Output stream to write the assembly code. </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>target</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Target architecture. </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/IR.h" line="87" column="10" bodyfile="src/IR.cpp" bodystart="45" bodyend="434"/>
+      </memberdef>
+    </sectiondef>
+    <briefdescription>
+<para>The class for one 3-address instruction. </para>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="include/IR.h" line="25" column="1" bodyfile="include/IR.h" bodystart="25" bodyend="94"/>
+    <listofallmembers>
+      <member refid="class_i_r_instr_1a4e228546957ed6096a45f48d7cfc7f15a5ea0d6cae2d2b73ce167042d2584aca8" prot="public" virt="non-virtual"><scope>IRInstr</scope><name>add</name></member>
+      <member refid="class_i_r_instr_1a4e228546957ed6096a45f48d7cfc7f15a6d6002b509969432274fe621bee4fa81" prot="public" virt="non-virtual"><scope>IRInstr</scope><name>add_const</name></member>
+      <member refid="class_i_r_instr_1a0bf0264847ab1c69e99495f1456e3adf" prot="private" virt="non-virtual"><scope>IRInstr</scope><name>bb</name></member>
+      <member refid="class_i_r_instr_1a4e228546957ed6096a45f48d7cfc7f15a04d7257064ccde262f241be53e8ea6b6" prot="public" virt="non-virtual"><scope>IRInstr</scope><name>bitwise_and</name></member>
+      <member refid="class_i_r_instr_1a4e228546957ed6096a45f48d7cfc7f15ab9ae7307714241dd91a0e5cad0a9345a" prot="public" virt="non-virtual"><scope>IRInstr</scope><name>bitwise_not</name></member>
+      <member refid="class_i_r_instr_1a4e228546957ed6096a45f48d7cfc7f15a2a1ca2cc4e800428bfde5f59d88653e6" prot="public" virt="non-virtual"><scope>IRInstr</scope><name>bitwise_or</name></member>
+      <member refid="class_i_r_instr_1a4e228546957ed6096a45f48d7cfc7f15a307d81b7bf9ef660d656b084e90ef1e1" prot="public" virt="non-virtual"><scope>IRInstr</scope><name>bitwise_xor</name></member>
+      <member refid="class_i_r_instr_1a4e228546957ed6096a45f48d7cfc7f15a5ab1bfcb25f200319a570ae4d9967785" prot="public" virt="non-virtual"><scope>IRInstr</scope><name>call</name></member>
+      <member refid="class_i_r_instr_1a4e228546957ed6096a45f48d7cfc7f15aa9b607646606d67933e8b00e8834e7c1" prot="public" virt="non-virtual"><scope>IRInstr</scope><name>cmp_const</name></member>
+      <member refid="class_i_r_instr_1a4e228546957ed6096a45f48d7cfc7f15acce36d79a13e3cd29a613b23e61e7313" prot="public" virt="non-virtual"><scope>IRInstr</scope><name>cmp_eq</name></member>
+      <member refid="class_i_r_instr_1a4e228546957ed6096a45f48d7cfc7f15a8094d29a10a1104909942c5ab8bd8839" prot="public" virt="non-virtual"><scope>IRInstr</scope><name>cmp_ge</name></member>
+      <member refid="class_i_r_instr_1a4e228546957ed6096a45f48d7cfc7f15a3d7c9a9592555029b0c37d7763f4b0e8" prot="public" virt="non-virtual"><scope>IRInstr</scope><name>cmp_gt</name></member>
+      <member refid="class_i_r_instr_1a4e228546957ed6096a45f48d7cfc7f15a5105f7cb37d60048d2ffd2bc8261ec1d" prot="public" virt="non-virtual"><scope>IRInstr</scope><name>cmp_le</name></member>
+      <member refid="class_i_r_instr_1a4e228546957ed6096a45f48d7cfc7f15abec19d69dcb94e11691886175a6d1473" prot="public" virt="non-virtual"><scope>IRInstr</scope><name>cmp_lt</name></member>
+      <member refid="class_i_r_instr_1a4e228546957ed6096a45f48d7cfc7f15a45a3acfb454fc68c35403e9c7c6dde54" prot="public" virt="non-virtual"><scope>IRInstr</scope><name>cmp_ne</name></member>
+      <member refid="class_i_r_instr_1a4e228546957ed6096a45f48d7cfc7f15ae1a39a175e0db60521741b775fcd77ec" prot="public" virt="non-virtual"><scope>IRInstr</scope><name>copy</name></member>
+      <member refid="class_i_r_instr_1a4e228546957ed6096a45f48d7cfc7f15adb082da0a7e054ba5118444bef248f0f" prot="public" virt="non-virtual"><scope>IRInstr</scope><name>copyIn</name></member>
+      <member refid="class_i_r_instr_1a4e228546957ed6096a45f48d7cfc7f15ad1c9200d728ee94d0e9cff990133d31b" prot="public" virt="non-virtual"><scope>IRInstr</scope><name>copyOut</name></member>
+      <member refid="class_i_r_instr_1a4e228546957ed6096a45f48d7cfc7f15a57a9112e2a510637354fe62dc5364454" prot="public" virt="non-virtual"><scope>IRInstr</scope><name>div</name></member>
+      <member refid="class_i_r_instr_1a7b48035fa80c3125e6192ef24dd0cebf" prot="public" virt="non-virtual"><scope>IRInstr</scope><name>gen_asm</name></member>
+      <member refid="class_i_r_instr_1a597d177c58ca8d836be819ef1520ebda" prot="public" virt="non-virtual"><scope>IRInstr</scope><name>IRInstr</name></member>
+      <member refid="class_i_r_instr_1a4e228546957ed6096a45f48d7cfc7f15a3bc40e9a2d509d46ecc344df94767012" prot="public" virt="non-virtual"><scope>IRInstr</scope><name>jump</name></member>
+      <member refid="class_i_r_instr_1a4e228546957ed6096a45f48d7cfc7f15a4ad192fa5de350fb2fa084cd0948d15d" prot="public" virt="non-virtual"><scope>IRInstr</scope><name>l_not</name></member>
+      <member refid="class_i_r_instr_1a4e228546957ed6096a45f48d7cfc7f15a080a2cd351bac2a442b25ab2ec726062" prot="public" virt="non-virtual"><scope>IRInstr</scope><name>lazy_and</name></member>
+      <member refid="class_i_r_instr_1a4e228546957ed6096a45f48d7cfc7f15add139171ca8c943386b69b1efb3228a5" prot="public" virt="non-virtual"><scope>IRInstr</scope><name>lazy_or</name></member>
+      <member refid="class_i_r_instr_1a4e228546957ed6096a45f48d7cfc7f15aca434b8ea2289b300adffe4d7177464b" prot="public" virt="non-virtual"><scope>IRInstr</scope><name>ldconst</name></member>
+      <member refid="class_i_r_instr_1a4e228546957ed6096a45f48d7cfc7f15a789b6016c462f6c6e5b1671107cd7d08" prot="public" virt="non-virtual"><scope>IRInstr</scope><name>mod</name></member>
+      <member refid="class_i_r_instr_1a4e228546957ed6096a45f48d7cfc7f15a6636565bd433d10de6878d80f0b75546" prot="public" virt="non-virtual"><scope>IRInstr</scope><name>mul</name></member>
+      <member refid="class_i_r_instr_1a4e228546957ed6096a45f48d7cfc7f15a6317d64127aa707de4e9c8258f4be689" prot="public" virt="non-virtual"><scope>IRInstr</scope><name>neg</name></member>
+      <member refid="class_i_r_instr_1aa245c38629c572258e4b1e86febb5da6" prot="private" virt="non-virtual"><scope>IRInstr</scope><name>op</name></member>
+      <member refid="class_i_r_instr_1a4e228546957ed6096a45f48d7cfc7f15" prot="public" virt="non-virtual"><scope>IRInstr</scope><name>Operation</name></member>
+      <member refid="class_i_r_instr_1afdf5e53969593927505c20e6acf19158" prot="private" virt="non-virtual"><scope>IRInstr</scope><name>params</name></member>
+      <member refid="class_i_r_instr_1ae1a18b0b16301d3791af64e053017e10" prot="public" virt="non-virtual"><scope>IRInstr</scope><name>repList</name></member>
+      <member refid="class_i_r_instr_1a4e228546957ed6096a45f48d7cfc7f15a0164ea8315f2834f64794e426315679d" prot="public" virt="non-virtual"><scope>IRInstr</scope><name>ret</name></member>
+      <member refid="class_i_r_instr_1a4e228546957ed6096a45f48d7cfc7f15a32be33a33681269493d74199aa34ff3a" prot="public" virt="non-virtual"><scope>IRInstr</scope><name>startfct</name></member>
+      <member refid="class_i_r_instr_1a4e228546957ed6096a45f48d7cfc7f15aa55951c56d52ea1ca49066e420be99c0" prot="public" virt="non-virtual"><scope>IRInstr</scope><name>sub</name></member>
+      <member refid="class_i_r_instr_1a4e228546957ed6096a45f48d7cfc7f15a246d3a2e1505ba85e0c2b232d46793f6" prot="public" virt="non-virtual"><scope>IRInstr</scope><name>sub_const</name></member>
+      <member refid="class_i_r_instr_1a449e6b5f75d186ce7975dbb72c416a6b" prot="private" virt="non-virtual"><scope>IRInstr</scope><name>t</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

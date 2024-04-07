@@ -1,0 +1,47 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.9.8" xml:lang="en-US">
+  <compounddef id="compiler_2_r_e_a_d_m_e_8md" kind="file" language="Markdown">
+    <compoundname>README.md</compoundname>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <programlisting>
+<codeline><highlight class="normal">#<sp/>C<sp/>compiler<sp/>with<sp/>antlr4/c++</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal">##<sp/>Instructions</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal">This<sp/>minimal<sp/>example<sp/>shows<sp/>how<sp/>to<sp/>build<sp/>a<sp/>basic<sp/>C<sp/>compiler<sp/>using</highlight></codeline>
+<codeline><highlight class="normal">Antlr4<sp/>for<sp/>C++.<sp/>The<sp/>only<sp/>file<sp/>the<sp/>compiler<sp/>can<sp/>deal<sp/>with<sp/>is:</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal">```</highlight></codeline>
+<codeline><highlight class="normal">int<sp/>main()<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>return<sp/>N;</highlight></codeline>
+<codeline><highlight class="normal">}</highlight></codeline>
+<codeline><highlight class="normal">```</highlight></codeline>
+<codeline><highlight class="normal">where<sp/>`N`<sp/>is<sp/>a<sp/>positive<sp/>integer<sp/>constant.<sp/></highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal">##<sp/>Source<sp/>Files</highlight></codeline>
+<codeline><highlight class="normal">-<sp/>`ifcc.g4`<sp/>contains<sp/>the<sp/>grammar<sp/>in<sp/>antlr4<sp/>format</highlight></codeline>
+<codeline><highlight class="normal">-<sp/>`main.cpp`<sp/>contains<sp/>the<sp/>C++<sp/>code<sp/>to<sp/>call<sp/>the<sp/>antlr4-generated<sp/>parser</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>on<sp/>the<sp/>file<sp/>name<sp/>provided<sp/>in<sp/>the<sp/>command<sp/>line.</highlight></codeline>
+<codeline><highlight class="normal">-<sp/>`CodeGenVisitor.h`<sp/>produces<sp/>the<sp/>actual<sp/>assembly-language<sp/>output</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal">##<sp/>Prerequisites</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>Before<sp/>building<sp/>your<sp/><sp/>compiler,<sp/>you<sp/>should<sp/>install<sp/><sp/>antlr<sp/>using<sp/>your</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>distribution&apos;s<sp/><sp/>package<sp/>manager,<sp/><sp/>or<sp/>by<sp/><sp/>running<sp/>the<sp/><sp/>provided<sp/>shell</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>script:<sp/><sp/><sp/>`install-antlr.sh`.<sp/></highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline><highlight class="normal">##<sp/>Compilation<sp/>scripts</highlight></codeline>
+<codeline><highlight class="normal">-<sp/>`Makefile`<sp/>contains<sp/><sp/>the<sp/>actual<sp/>build<sp/><sp/>logic.<sp/>Please<sp/>read<sp/><sp/>this<sp/>file</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>and<sp/>ask<sp/>questions<sp/>on<sp/>parts<sp/>you<sp/>do<sp/>not<sp/>understand.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>The<sp/><sp/>Makefile<sp/>includes<sp/>a<sp/>.mk<sp/>file<sp/>that<sp/>defines<sp/>several<sp/>variables<sp/></highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>(ANTLR,<sp/>ANTLRJAR,<sp/><sp/>ANTLRINC<sp/>and<sp/><sp/>ANTLRLIB)<sp/>indicating<sp/>the<sp/>location<sp/></highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>of<sp/>various<sp/>parts<sp/>of<sp/>the<sp/>Antlr<sp/>suite.<sp/></highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>You<sp/>can<sp/>(should)<sp/><sp/>change<sp/><sp/>those<sp/>values<sp/>to<sp/>suit<sp/>your<sp/>installation,<sp/>either</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>by<sp/>editing<sp/>the<sp/><sp/>Makefile<sp/>and/or<sp/>adding<sp/>another<sp/>.mk<sp/>file.</highlight></codeline>
+<codeline></codeline>
+    </programlisting>
+    <location file="README.md"/>
+  </compounddef>
+</doxygen>

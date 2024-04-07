@@ -116,4 +116,13 @@ check:
 	@make -s -C ../tests check
 
 
+.PHONY:doc
+doc : ## génère la documentation avec doxygen
+	@echo "suppression de la documentation"
+	@rm -rf doc/html* doc/xml*
+	@echo "génération de la nouvelle documentation"
+	@doxygen doc/image.doxy > /dev/null
+	@echo "ouverture de la doc"
+	@firefox doc/html/index.html &
+
 

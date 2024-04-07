@@ -1,0 +1,148 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.9.8" xml:lang="en-US">
+  <compounddef id="class_variable_info" kind="class" language="C++" prot="public">
+    <compoundname>VariableInfo</compoundname>
+    <includes refid="_symbol_gen_visitor_8h" local="no">SymbolGenVisitor.h</includes>
+    <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="class_variable_info_1aac07859b2fdcae95d4e4ef1e6800c53f" prot="public" static="no" mutable="no">
+        <type>long int</type>
+        <definition>long int VariableInfo::address</definition>
+        <argsstring></argsstring>
+        <name>address</name>
+        <qualifiedname>VariableInfo::address</qualifiedname>
+        <briefdescription>
+<para>Relative address of the pointer. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/SymbolGenVisitor.h" line="21" column="14" bodyfile="include/SymbolGenVisitor.h" bodystart="21" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="class_variable_info_1ad01b414010bdec1b180b7b3d67cdba79" prot="public" static="no" mutable="no">
+        <type>int</type>
+        <definition>int VariableInfo::size</definition>
+        <argsstring></argsstring>
+        <name>size</name>
+        <qualifiedname>VariableInfo::size</qualifiedname>
+        <briefdescription>
+<para>Size of the variable in octets. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/SymbolGenVisitor.h" line="22" column="9" bodyfile="include/SymbolGenVisitor.h" bodystart="22" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="class_variable_info_1a3dfeca5f4482248852435af8dad40355" prot="public" static="no" mutable="no">
+        <type>bool</type>
+        <definition>bool VariableInfo::defined</definition>
+        <argsstring></argsstring>
+        <name>defined</name>
+        <qualifiedname>VariableInfo::defined</qualifiedname>
+        <briefdescription>
+<para>Flag indicating if the variable is defined. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/SymbolGenVisitor.h" line="23" column="10" bodyfile="include/SymbolGenVisitor.h" bodystart="23" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="class_variable_info_1abde46b2a7c3878b51e1ea2f105535e9c" prot="public" static="no" mutable="no">
+        <type>bool</type>
+        <definition>bool VariableInfo::used</definition>
+        <argsstring></argsstring>
+        <name>used</name>
+        <qualifiedname>VariableInfo::used</qualifiedname>
+        <briefdescription>
+<para>Flag indicating if the variable is used. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/SymbolGenVisitor.h" line="24" column="10" bodyfile="include/SymbolGenVisitor.h" bodystart="24" bodyend="-1"/>
+      </memberdef>
+    </sectiondef>
+    <sectiondef kind="public-func">
+      <memberdef kind="function" id="class_variable_info_1a4ef028f283e2ba4637856450c8d4ba92" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type></type>
+        <definition>VariableInfo::VariableInfo</definition>
+        <argsstring>()</argsstring>
+        <name>VariableInfo</name>
+        <qualifiedname>VariableInfo::VariableInfo</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/SymbolGenVisitor.h" line="18" column="5" bodyfile="include/SymbolGenVisitor.h" bodystart="18" bodyend="18"/>
+      </memberdef>
+      <memberdef kind="function" id="class_variable_info_1a3c7fb1dd5e7fb43b3f7f7e025774ebb4" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type></type>
+        <definition>VariableInfo::VariableInfo</definition>
+        <argsstring>(long int address_, int size_)</argsstring>
+        <name>VariableInfo</name>
+        <qualifiedname>VariableInfo::VariableInfo</qualifiedname>
+        <param>
+          <type>long int</type>
+          <declname>address_</declname>
+        </param>
+        <param>
+          <type>int</type>
+          <declname>size_</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/SymbolGenVisitor.h" line="19" column="5" bodyfile="include/SymbolGenVisitor.h" bodystart="19" bodyend="19"/>
+      </memberdef>
+      <memberdef kind="function" id="class_variable_info_1ad89a10fdc1537a98785d0c488dc93c6c" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type></type>
+        <definition>VariableInfo::VariableInfo</definition>
+        <argsstring>(long int address_, int size_, bool defined_)</argsstring>
+        <name>VariableInfo</name>
+        <qualifiedname>VariableInfo::VariableInfo</qualifiedname>
+        <param>
+          <type>long int</type>
+          <declname>address_</declname>
+        </param>
+        <param>
+          <type>int</type>
+          <declname>size_</declname>
+        </param>
+        <param>
+          <type>bool</type>
+          <declname>defined_</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/SymbolGenVisitor.h" line="20" column="5" bodyfile="include/SymbolGenVisitor.h" bodystart="20" bodyend="20"/>
+      </memberdef>
+    </sectiondef>
+    <briefdescription>
+<para>Class representing information about a variable. </para>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="include/SymbolGenVisitor.h" line="16" column="1" bodyfile="include/SymbolGenVisitor.h" bodystart="16" bodyend="25"/>
+    <listofallmembers>
+      <member refid="class_variable_info_1aac07859b2fdcae95d4e4ef1e6800c53f" prot="public" virt="non-virtual"><scope>VariableInfo</scope><name>address</name></member>
+      <member refid="class_variable_info_1a3dfeca5f4482248852435af8dad40355" prot="public" virt="non-virtual"><scope>VariableInfo</scope><name>defined</name></member>
+      <member refid="class_variable_info_1ad01b414010bdec1b180b7b3d67cdba79" prot="public" virt="non-virtual"><scope>VariableInfo</scope><name>size</name></member>
+      <member refid="class_variable_info_1abde46b2a7c3878b51e1ea2f105535e9c" prot="public" virt="non-virtual"><scope>VariableInfo</scope><name>used</name></member>
+      <member refid="class_variable_info_1a4ef028f283e2ba4637856450c8d4ba92" prot="public" virt="non-virtual"><scope>VariableInfo</scope><name>VariableInfo</name></member>
+      <member refid="class_variable_info_1a3c7fb1dd5e7fb43b3f7f7e025774ebb4" prot="public" virt="non-virtual"><scope>VariableInfo</scope><name>VariableInfo</name></member>
+      <member refid="class_variable_info_1ad89a10fdc1537a98785d0c488dc93c6c" prot="public" virt="non-virtual"><scope>VariableInfo</scope><name>VariableInfo</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

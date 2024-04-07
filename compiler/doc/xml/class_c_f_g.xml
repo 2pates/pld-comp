@@ -1,0 +1,487 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.9.8" xml:lang="en-US">
+  <compounddef id="class_c_f_g" kind="class" language="C++" prot="public">
+    <compoundname>CFG</compoundname>
+    <includes refid="_i_r_8h" local="no">IR.h</includes>
+    <sectiondef kind="friend">
+      <memberdef kind="friend" id="class_c_f_g_1a4f559d9ecf81b3aad288b5870dbddd85" prot="private" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>class</type>
+        <definition>friend class CodeGenVisitor</definition>
+        <argsstring></argsstring>
+        <name>CodeGenVisitor</name>
+        <qualifiedname>CFG::CodeGenVisitor</qualifiedname>
+        <param>
+          <type><ref refid="class_code_gen_visitor" kindref="compound">CodeGenVisitor</ref></type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/IR.h" line="167" column="18" bodyfile="include/IR.h" bodystart="167" bodyend="-1"/>
+      </memberdef>
+    </sectiondef>
+    <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="class_c_f_g_1a37b50f8c106bb96c1ba23bba6bddacb7" prot="public" static="no" mutable="no">
+        <type><ref refid="class_basic_block" kindref="compound">BasicBlock</ref> *</type>
+        <definition>BasicBlock* CFG::current_bb</definition>
+        <argsstring></argsstring>
+        <name>current_bb</name>
+        <qualifiedname>CFG::current_bb</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Pointer to the current basic block. </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/IR.h" line="240" column="16" bodyfile="include/IR.h" bodystart="240" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="class_c_f_g_1a558f42a78f48bffc592823e909d7be21" prot="public" static="no" mutable="no">
+        <type>int</type>
+        <definition>int CFG::memoryUse</definition>
+        <argsstring></argsstring>
+        <name>memoryUse</name>
+        <qualifiedname>CFG::memoryUse</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Memory usage of the <ref refid="class_c_f_g" kindref="compound">CFG</ref>. </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/IR.h" line="241" column="9" bodyfile="include/IR.h" bodystart="241" bodyend="-1"/>
+      </memberdef>
+    </sectiondef>
+    <sectiondef kind="protected-attrib">
+      <memberdef kind="variable" id="class_c_f_g_1abed88166f764cd6553e2e1a7c34df807" prot="protected" static="no" mutable="no">
+        <type>std::unordered_map&lt; std::string, <ref refid="class_variable_info" kindref="compound">VariableInfo</ref> &gt; &amp;</type>
+        <definition>std::unordered_map&lt;std::string, VariableInfo&gt;&amp; CFG::variables</definition>
+        <argsstring></argsstring>
+        <name>variables</name>
+        <qualifiedname>CFG::variables</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Reference to the symbol table (variables). </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/IR.h" line="244" column="24" bodyfile="include/IR.h" bodystart="244" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="class_c_f_g_1acf2416350f1f21a45b401d4577065717" prot="protected" static="no" mutable="no">
+        <type>std::string</type>
+        <definition>std::string CFG::entry_block_label</definition>
+        <argsstring></argsstring>
+        <name>entry_block_label</name>
+        <qualifiedname>CFG::entry_block_label</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Label of the entry block. </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/IR.h" line="245" column="17" bodyfile="include/IR.h" bodystart="245" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="class_c_f_g_1afecab2ba5b16c25579c003999604c234" prot="protected" static="no" mutable="no">
+        <type>int</type>
+        <definition>int CFG::nextBBnumber</definition>
+        <argsstring></argsstring>
+        <name>nextBBnumber</name>
+        <qualifiedname>CFG::nextBBnumber</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Just for naming. </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/IR.h" line="246" column="9" bodyfile="include/IR.h" bodystart="246" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="class_c_f_g_1a5838a3d36080ba1ee9bc5bb2e6f41319" prot="protected" static="no" mutable="no">
+        <type>std::vector&lt; <ref refid="class_basic_block" kindref="compound">BasicBlock</ref> * &gt;</type>
+        <definition>std::vector&lt;BasicBlock*&gt; CFG::bbs</definition>
+        <argsstring></argsstring>
+        <name>bbs</name>
+        <qualifiedname>CFG::bbs</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>All the basic blocks of this <ref refid="class_c_f_g" kindref="compound">CFG</ref>. </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/IR.h" line="248" column="17" bodyfile="include/IR.h" bodystart="248" bodyend="-1"/>
+      </memberdef>
+    </sectiondef>
+    <sectiondef kind="public-func">
+      <memberdef kind="function" id="class_c_f_g_1a5201761ebbc062a6dcab154699e1b4a6" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>CFG::CFG</definition>
+        <argsstring>(std::unordered_map&lt; std::string, VariableInfo &gt; &amp;variables_, std::string entry_block_label_)</argsstring>
+        <name>CFG</name>
+        <qualifiedname>CFG::CFG</qualifiedname>
+        <param>
+          <type>std::unordered_map&lt; std::string, <ref refid="class_variable_info" kindref="compound">VariableInfo</ref> &gt; &amp;</type>
+          <declname>variables_</declname>
+        </param>
+        <param>
+          <type>std::string</type>
+          <declname>entry_block_label_</declname>
+        </param>
+        <briefdescription>
+<para>Constructor for <ref refid="class_c_f_g" kindref="compound">CFG</ref> class. </para>
+        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>variables_</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Reference to the symbol table (variables). </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>entry_block_label_</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Label of the entry block. </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/IR.h" line="176" column="5" bodyfile="src/IR.cpp" bodystart="470" bodyend="471"/>
+      </memberdef>
+      <memberdef kind="function" id="class_c_f_g_1aad1ed5a4e961c34bf396b1baae2daf52" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void CFG::add_bb</definition>
+        <argsstring>(BasicBlock *bb)</argsstring>
+        <name>add_bb</name>
+        <qualifiedname>CFG::add_bb</qualifiedname>
+        <param>
+          <type><ref refid="class_basic_block" kindref="compound">BasicBlock</ref> *</type>
+          <declname>bb</declname>
+        </param>
+        <briefdescription>
+<para>Add a basic block to the <ref refid="class_c_f_g" kindref="compound">CFG</ref>. </para>
+        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>bb</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Pointer to the basic block to add. </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/IR.h" line="183" column="10" bodyfile="src/IR.cpp" bodystart="473" bodyend="476"/>
+      </memberdef>
+      <memberdef kind="function" id="class_c_f_g_1a9e4ade9eea4546ab7e16654f9ec2e1d1" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void CFG::gen_asm</definition>
+        <argsstring>(std::ostream &amp;o, Target target)</argsstring>
+        <name>gen_asm</name>
+        <qualifiedname>CFG::gen_asm</qualifiedname>
+        <param>
+          <type>std::ostream &amp;</type>
+          <declname>o</declname>
+        </param>
+        <param>
+          <type><ref refid="_i_r_8h_1a31488d29805a596498c0234ae392d35d" kindref="member">Target</ref></type>
+          <declname>target</declname>
+        </param>
+        <briefdescription>
+<para>Generate x86 assembly code for the <ref refid="class_c_f_g" kindref="compound">CFG</ref>. </para>
+        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>o</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Output stream to write the assembly code. </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>target</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Target architecture. </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/IR.h" line="191" column="10" bodyfile="src/IR.cpp" bodystart="478" bodyend="483"/>
+      </memberdef>
+      <memberdef kind="function" id="class_c_f_g_1ac9aecf24dee8f6e226efffc59dfa75b4" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>std::string</type>
+        <definition>std::string CFG::IR_reg_to_asm</definition>
+        <argsstring>(std::string reg)</argsstring>
+        <name>IR_reg_to_asm</name>
+        <qualifiedname>CFG::IR_reg_to_asm</qualifiedname>
+        <param>
+          <type>std::string</type>
+          <declname>reg</declname>
+        </param>
+        <briefdescription>
+<para>Convert IR register or input variable to assembly format. </para>
+        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>reg</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>IR register or input variable. </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="return"><para>Assembly format of the register or input variable. </para>
+</simplesect>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/IR.h" line="199" column="17"/>
+      </memberdef>
+      <memberdef kind="function" id="class_c_f_g_1a768f5fac78b57d9e485cac271ffed392" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void CFG::gen_asm_prologue</definition>
+        <argsstring>(std::ostream &amp;o, Target target)</argsstring>
+        <name>gen_asm_prologue</name>
+        <qualifiedname>CFG::gen_asm_prologue</qualifiedname>
+        <param>
+          <type>std::ostream &amp;</type>
+          <declname>o</declname>
+        </param>
+        <param>
+          <type><ref refid="_i_r_8h_1a31488d29805a596498c0234ae392d35d" kindref="member">Target</ref></type>
+          <declname>target</declname>
+        </param>
+        <briefdescription>
+<para>Generate the prologue of the function in assembly. </para>
+        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>o</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Output stream to write the assembly code. </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>target</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Target architecture. </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/IR.h" line="207" column="10" bodyfile="src/IR.cpp" bodystart="485" bodyend="494"/>
+      </memberdef>
+      <memberdef kind="function" id="class_c_f_g_1a6761f195cadec709615b0c12e28fa90a" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void CFG::gen_asm_epilogue</definition>
+        <argsstring>(std::ostream &amp;o, Target target)</argsstring>
+        <name>gen_asm_epilogue</name>
+        <qualifiedname>CFG::gen_asm_epilogue</qualifiedname>
+        <param>
+          <type>std::ostream &amp;</type>
+          <declname>o</declname>
+        </param>
+        <param>
+          <type><ref refid="_i_r_8h_1a31488d29805a596498c0234ae392d35d" kindref="member">Target</ref></type>
+          <declname>target</declname>
+        </param>
+        <briefdescription>
+<para>Generate the epilogue of the function in assembly. </para>
+        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>o</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Output stream to write the assembly code. </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>target</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Target architecture. </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/IR.h" line="215" column="10"/>
+      </memberdef>
+      <memberdef kind="function" id="class_c_f_g_1a293fbab6cf25a645ae766cd5b0e12c29" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void CFG::add_to_symbol_table</definition>
+        <argsstring>(std::string name, VariableInfo t)</argsstring>
+        <name>add_to_symbol_table</name>
+        <qualifiedname>CFG::add_to_symbol_table</qualifiedname>
+        <param>
+          <type>std::string</type>
+          <declname>name</declname>
+        </param>
+        <param>
+          <type><ref refid="class_variable_info" kindref="compound">VariableInfo</ref></type>
+          <declname>t</declname>
+        </param>
+        <briefdescription>
+<para>Add a variable to the symbol table. </para>
+        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>name</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Name of the variable. </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>t</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Information about the variable. </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/IR.h" line="223" column="10" bodyfile="src/IR.cpp" bodystart="496" bodyend="496"/>
+      </memberdef>
+      <memberdef kind="function" id="class_c_f_g_1a926d7f4fbe2b13789f8c3edf6a23aa57" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="class_variable_info" kindref="compound">VariableInfo</ref></type>
+        <definition>VariableInfo CFG::get_var_info</definition>
+        <argsstring>(std::string name)</argsstring>
+        <name>get_var_info</name>
+        <qualifiedname>CFG::get_var_info</qualifiedname>
+        <param>
+          <type>std::string</type>
+          <declname>name</declname>
+        </param>
+        <briefdescription>
+<para>Get information about a variable from the symbol table. </para>
+        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>name</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Name of the variable. </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="return"><para>Information about the variable. </para>
+</simplesect>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/IR.h" line="231" column="18" bodyfile="src/IR.cpp" bodystart="503" bodyend="503"/>
+      </memberdef>
+      <memberdef kind="function" id="class_c_f_g_1affb68a8d7b21dff67e4aa3244e8338e1" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>std::string</type>
+        <definition>string CFG::new_BB_name</definition>
+        <argsstring>()</argsstring>
+        <name>new_BB_name</name>
+        <qualifiedname>CFG::new_BB_name</qualifiedname>
+        <briefdescription>
+<para>Generate a new basic block name. </para>
+        </briefdescription>
+        <detaileddescription>
+<para><simplesect kind="return"><para>New basic block name. </para>
+</simplesect>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/IR.h" line="238" column="17" bodyfile="src/IR.cpp" bodystart="498" bodyend="501"/>
+      </memberdef>
+    </sectiondef>
+    <briefdescription>
+<para>The class for the control flow graph, also includes the symbol table. </para>
+    </briefdescription>
+    <detaileddescription>
+<para>A few important comments:<itemizedlist>
+<listitem><para>The entry block is the one with the same label as the AST function name. (it could be the first of bbs, or it could be defined by an attribute value)</para>
+</listitem><listitem><para>The exit block is the one with both exit pointers equal to nullptr. (again it could be identified in a more explicit way) </para>
+</listitem></itemizedlist>
+</para>
+    </detaileddescription>
+    <collaborationgraph>
+      <node id="2">
+        <label>BasicBlock</label>
+        <link refid="class_basic_block"/>
+        <childnode refid="2" relation="usage">
+          <edgelabel>exit_false</edgelabel>
+          <edgelabel>exit_true</edgelabel>
+          <edgelabel>next_block</edgelabel>
+          <edgelabel>parent_test</edgelabel>
+        </childnode>
+        <childnode refid="1" relation="usage">
+          <edgelabel>cfg</edgelabel>
+        </childnode>
+      </node>
+      <node id="1">
+        <label>CFG</label>
+        <link refid="class_c_f_g"/>
+        <childnode refid="2" relation="usage">
+          <edgelabel>current_bb</edgelabel>
+        </childnode>
+      </node>
+    </collaborationgraph>
+    <location file="include/IR.h" line="166" column="1" bodyfile="include/IR.h" bodystart="166" bodyend="249"/>
+    <listofallmembers>
+      <member refid="class_c_f_g_1aad1ed5a4e961c34bf396b1baae2daf52" prot="public" virt="non-virtual"><scope>CFG</scope><name>add_bb</name></member>
+      <member refid="class_c_f_g_1a293fbab6cf25a645ae766cd5b0e12c29" prot="public" virt="non-virtual"><scope>CFG</scope><name>add_to_symbol_table</name></member>
+      <member refid="class_c_f_g_1a5838a3d36080ba1ee9bc5bb2e6f41319" prot="protected" virt="non-virtual"><scope>CFG</scope><name>bbs</name></member>
+      <member refid="class_c_f_g_1a5201761ebbc062a6dcab154699e1b4a6" prot="public" virt="non-virtual"><scope>CFG</scope><name>CFG</name></member>
+      <member refid="class_c_f_g_1a4f559d9ecf81b3aad288b5870dbddd85" prot="private" virt="non-virtual"><scope>CFG</scope><name>CodeGenVisitor</name></member>
+      <member refid="class_c_f_g_1a37b50f8c106bb96c1ba23bba6bddacb7" prot="public" virt="non-virtual"><scope>CFG</scope><name>current_bb</name></member>
+      <member refid="class_c_f_g_1acf2416350f1f21a45b401d4577065717" prot="protected" virt="non-virtual"><scope>CFG</scope><name>entry_block_label</name></member>
+      <member refid="class_c_f_g_1a9e4ade9eea4546ab7e16654f9ec2e1d1" prot="public" virt="non-virtual"><scope>CFG</scope><name>gen_asm</name></member>
+      <member refid="class_c_f_g_1a6761f195cadec709615b0c12e28fa90a" prot="public" virt="non-virtual"><scope>CFG</scope><name>gen_asm_epilogue</name></member>
+      <member refid="class_c_f_g_1a768f5fac78b57d9e485cac271ffed392" prot="public" virt="non-virtual"><scope>CFG</scope><name>gen_asm_prologue</name></member>
+      <member refid="class_c_f_g_1a926d7f4fbe2b13789f8c3edf6a23aa57" prot="public" virt="non-virtual"><scope>CFG</scope><name>get_var_info</name></member>
+      <member refid="class_c_f_g_1ac9aecf24dee8f6e226efffc59dfa75b4" prot="public" virt="non-virtual"><scope>CFG</scope><name>IR_reg_to_asm</name></member>
+      <member refid="class_c_f_g_1a558f42a78f48bffc592823e909d7be21" prot="public" virt="non-virtual"><scope>CFG</scope><name>memoryUse</name></member>
+      <member refid="class_c_f_g_1affb68a8d7b21dff67e4aa3244e8338e1" prot="public" virt="non-virtual"><scope>CFG</scope><name>new_BB_name</name></member>
+      <member refid="class_c_f_g_1afecab2ba5b16c25579c003999604c234" prot="protected" virt="non-virtual"><scope>CFG</scope><name>nextBBnumber</name></member>
+      <member refid="class_c_f_g_1abed88166f764cd6553e2e1a7c34df807" prot="protected" virt="non-virtual"><scope>CFG</scope><name>variables</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

@@ -1,0 +1,911 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.9.8" xml:lang="en-US">
+  <compounddef id="class_code_gen_visitor" kind="class" language="C++" prot="public">
+    <compoundname>CodeGenVisitor</compoundname>
+    <basecompoundref prot="public" virt="non-virtual">ifccBaseVisitor</basecompoundref>
+    <includes refid="_code_gen_visitor_8h" local="no">CodeGenVisitor.h</includes>
+    <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="class_code_gen_visitor_1a08d9a8e9c43a599e44f9a32cde8442ce" prot="public" static="no" mutable="no">
+        <type>int</type>
+        <definition>int CodeGenVisitor::current_block</definition>
+        <argsstring></argsstring>
+        <name>current_block</name>
+        <qualifiedname>CodeGenVisitor::current_block</qualifiedname>
+        <briefdescription>
+<para>ID of the current block. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/CodeGenVisitor.h" line="68" column="9" bodyfile="include/CodeGenVisitor.h" bodystart="68" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="class_code_gen_visitor_1a13b42fcc6507c743cf7acd6ddd17e0a9" prot="public" static="no" mutable="no">
+        <type>int</type>
+        <definition>int CodeGenVisitor::tmp_block_index</definition>
+        <argsstring></argsstring>
+        <name>tmp_block_index</name>
+        <qualifiedname>CodeGenVisitor::tmp_block_index</qualifiedname>
+        <briefdescription>
+<para>Index for temporary block IDs. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/CodeGenVisitor.h" line="69" column="9" bodyfile="include/CodeGenVisitor.h" bodystart="69" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="class_code_gen_visitor_1a4ad1ccabeeb96263592b12424614db01" prot="public" static="no" mutable="no">
+        <type>std::unordered_map&lt; int, int &gt;</type>
+        <definition>std::unordered_map&lt;int, int&gt; CodeGenVisitor::blocks</definition>
+        <argsstring></argsstring>
+        <name>blocks</name>
+        <qualifiedname>CodeGenVisitor::blocks</qualifiedname>
+        <briefdescription>
+<para>Mapping of block IDs to their parent block IDs. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/CodeGenVisitor.h" line="70" column="24" bodyfile="include/CodeGenVisitor.h" bodystart="70" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="class_code_gen_visitor_1aac0c3060638d933fa2c12030901d7ce4" prot="public" static="no" mutable="no">
+        <type>int</type>
+        <definition>int CodeGenVisitor::tmp_index</definition>
+        <argsstring></argsstring>
+        <name>tmp_index</name>
+        <qualifiedname>CodeGenVisitor::tmp_index</qualifiedname>
+        <briefdescription>
+<para>Index for temporary variable names. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/CodeGenVisitor.h" line="72" column="9" bodyfile="include/CodeGenVisitor.h" bodystart="72" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="class_code_gen_visitor_1adfdbda3eb128c2a4b8672a465b5a2401" prot="public" static="no" mutable="no">
+        <type><ref refid="class_c_f_g" kindref="compound">CFG</ref> *</type>
+        <definition>CFG* CodeGenVisitor::cfg</definition>
+        <argsstring></argsstring>
+        <name>cfg</name>
+        <qualifiedname>CodeGenVisitor::cfg</qualifiedname>
+        <briefdescription>
+<para>Pointer to the Control Flow Graph. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/CodeGenVisitor.h" line="73" column="9" bodyfile="include/CodeGenVisitor.h" bodystart="73" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="class_code_gen_visitor_1a21198465a38edfecbd555aff3465fc17" prot="public" static="no" mutable="no">
+        <type>std::unordered_map&lt; std::string, <ref refid="class_variable_info" kindref="compound">VariableInfo</ref> &gt; &amp;</type>
+        <definition>std::unordered_map&lt;std::string, VariableInfo&gt;&amp; CodeGenVisitor::variables</definition>
+        <argsstring></argsstring>
+        <name>variables</name>
+        <qualifiedname>CodeGenVisitor::variables</qualifiedname>
+        <briefdescription>
+<para>Mapping of variable names to their information. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/CodeGenVisitor.h" line="74" column="24" bodyfile="include/CodeGenVisitor.h" bodystart="74" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="class_code_gen_visitor_1acbfe3399c13acf10119a85d07c616bef" prot="public" static="no" mutable="no">
+        <type>bool</type>
+        <definition>bool CodeGenVisitor::declaration_mode</definition>
+        <argsstring></argsstring>
+        <name>declaration_mode</name>
+        <qualifiedname>CodeGenVisitor::declaration_mode</qualifiedname>
+        <briefdescription>
+<para>Flag indicating if in declaration mode. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/CodeGenVisitor.h" line="75" column="10" bodyfile="include/CodeGenVisitor.h" bodystart="75" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="class_code_gen_visitor_1aedd8ca449d0fcb9ad98cf70570b1df69" prot="public" static="no" mutable="no">
+        <type>bool</type>
+        <definition>bool CodeGenVisitor::inmain</definition>
+        <argsstring></argsstring>
+        <name>inmain</name>
+        <qualifiedname>CodeGenVisitor::inmain</qualifiedname>
+        <initializer>= false</initializer>
+        <briefdescription>
+<para>Flag indicating if inside main function. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/CodeGenVisitor.h" line="76" column="10" bodyfile="include/CodeGenVisitor.h" bodystart="76" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="class_code_gen_visitor_1a7f5fd27c39b8889315e39371ba72c576" prot="public" static="no" mutable="no">
+        <type>int</type>
+        <definition>int CodeGenVisitor::varInFunctionDef</definition>
+        <argsstring></argsstring>
+        <name>varInFunctionDef</name>
+        <qualifiedname>CodeGenVisitor::varInFunctionDef</qualifiedname>
+        <initializer>= 0</initializer>
+        <briefdescription>
+<para>Number of variables in a function definition. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/CodeGenVisitor.h" line="77" column="9" bodyfile="include/CodeGenVisitor.h" bodystart="77" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="class_code_gen_visitor_1af299368eb940efc08348ec18d4090714" prot="public" static="no" mutable="no">
+        <type>std::string</type>
+        <definition>std::string CodeGenVisitor::currentFunction</definition>
+        <argsstring></argsstring>
+        <name>currentFunction</name>
+        <qualifiedname>CodeGenVisitor::currentFunction</qualifiedname>
+        <initializer>= &quot;&quot;</initializer>
+        <briefdescription>
+<para>Name of the current function. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/CodeGenVisitor.h" line="78" column="17" bodyfile="include/CodeGenVisitor.h" bodystart="78" bodyend="-1"/>
+      </memberdef>
+    </sectiondef>
+    <sectiondef kind="public-func">
+      <memberdef kind="function" id="class_code_gen_visitor_1a3da9fec0416c8f3dd3a660d78675540d" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type></type>
+        <definition>CodeGenVisitor::CodeGenVisitor</definition>
+        <argsstring>(CFG *cfg_, std::unordered_map&lt; int, int &gt; &amp;blocks_)</argsstring>
+        <name>CodeGenVisitor</name>
+        <qualifiedname>CodeGenVisitor::CodeGenVisitor</qualifiedname>
+        <param>
+          <type><ref refid="class_c_f_g" kindref="compound">CFG</ref> *</type>
+          <declname>cfg_</declname>
+        </param>
+        <param>
+          <type>std::unordered_map&lt; int, int &gt; &amp;</type>
+          <declname>blocks_</declname>
+        </param>
+        <briefdescription>
+<para>Constructor for <ref refid="class_code_gen_visitor" kindref="compound">CodeGenVisitor</ref> class. </para>
+        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>cfg_</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Pointer to the Control Flow Graph. </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>blocks_</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Mapping of block IDs to their parent block IDs. </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/CodeGenVisitor.h" line="21" column="5" bodyfile="include/CodeGenVisitor.h" bodystart="21" bodyend="23"/>
+      </memberdef>
+      <memberdef kind="function" id="class_code_gen_visitor_1a79e751e8d4921afd9f0cdb7a46a633ef" prot="public" static="no" const="no" explicit="no" inline="no" virt="virtual">
+        <type>antlrcpp::Any</type>
+        <definition>antlrcpp::Any CodeGenVisitor::visitProg</definition>
+        <argsstring>(ifccParser::ProgContext *ctx) override</argsstring>
+        <name>visitProg</name>
+        <qualifiedname>CodeGenVisitor::visitProg</qualifiedname>
+        <param>
+          <type>ifccParser::ProgContext *</type>
+          <declname>ctx</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/CodeGenVisitor.h" line="26" column="27" bodyfile="src/CodeGenVisitor.cpp" bodystart="5" bodyend="18"/>
+      </memberdef>
+      <memberdef kind="function" id="class_code_gen_visitor_1aa50dc2e13585695cec162a628a7fc81a" prot="public" static="no" const="no" explicit="no" inline="no" virt="virtual">
+        <type>antlrcpp::Any</type>
+        <definition>antlrcpp::Any CodeGenVisitor::visitBlock</definition>
+        <argsstring>(ifccParser::BlockContext *ctx) override</argsstring>
+        <name>visitBlock</name>
+        <qualifiedname>CodeGenVisitor::visitBlock</qualifiedname>
+        <param>
+          <type>ifccParser::BlockContext *</type>
+          <declname>ctx</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/CodeGenVisitor.h" line="27" column="27" bodyfile="src/CodeGenVisitor.cpp" bodystart="39" bodyend="47"/>
+      </memberdef>
+      <memberdef kind="function" id="class_code_gen_visitor_1a05fbadb4b0c52448404a940175a8bafc" prot="public" static="no" const="no" explicit="no" inline="no" virt="virtual">
+        <type>antlrcpp::Any</type>
+        <definition>antlrcpp::Any CodeGenVisitor::visitInstruction</definition>
+        <argsstring>(ifccParser::InstructionContext *ctx) override</argsstring>
+        <name>visitInstruction</name>
+        <qualifiedname>CodeGenVisitor::visitInstruction</qualifiedname>
+        <param>
+          <type>ifccParser::InstructionContext *</type>
+          <declname>ctx</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/CodeGenVisitor.h" line="28" column="27" bodyfile="src/CodeGenVisitor.cpp" bodystart="84" bodyend="100"/>
+      </memberdef>
+      <memberdef kind="function" id="class_code_gen_visitor_1ab4530a6f6a0014236189ed626a59d06d" prot="public" static="no" const="no" explicit="no" inline="no" virt="virtual">
+        <type>antlrcpp::Any</type>
+        <definition>antlrcpp::Any CodeGenVisitor::visitReturn_stmt</definition>
+        <argsstring>(ifccParser::Return_stmtContext *ctx) override</argsstring>
+        <name>visitReturn_stmt</name>
+        <qualifiedname>CodeGenVisitor::visitReturn_stmt</qualifiedname>
+        <param>
+          <type>ifccParser::Return_stmtContext *</type>
+          <declname>ctx</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/CodeGenVisitor.h" line="29" column="27" bodyfile="src/CodeGenVisitor.cpp" bodystart="114" bodyend="122"/>
+      </memberdef>
+      <memberdef kind="function" id="class_code_gen_visitor_1af60a97f4db03bd1b4071ab59d4c73191" prot="public" static="no" const="no" explicit="no" inline="no" virt="virtual">
+        <type>antlrcpp::Any</type>
+        <definition>antlrcpp::Any CodeGenVisitor::visitDeclare_stmt</definition>
+        <argsstring>(ifccParser::Declare_stmtContext *ctx) override</argsstring>
+        <name>visitDeclare_stmt</name>
+        <qualifiedname>CodeGenVisitor::visitDeclare_stmt</qualifiedname>
+        <param>
+          <type>ifccParser::Declare_stmtContext *</type>
+          <declname>ctx</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/CodeGenVisitor.h" line="30" column="27" bodyfile="src/CodeGenVisitor.cpp" bodystart="102" bodyend="112"/>
+      </memberdef>
+      <memberdef kind="function" id="class_code_gen_visitor_1a0d65c8190d7c5ef96cc62eee1ef9cb4b" prot="public" static="no" const="no" explicit="no" inline="no" virt="virtual">
+        <type>antlrcpp::Any</type>
+        <definition>antlrcpp::Any CodeGenVisitor::visitDeclare_only_stmt</definition>
+        <argsstring>(ifccParser::Declare_only_stmtContext *ctx) override</argsstring>
+        <name>visitDeclare_only_stmt</name>
+        <qualifiedname>CodeGenVisitor::visitDeclare_only_stmt</qualifiedname>
+        <param>
+          <type>ifccParser::Declare_only_stmtContext *</type>
+          <declname>ctx</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/CodeGenVisitor.h" line="31" column="27" bodyfile="src/CodeGenVisitor.cpp" bodystart="145" bodyend="161"/>
+      </memberdef>
+      <memberdef kind="function" id="class_code_gen_visitor_1a8ebce0dbad02f5120a45868481cc6a8c" prot="public" static="no" const="no" explicit="no" inline="no" virt="virtual">
+        <type>antlrcpp::Any</type>
+        <definition>antlrcpp::Any CodeGenVisitor::visitAssignment_equal</definition>
+        <argsstring>(ifccParser::Assignment_equalContext *ctx) override</argsstring>
+        <name>visitAssignment_equal</name>
+        <qualifiedname>CodeGenVisitor::visitAssignment_equal</qualifiedname>
+        <param>
+          <type>ifccParser::Assignment_equalContext *</type>
+          <declname>ctx</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/CodeGenVisitor.h" line="32" column="27" bodyfile="src/CodeGenVisitor.cpp" bodystart="124" bodyend="144"/>
+      </memberdef>
+      <memberdef kind="function" id="class_code_gen_visitor_1ae5a02646fcf0faf213e063500ccfa58d" prot="public" static="no" const="no" explicit="no" inline="no" virt="virtual">
+        <type>antlrcpp::Any</type>
+        <definition>antlrcpp::Any CodeGenVisitor::visitAssignment_add</definition>
+        <argsstring>(ifccParser::Assignment_addContext *ctx) override</argsstring>
+        <name>visitAssignment_add</name>
+        <qualifiedname>CodeGenVisitor::visitAssignment_add</qualifiedname>
+        <param>
+          <type>ifccParser::Assignment_addContext *</type>
+          <declname>ctx</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/CodeGenVisitor.h" line="33" column="27" bodyfile="src/CodeGenVisitor.cpp" bodystart="173" bodyend="184"/>
+      </memberdef>
+      <memberdef kind="function" id="class_code_gen_visitor_1a70ff0f907f57d4c6a9dfec0d6516c027" prot="public" static="no" const="no" explicit="no" inline="no" virt="virtual">
+        <type>antlrcpp::Any</type>
+        <definition>antlrcpp::Any CodeGenVisitor::visitAssignment_mult</definition>
+        <argsstring>(ifccParser::Assignment_multContext *ctx) override</argsstring>
+        <name>visitAssignment_mult</name>
+        <qualifiedname>CodeGenVisitor::visitAssignment_mult</qualifiedname>
+        <param>
+          <type>ifccParser::Assignment_multContext *</type>
+          <declname>ctx</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/CodeGenVisitor.h" line="34" column="27" bodyfile="src/CodeGenVisitor.cpp" bodystart="186" bodyend="199"/>
+      </memberdef>
+      <memberdef kind="function" id="class_code_gen_visitor_1a43c4d0216e00a9b3ab566b64d222e74f" prot="public" static="no" const="no" explicit="no" inline="no" virt="virtual">
+        <type>antlrcpp::Any</type>
+        <definition>antlrcpp::Any CodeGenVisitor::visitPre_incrementation</definition>
+        <argsstring>(ifccParser::Pre_incrementationContext *ctx) override</argsstring>
+        <name>visitPre_incrementation</name>
+        <qualifiedname>CodeGenVisitor::visitPre_incrementation</qualifiedname>
+        <param>
+          <type>ifccParser::Pre_incrementationContext *</type>
+          <declname>ctx</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/CodeGenVisitor.h" line="35" column="27" bodyfile="src/CodeGenVisitor.cpp" bodystart="201" bodyend="213"/>
+      </memberdef>
+      <memberdef kind="function" id="class_code_gen_visitor_1af95fa24385733a6187c2ee2a544189dd" prot="public" static="no" const="no" explicit="no" inline="no" virt="virtual">
+        <type>antlrcpp::Any</type>
+        <definition>antlrcpp::Any CodeGenVisitor::visitPost_incrementation</definition>
+        <argsstring>(ifccParser::Post_incrementationContext *ctx) override</argsstring>
+        <name>visitPost_incrementation</name>
+        <qualifiedname>CodeGenVisitor::visitPost_incrementation</qualifiedname>
+        <param>
+          <type>ifccParser::Post_incrementationContext *</type>
+          <declname>ctx</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/CodeGenVisitor.h" line="36" column="27" bodyfile="src/CodeGenVisitor.cpp" bodystart="215" bodyend="231"/>
+      </memberdef>
+      <memberdef kind="function" id="class_code_gen_visitor_1af0ce976cf720243de430b4f7e6e6b92d" prot="public" static="no" const="no" explicit="no" inline="no" virt="virtual">
+        <type>antlrcpp::Any</type>
+        <definition>antlrcpp::Any CodeGenVisitor::visitRvalue</definition>
+        <argsstring>(ifccParser::RvalueContext *ctx) override</argsstring>
+        <name>visitRvalue</name>
+        <qualifiedname>CodeGenVisitor::visitRvalue</qualifiedname>
+        <param>
+          <type>ifccParser::RvalueContext *</type>
+          <declname>ctx</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/CodeGenVisitor.h" line="37" column="27" bodyfile="src/CodeGenVisitor.cpp" bodystart="82" bodyend="82"/>
+      </memberdef>
+      <memberdef kind="function" id="class_code_gen_visitor_1a0a868d6e169c106d91ac383d99654e01" prot="public" static="no" const="no" explicit="no" inline="no" virt="virtual">
+        <type>antlrcpp::Any</type>
+        <definition>antlrcpp::Any CodeGenVisitor::visitExpr_parenthesis</definition>
+        <argsstring>(ifccParser::Expr_parenthesisContext *ctx) override</argsstring>
+        <name>visitExpr_parenthesis</name>
+        <qualifiedname>CodeGenVisitor::visitExpr_parenthesis</qualifiedname>
+        <param>
+          <type>ifccParser::Expr_parenthesisContext *</type>
+          <declname>ctx</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/CodeGenVisitor.h" line="38" column="27" bodyfile="src/CodeGenVisitorExpr.cpp" bodystart="10" bodyend="16"/>
+      </memberdef>
+      <memberdef kind="function" id="class_code_gen_visitor_1a8e2ba50a028a20c5c9589569596d9704" prot="public" static="no" const="no" explicit="no" inline="no" virt="virtual">
+        <type>antlrcpp::Any</type>
+        <definition>antlrcpp::Any CodeGenVisitor::visitExpr_function</definition>
+        <argsstring>(ifccParser::Expr_functionContext *ctx) override</argsstring>
+        <name>visitExpr_function</name>
+        <qualifiedname>CodeGenVisitor::visitExpr_function</qualifiedname>
+        <param>
+          <type>ifccParser::Expr_functionContext *</type>
+          <declname>ctx</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/CodeGenVisitor.h" line="39" column="27" bodyfile="src/CodeGenVisitorExpr.cpp" bodystart="17" bodyend="23"/>
+      </memberdef>
+      <memberdef kind="function" id="class_code_gen_visitor_1a64b1795897fadbf44432bf98680f5cdb" prot="public" static="no" const="no" explicit="no" inline="no" virt="virtual">
+        <type>antlrcpp::Any</type>
+        <definition>antlrcpp::Any CodeGenVisitor::visitExpr_unaire</definition>
+        <argsstring>(ifccParser::Expr_unaireContext *ctx) override</argsstring>
+        <name>visitExpr_unaire</name>
+        <qualifiedname>CodeGenVisitor::visitExpr_unaire</qualifiedname>
+        <param>
+          <type>ifccParser::Expr_unaireContext *</type>
+          <declname>ctx</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/CodeGenVisitor.h" line="40" column="27" bodyfile="src/CodeGenVisitorExpr.cpp" bodystart="25" bodyend="43"/>
+      </memberdef>
+      <memberdef kind="function" id="class_code_gen_visitor_1ac69cc4eab0ee49fc0bdfbb208ce95953" prot="public" static="no" const="no" explicit="no" inline="no" virt="virtual">
+        <type>antlrcpp::Any</type>
+        <definition>antlrcpp::Any CodeGenVisitor::visitExpr_mult</definition>
+        <argsstring>(ifccParser::Expr_multContext *ctx) override</argsstring>
+        <name>visitExpr_mult</name>
+        <qualifiedname>CodeGenVisitor::visitExpr_mult</qualifiedname>
+        <param>
+          <type>ifccParser::Expr_multContext *</type>
+          <declname>ctx</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/CodeGenVisitor.h" line="41" column="27" bodyfile="src/CodeGenVisitorExpr.cpp" bodystart="45" bodyend="59"/>
+      </memberdef>
+      <memberdef kind="function" id="class_code_gen_visitor_1a19260411b818b2199080f3253f864ad3" prot="public" static="no" const="no" explicit="no" inline="no" virt="virtual">
+        <type>antlrcpp::Any</type>
+        <definition>antlrcpp::Any CodeGenVisitor::visitExpr_add</definition>
+        <argsstring>(ifccParser::Expr_addContext *ctx) override</argsstring>
+        <name>visitExpr_add</name>
+        <qualifiedname>CodeGenVisitor::visitExpr_add</qualifiedname>
+        <param>
+          <type>ifccParser::Expr_addContext *</type>
+          <declname>ctx</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/CodeGenVisitor.h" line="42" column="27" bodyfile="src/CodeGenVisitorExpr.cpp" bodystart="61" bodyend="72"/>
+      </memberdef>
+      <memberdef kind="function" id="class_code_gen_visitor_1a8cb0d5f4716e485f951dd31591fd6a95" prot="public" static="no" const="no" explicit="no" inline="no" virt="virtual">
+        <type>antlrcpp::Any</type>
+        <definition>antlrcpp::Any CodeGenVisitor::visitExpr_relational</definition>
+        <argsstring>(ifccParser::Expr_relationalContext *ctx) override</argsstring>
+        <name>visitExpr_relational</name>
+        <qualifiedname>CodeGenVisitor::visitExpr_relational</qualifiedname>
+        <param>
+          <type>ifccParser::Expr_relationalContext *</type>
+          <declname>ctx</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/CodeGenVisitor.h" line="43" column="27" bodyfile="src/CodeGenVisitorExpr.cpp" bodystart="74" bodyend="93"/>
+      </memberdef>
+      <memberdef kind="function" id="class_code_gen_visitor_1affc381d8b90ee716eb9f7adf13befb04" prot="public" static="no" const="no" explicit="no" inline="no" virt="virtual">
+        <type>antlrcpp::Any</type>
+        <definition>antlrcpp::Any CodeGenVisitor::visitExpr_equality</definition>
+        <argsstring>(ifccParser::Expr_equalityContext *ctx) override</argsstring>
+        <name>visitExpr_equality</name>
+        <qualifiedname>CodeGenVisitor::visitExpr_equality</qualifiedname>
+        <param>
+          <type>ifccParser::Expr_equalityContext *</type>
+          <declname>ctx</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/CodeGenVisitor.h" line="44" column="27" bodyfile="src/CodeGenVisitorExpr.cpp" bodystart="95" bodyend="110"/>
+      </memberdef>
+      <memberdef kind="function" id="class_code_gen_visitor_1a8feb86fa301537bd9c443316c5ccdf74" prot="public" static="no" const="no" explicit="no" inline="no" virt="virtual">
+        <type>antlrcpp::Any</type>
+        <definition>antlrcpp::Any CodeGenVisitor::visitExpr_and</definition>
+        <argsstring>(ifccParser::Expr_andContext *ctx) override</argsstring>
+        <name>visitExpr_and</name>
+        <qualifiedname>CodeGenVisitor::visitExpr_and</qualifiedname>
+        <param>
+          <type>ifccParser::Expr_andContext *</type>
+          <declname>ctx</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/CodeGenVisitor.h" line="45" column="27" bodyfile="src/CodeGenVisitorExpr.cpp" bodystart="112" bodyend="119"/>
+      </memberdef>
+      <memberdef kind="function" id="class_code_gen_visitor_1aeb747269630b2e410b029467e53fe740" prot="public" static="no" const="no" explicit="no" inline="no" virt="virtual">
+        <type>antlrcpp::Any</type>
+        <definition>antlrcpp::Any CodeGenVisitor::visitExpr_xor</definition>
+        <argsstring>(ifccParser::Expr_xorContext *ctx) override</argsstring>
+        <name>visitExpr_xor</name>
+        <qualifiedname>CodeGenVisitor::visitExpr_xor</qualifiedname>
+        <param>
+          <type>ifccParser::Expr_xorContext *</type>
+          <declname>ctx</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/CodeGenVisitor.h" line="46" column="27" bodyfile="src/CodeGenVisitorExpr.cpp" bodystart="121" bodyend="128"/>
+      </memberdef>
+      <memberdef kind="function" id="class_code_gen_visitor_1a19f025270284d847831c828333720536" prot="public" static="no" const="no" explicit="no" inline="no" virt="virtual">
+        <type>antlrcpp::Any</type>
+        <definition>antlrcpp::Any CodeGenVisitor::visitExpr_or</definition>
+        <argsstring>(ifccParser::Expr_orContext *ctx) override</argsstring>
+        <name>visitExpr_or</name>
+        <qualifiedname>CodeGenVisitor::visitExpr_or</qualifiedname>
+        <param>
+          <type>ifccParser::Expr_orContext *</type>
+          <declname>ctx</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/CodeGenVisitor.h" line="47" column="27" bodyfile="src/CodeGenVisitorExpr.cpp" bodystart="130" bodyend="137"/>
+      </memberdef>
+      <memberdef kind="function" id="class_code_gen_visitor_1af8f24da24f53d81a7ee34036f79a8502" prot="public" static="no" const="no" explicit="no" inline="no" virt="virtual">
+        <type>antlrcpp::Any</type>
+        <definition>antlrcpp::Any CodeGenVisitor::visitExpr_lazy_and</definition>
+        <argsstring>(ifccParser::Expr_lazy_andContext *ctx) override</argsstring>
+        <name>visitExpr_lazy_and</name>
+        <qualifiedname>CodeGenVisitor::visitExpr_lazy_and</qualifiedname>
+        <param>
+          <type>ifccParser::Expr_lazy_andContext *</type>
+          <declname>ctx</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/CodeGenVisitor.h" line="48" column="27" bodyfile="src/CodeGenVisitorExpr.cpp" bodystart="139" bodyend="167"/>
+      </memberdef>
+      <memberdef kind="function" id="class_code_gen_visitor_1a43223c10b55671117f2960d8e0093d3f" prot="public" static="no" const="no" explicit="no" inline="no" virt="virtual">
+        <type>antlrcpp::Any</type>
+        <definition>antlrcpp::Any CodeGenVisitor::visitExpr_lazy_or</definition>
+        <argsstring>(ifccParser::Expr_lazy_orContext *ctx) override</argsstring>
+        <name>visitExpr_lazy_or</name>
+        <qualifiedname>CodeGenVisitor::visitExpr_lazy_or</qualifiedname>
+        <param>
+          <type>ifccParser::Expr_lazy_orContext *</type>
+          <declname>ctx</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/CodeGenVisitor.h" line="49" column="27" bodyfile="src/CodeGenVisitorExpr.cpp" bodystart="169" bodyend="196"/>
+      </memberdef>
+      <memberdef kind="function" id="class_code_gen_visitor_1a90b7babc65eaafcbd322274e63eddb02" prot="public" static="no" const="no" explicit="no" inline="no" virt="virtual">
+        <type>antlrcpp::Any</type>
+        <definition>antlrcpp::Any CodeGenVisitor::visitExpr_atom</definition>
+        <argsstring>(ifccParser::Expr_atomContext *ctx) override</argsstring>
+        <name>visitExpr_atom</name>
+        <qualifiedname>CodeGenVisitor::visitExpr_atom</qualifiedname>
+        <param>
+          <type>ifccParser::Expr_atomContext *</type>
+          <declname>ctx</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/CodeGenVisitor.h" line="51" column="27" bodyfile="src/CodeGenVisitorExpr.cpp" bodystart="198" bodyend="240"/>
+      </memberdef>
+      <memberdef kind="function" id="class_code_gen_visitor_1a2db3b149111e48f5bbe448b031b754a7" prot="public" static="no" const="no" explicit="no" inline="no" virt="virtual">
+        <type>antlrcpp::Any</type>
+        <definition>antlrcpp::Any CodeGenVisitor::visitFunction_call</definition>
+        <argsstring>(ifccParser::Function_callContext *ctx) override</argsstring>
+        <name>visitFunction_call</name>
+        <qualifiedname>CodeGenVisitor::visitFunction_call</qualifiedname>
+        <param>
+          <type>ifccParser::Function_callContext *</type>
+          <declname>ctx</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/CodeGenVisitor.h" line="52" column="27" bodyfile="src/CodeGenVisitor.cpp" bodystart="49" bodyend="80"/>
+      </memberdef>
+      <memberdef kind="function" id="class_code_gen_visitor_1a982a446a408c3963656e71dd3b6b539f" prot="public" static="no" const="no" explicit="no" inline="no" virt="virtual">
+        <type>antlrcpp::Any</type>
+        <definition>antlrcpp::Any CodeGenVisitor::visitFunction_def</definition>
+        <argsstring>(ifccParser::Function_defContext *ctx) override</argsstring>
+        <name>visitFunction_def</name>
+        <qualifiedname>CodeGenVisitor::visitFunction_def</qualifiedname>
+        <param>
+          <type>ifccParser::Function_defContext *</type>
+          <declname>ctx</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/CodeGenVisitor.h" line="53" column="27" bodyfile="src/CodeGenVisitor.cpp" bodystart="19" bodyend="37"/>
+      </memberdef>
+      <memberdef kind="function" id="class_code_gen_visitor_1aa0dc6648bb343eeb1df460b0bc675486" prot="public" static="no" const="no" explicit="no" inline="no" virt="virtual">
+        <type>antlrcpp::Any</type>
+        <definition>antlrcpp::Any CodeGenVisitor::visitSelection_if</definition>
+        <argsstring>(ifccParser::Selection_ifContext *ctx) override</argsstring>
+        <name>visitSelection_if</name>
+        <qualifiedname>CodeGenVisitor::visitSelection_if</qualifiedname>
+        <param>
+          <type>ifccParser::Selection_ifContext *</type>
+          <declname>ctx</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+<para>BasicBlock* nextBB = new <ref refid="class_basic_block" kindref="compound">BasicBlock</ref>(cfg, cfg-&gt;new_BB_name(), cfg-&gt;current_bb-&gt;next_block); cfg-&gt;add_bb(nextBB); nextBB-&gt;exit_true = cfg-&gt;current_bb-&gt;next_block; // After next block go back to the previous next block BasicBlock* testBlock = new <ref refid="class_basic_block" kindref="compound">BasicBlock</ref>(cfg, cfg-&gt;new_BB_name()); cfg-&gt;add_bb(testBlock);</para>
+        </inbodydescription>
+        <location file="include/CodeGenVisitor.h" line="54" column="27" bodyfile="src/CodeGenVisitor.cpp" bodystart="233" bodyend="283"/>
+      </memberdef>
+      <memberdef kind="function" id="class_code_gen_visitor_1a8a214cfa5a8871c0a2771652da991107" prot="public" static="no" const="no" explicit="no" inline="no" virt="virtual">
+        <type>antlrcpp::Any</type>
+        <definition>antlrcpp::Any CodeGenVisitor::visitIteration_while</definition>
+        <argsstring>(ifccParser::Iteration_whileContext *ctx) override</argsstring>
+        <name>visitIteration_while</name>
+        <qualifiedname>CodeGenVisitor::visitIteration_while</qualifiedname>
+        <param>
+          <type>ifccParser::Iteration_whileContext *</type>
+          <declname>ctx</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/CodeGenVisitor.h" line="55" column="27" bodyfile="src/CodeGenVisitor.cpp" bodystart="285" bodyend="314"/>
+      </memberdef>
+      <memberdef kind="function" id="class_code_gen_visitor_1a08174ad1083d84ce09e79480f21cbbc1" prot="public" static="no" const="no" explicit="no" inline="no" virt="virtual">
+        <type>antlrcpp::Any</type>
+        <definition>antlrcpp::Any CodeGenVisitor::visitExpr_assignment</definition>
+        <argsstring>(ifccParser::Expr_assignmentContext *ctx) override</argsstring>
+        <name>visitExpr_assignment</name>
+        <qualifiedname>CodeGenVisitor::visitExpr_assignment</qualifiedname>
+        <param>
+          <type>ifccParser::Expr_assignmentContext *</type>
+          <declname>ctx</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/CodeGenVisitor.h" line="56" column="27" bodyfile="src/CodeGenVisitorExpr.cpp" bodystart="242" bodyend="245"/>
+      </memberdef>
+      <memberdef kind="function" id="class_code_gen_visitor_1a3358ebdb058ec06c14f87fd53a2b9c27" prot="public" static="no" const="no" explicit="no" inline="no" virt="virtual">
+        <type>antlrcpp::Any</type>
+        <definition>antlrcpp::Any CodeGenVisitor::visitJump_break</definition>
+        <argsstring>(ifccParser::Jump_breakContext *ctx) override</argsstring>
+        <name>visitJump_break</name>
+        <qualifiedname>CodeGenVisitor::visitJump_break</qualifiedname>
+        <param>
+          <type>ifccParser::Jump_breakContext *</type>
+          <declname>ctx</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/CodeGenVisitor.h" line="57" column="27" bodyfile="src/CodeGenVisitor.cpp" bodystart="321" bodyend="324"/>
+      </memberdef>
+      <memberdef kind="function" id="class_code_gen_visitor_1afdd17571d07c7297abb263d43032165c" prot="public" static="no" const="no" explicit="no" inline="no" virt="virtual">
+        <type>antlrcpp::Any</type>
+        <definition>antlrcpp::Any CodeGenVisitor::visitJump_continue</definition>
+        <argsstring>(ifccParser::Jump_continueContext *ctx) override</argsstring>
+        <name>visitJump_continue</name>
+        <qualifiedname>CodeGenVisitor::visitJump_continue</qualifiedname>
+        <param>
+          <type>ifccParser::Jump_continueContext *</type>
+          <declname>ctx</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/CodeGenVisitor.h" line="58" column="27" bodyfile="src/CodeGenVisitor.cpp" bodystart="316" bodyend="319"/>
+      </memberdef>
+      <memberdef kind="function" id="class_code_gen_visitor_1af3c6251e81299cebb86514e587e07ab5" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>std::string</type>
+        <definition>std::string CodeGenVisitor::get_unique_var_name</definition>
+        <argsstring>(std::string varname)</argsstring>
+        <name>get_unique_var_name</name>
+        <qualifiedname>CodeGenVisitor::get_unique_var_name</qualifiedname>
+        <param>
+          <type>std::string</type>
+          <declname>varname</declname>
+        </param>
+        <briefdescription>
+<para>Generate a unique variable name. </para>
+        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>varname</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The variable name to make unique. </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="return"><para>A unique variable name. </para>
+</simplesect>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/CodeGenVisitor.h" line="66" column="17" bodyfile="src/CodeGenVisitor.cpp" bodystart="162" bodyend="171"/>
+      </memberdef>
+    </sectiondef>
+    <briefdescription>
+<para>Visitor class for generating code. </para>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <inheritancegraph>
+      <node id="1">
+        <label>CodeGenVisitor</label>
+        <link refid="class_code_gen_visitor"/>
+        <childnode refid="2" relation="public-inheritance">
+        </childnode>
+      </node>
+      <node id="2">
+        <label>ifccBaseVisitor</label>
+      </node>
+    </inheritancegraph>
+    <collaborationgraph>
+      <node id="4">
+        <label>BasicBlock</label>
+        <link refid="class_basic_block"/>
+        <childnode refid="4" relation="usage">
+          <edgelabel>exit_false</edgelabel>
+          <edgelabel>exit_true</edgelabel>
+          <edgelabel>next_block</edgelabel>
+          <edgelabel>parent_test</edgelabel>
+        </childnode>
+        <childnode refid="3" relation="usage">
+          <edgelabel>cfg</edgelabel>
+        </childnode>
+      </node>
+      <node id="3">
+        <label>CFG</label>
+        <link refid="class_c_f_g"/>
+        <childnode refid="4" relation="usage">
+          <edgelabel>current_bb</edgelabel>
+        </childnode>
+      </node>
+      <node id="1">
+        <label>CodeGenVisitor</label>
+        <link refid="class_code_gen_visitor"/>
+        <childnode refid="2" relation="public-inheritance">
+        </childnode>
+        <childnode refid="3" relation="usage">
+          <edgelabel>cfg</edgelabel>
+        </childnode>
+      </node>
+      <node id="2">
+        <label>ifccBaseVisitor</label>
+      </node>
+    </collaborationgraph>
+    <location file="include/CodeGenVisitor.h" line="13" column="1" bodyfile="include/CodeGenVisitor.h" bodystart="13" bodyend="79"/>
+    <listofallmembers>
+      <member refid="class_code_gen_visitor_1a4ad1ccabeeb96263592b12424614db01" prot="public" virt="non-virtual"><scope>CodeGenVisitor</scope><name>blocks</name></member>
+      <member refid="class_code_gen_visitor_1adfdbda3eb128c2a4b8672a465b5a2401" prot="public" virt="non-virtual"><scope>CodeGenVisitor</scope><name>cfg</name></member>
+      <member refid="class_code_gen_visitor_1a3da9fec0416c8f3dd3a660d78675540d" prot="public" virt="non-virtual"><scope>CodeGenVisitor</scope><name>CodeGenVisitor</name></member>
+      <member refid="class_code_gen_visitor_1a08d9a8e9c43a599e44f9a32cde8442ce" prot="public" virt="non-virtual"><scope>CodeGenVisitor</scope><name>current_block</name></member>
+      <member refid="class_code_gen_visitor_1af299368eb940efc08348ec18d4090714" prot="public" virt="non-virtual"><scope>CodeGenVisitor</scope><name>currentFunction</name></member>
+      <member refid="class_code_gen_visitor_1acbfe3399c13acf10119a85d07c616bef" prot="public" virt="non-virtual"><scope>CodeGenVisitor</scope><name>declaration_mode</name></member>
+      <member refid="class_code_gen_visitor_1af3c6251e81299cebb86514e587e07ab5" prot="public" virt="non-virtual"><scope>CodeGenVisitor</scope><name>get_unique_var_name</name></member>
+      <member refid="class_code_gen_visitor_1aedd8ca449d0fcb9ad98cf70570b1df69" prot="public" virt="non-virtual"><scope>CodeGenVisitor</scope><name>inmain</name></member>
+      <member refid="class_code_gen_visitor_1a13b42fcc6507c743cf7acd6ddd17e0a9" prot="public" virt="non-virtual"><scope>CodeGenVisitor</scope><name>tmp_block_index</name></member>
+      <member refid="class_code_gen_visitor_1aac0c3060638d933fa2c12030901d7ce4" prot="public" virt="non-virtual"><scope>CodeGenVisitor</scope><name>tmp_index</name></member>
+      <member refid="class_code_gen_visitor_1a21198465a38edfecbd555aff3465fc17" prot="public" virt="non-virtual"><scope>CodeGenVisitor</scope><name>variables</name></member>
+      <member refid="class_code_gen_visitor_1a7f5fd27c39b8889315e39371ba72c576" prot="public" virt="non-virtual"><scope>CodeGenVisitor</scope><name>varInFunctionDef</name></member>
+      <member refid="class_code_gen_visitor_1ae5a02646fcf0faf213e063500ccfa58d" prot="public" virt="virtual"><scope>CodeGenVisitor</scope><name>visitAssignment_add</name></member>
+      <member refid="class_code_gen_visitor_1a8ebce0dbad02f5120a45868481cc6a8c" prot="public" virt="virtual"><scope>CodeGenVisitor</scope><name>visitAssignment_equal</name></member>
+      <member refid="class_code_gen_visitor_1a70ff0f907f57d4c6a9dfec0d6516c027" prot="public" virt="virtual"><scope>CodeGenVisitor</scope><name>visitAssignment_mult</name></member>
+      <member refid="class_code_gen_visitor_1aa50dc2e13585695cec162a628a7fc81a" prot="public" virt="virtual"><scope>CodeGenVisitor</scope><name>visitBlock</name></member>
+      <member refid="class_code_gen_visitor_1a0d65c8190d7c5ef96cc62eee1ef9cb4b" prot="public" virt="virtual"><scope>CodeGenVisitor</scope><name>visitDeclare_only_stmt</name></member>
+      <member refid="class_code_gen_visitor_1af60a97f4db03bd1b4071ab59d4c73191" prot="public" virt="virtual"><scope>CodeGenVisitor</scope><name>visitDeclare_stmt</name></member>
+      <member refid="class_code_gen_visitor_1a19260411b818b2199080f3253f864ad3" prot="public" virt="virtual"><scope>CodeGenVisitor</scope><name>visitExpr_add</name></member>
+      <member refid="class_code_gen_visitor_1a8feb86fa301537bd9c443316c5ccdf74" prot="public" virt="virtual"><scope>CodeGenVisitor</scope><name>visitExpr_and</name></member>
+      <member refid="class_code_gen_visitor_1a08174ad1083d84ce09e79480f21cbbc1" prot="public" virt="virtual"><scope>CodeGenVisitor</scope><name>visitExpr_assignment</name></member>
+      <member refid="class_code_gen_visitor_1a90b7babc65eaafcbd322274e63eddb02" prot="public" virt="virtual"><scope>CodeGenVisitor</scope><name>visitExpr_atom</name></member>
+      <member refid="class_code_gen_visitor_1affc381d8b90ee716eb9f7adf13befb04" prot="public" virt="virtual"><scope>CodeGenVisitor</scope><name>visitExpr_equality</name></member>
+      <member refid="class_code_gen_visitor_1a8e2ba50a028a20c5c9589569596d9704" prot="public" virt="virtual"><scope>CodeGenVisitor</scope><name>visitExpr_function</name></member>
+      <member refid="class_code_gen_visitor_1af8f24da24f53d81a7ee34036f79a8502" prot="public" virt="virtual"><scope>CodeGenVisitor</scope><name>visitExpr_lazy_and</name></member>
+      <member refid="class_code_gen_visitor_1a43223c10b55671117f2960d8e0093d3f" prot="public" virt="virtual"><scope>CodeGenVisitor</scope><name>visitExpr_lazy_or</name></member>
+      <member refid="class_code_gen_visitor_1ac69cc4eab0ee49fc0bdfbb208ce95953" prot="public" virt="virtual"><scope>CodeGenVisitor</scope><name>visitExpr_mult</name></member>
+      <member refid="class_code_gen_visitor_1a19f025270284d847831c828333720536" prot="public" virt="virtual"><scope>CodeGenVisitor</scope><name>visitExpr_or</name></member>
+      <member refid="class_code_gen_visitor_1a0a868d6e169c106d91ac383d99654e01" prot="public" virt="virtual"><scope>CodeGenVisitor</scope><name>visitExpr_parenthesis</name></member>
+      <member refid="class_code_gen_visitor_1a8cb0d5f4716e485f951dd31591fd6a95" prot="public" virt="virtual"><scope>CodeGenVisitor</scope><name>visitExpr_relational</name></member>
+      <member refid="class_code_gen_visitor_1a64b1795897fadbf44432bf98680f5cdb" prot="public" virt="virtual"><scope>CodeGenVisitor</scope><name>visitExpr_unaire</name></member>
+      <member refid="class_code_gen_visitor_1aeb747269630b2e410b029467e53fe740" prot="public" virt="virtual"><scope>CodeGenVisitor</scope><name>visitExpr_xor</name></member>
+      <member refid="class_code_gen_visitor_1a2db3b149111e48f5bbe448b031b754a7" prot="public" virt="virtual"><scope>CodeGenVisitor</scope><name>visitFunction_call</name></member>
+      <member refid="class_code_gen_visitor_1a982a446a408c3963656e71dd3b6b539f" prot="public" virt="virtual"><scope>CodeGenVisitor</scope><name>visitFunction_def</name></member>
+      <member refid="class_code_gen_visitor_1a05fbadb4b0c52448404a940175a8bafc" prot="public" virt="virtual"><scope>CodeGenVisitor</scope><name>visitInstruction</name></member>
+      <member refid="class_code_gen_visitor_1a8a214cfa5a8871c0a2771652da991107" prot="public" virt="virtual"><scope>CodeGenVisitor</scope><name>visitIteration_while</name></member>
+      <member refid="class_code_gen_visitor_1a3358ebdb058ec06c14f87fd53a2b9c27" prot="public" virt="virtual"><scope>CodeGenVisitor</scope><name>visitJump_break</name></member>
+      <member refid="class_code_gen_visitor_1afdd17571d07c7297abb263d43032165c" prot="public" virt="virtual"><scope>CodeGenVisitor</scope><name>visitJump_continue</name></member>
+      <member refid="class_code_gen_visitor_1af95fa24385733a6187c2ee2a544189dd" prot="public" virt="virtual"><scope>CodeGenVisitor</scope><name>visitPost_incrementation</name></member>
+      <member refid="class_code_gen_visitor_1a43c4d0216e00a9b3ab566b64d222e74f" prot="public" virt="virtual"><scope>CodeGenVisitor</scope><name>visitPre_incrementation</name></member>
+      <member refid="class_code_gen_visitor_1a79e751e8d4921afd9f0cdb7a46a633ef" prot="public" virt="virtual"><scope>CodeGenVisitor</scope><name>visitProg</name></member>
+      <member refid="class_code_gen_visitor_1ab4530a6f6a0014236189ed626a59d06d" prot="public" virt="virtual"><scope>CodeGenVisitor</scope><name>visitReturn_stmt</name></member>
+      <member refid="class_code_gen_visitor_1af0ce976cf720243de430b4f7e6e6b92d" prot="public" virt="virtual"><scope>CodeGenVisitor</scope><name>visitRvalue</name></member>
+      <member refid="class_code_gen_visitor_1aa0dc6648bb343eeb1df460b0bc675486" prot="public" virt="virtual"><scope>CodeGenVisitor</scope><name>visitSelection_if</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

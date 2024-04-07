@@ -1,0 +1,905 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.9.8" xml:lang="en-US">
+  <compounddef id="class_symbol_gen_visitor" kind="class" language="C++" prot="public">
+    <compoundname>SymbolGenVisitor</compoundname>
+    <basecompoundref prot="public" virt="non-virtual">ifccBaseVisitor</basecompoundref>
+    <includes refid="_symbol_gen_visitor_8h" local="no">SymbolGenVisitor.h</includes>
+    <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="class_symbol_gen_visitor_1a8ce1344a310f9164cd18f17936d8b7e8" prot="public" static="no" mutable="no">
+        <type>std::string</type>
+        <definition>std::string SymbolGenVisitor::currentFunction</definition>
+        <argsstring></argsstring>
+        <name>currentFunction</name>
+        <qualifiedname>SymbolGenVisitor::currentFunction</qualifiedname>
+        <initializer>= &quot;&quot;</initializer>
+        <briefdescription>
+<para>Name of the current function. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/SymbolGenVisitor.h" line="75" column="17" bodyfile="include/SymbolGenVisitor.h" bodystart="75" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="class_symbol_gen_visitor_1a1ea8a5fc10d9c12dd766e7857a0cef8c" prot="public" static="no" mutable="no">
+        <type>std::unordered_map&lt; int, int &gt;</type>
+        <definition>std::unordered_map&lt;int, int&gt; SymbolGenVisitor::blocks</definition>
+        <argsstring></argsstring>
+        <name>blocks</name>
+        <qualifiedname>SymbolGenVisitor::blocks</qualifiedname>
+        <briefdescription>
+<para>Mapping of block IDs to their parent block IDs. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/SymbolGenVisitor.h" line="76" column="24" bodyfile="include/SymbolGenVisitor.h" bodystart="76" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="class_symbol_gen_visitor_1ab040a4dfc3af1f7f059355508dfd1668" prot="public" static="no" mutable="no">
+        <type>int</type>
+        <definition>int SymbolGenVisitor::current_block</definition>
+        <argsstring></argsstring>
+        <name>current_block</name>
+        <qualifiedname>SymbolGenVisitor::current_block</qualifiedname>
+        <briefdescription>
+<para>ID of the current block. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/SymbolGenVisitor.h" line="77" column="9" bodyfile="include/SymbolGenVisitor.h" bodystart="77" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="class_symbol_gen_visitor_1a6e64627695cc7eebb5d6d1012645c167" prot="public" static="no" mutable="no">
+        <type>int</type>
+        <definition>int SymbolGenVisitor::tmp_block_index</definition>
+        <argsstring></argsstring>
+        <name>tmp_block_index</name>
+        <qualifiedname>SymbolGenVisitor::tmp_block_index</qualifiedname>
+        <briefdescription>
+<para>Index for temporary block IDs. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/SymbolGenVisitor.h" line="78" column="9" bodyfile="include/SymbolGenVisitor.h" bodystart="78" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="class_symbol_gen_visitor_1adc9b1ed0de92feff8d9fe64c69e46cee" prot="public" static="no" mutable="no">
+        <type>std::unordered_map&lt; std::string, <ref refid="class_variable_info" kindref="compound">VariableInfo</ref> &gt;</type>
+        <definition>std::unordered_map&lt;std::string, VariableInfo&gt; SymbolGenVisitor::variables</definition>
+        <argsstring></argsstring>
+        <name>variables</name>
+        <qualifiedname>SymbolGenVisitor::variables</qualifiedname>
+        <briefdescription>
+<para>Mapping of variable names to their information. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/SymbolGenVisitor.h" line="79" column="24" bodyfile="include/SymbolGenVisitor.h" bodystart="79" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="class_symbol_gen_visitor_1a5bb1757ba7c57b93b117660ec4c1e2a3" prot="public" static="no" mutable="no">
+        <type>long int</type>
+        <definition>long int SymbolGenVisitor::memory_offset</definition>
+        <argsstring></argsstring>
+        <name>memory_offset</name>
+        <qualifiedname>SymbolGenVisitor::memory_offset</qualifiedname>
+        <briefdescription>
+<para>Memory offset for variable addresses. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/SymbolGenVisitor.h" line="80" column="14" bodyfile="include/SymbolGenVisitor.h" bodystart="80" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="class_symbol_gen_visitor_1a95edb7574c517b0eabbd094d7f560b1d" prot="public" static="no" mutable="no">
+        <type>int</type>
+        <definition>int SymbolGenVisitor::tmp_index</definition>
+        <argsstring></argsstring>
+        <name>tmp_index</name>
+        <qualifiedname>SymbolGenVisitor::tmp_index</qualifiedname>
+        <briefdescription>
+<para>Index for temporary variable names. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/SymbolGenVisitor.h" line="81" column="9" bodyfile="include/SymbolGenVisitor.h" bodystart="81" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="class_symbol_gen_visitor_1a9972343676d78ccabacf4dcb93a273b1" prot="public" static="no" mutable="no">
+        <type>bool</type>
+        <definition>bool SymbolGenVisitor::declaration_mode</definition>
+        <argsstring></argsstring>
+        <name>declaration_mode</name>
+        <qualifiedname>SymbolGenVisitor::declaration_mode</qualifiedname>
+        <initializer>= false</initializer>
+        <briefdescription>
+<para>Flag indicating if in declaration mode. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/SymbolGenVisitor.h" line="82" column="10" bodyfile="include/SymbolGenVisitor.h" bodystart="82" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="class_symbol_gen_visitor_1a6bcf0e30a81fd43b7309b511ba4c7719" prot="public" static="no" mutable="no">
+        <type>std::vector&lt; std::string &gt;</type>
+        <definition>std::vector&lt;std::string&gt; SymbolGenVisitor::reserved_word</definition>
+        <argsstring></argsstring>
+        <name>reserved_word</name>
+        <qualifiedname>SymbolGenVisitor::reserved_word</qualifiedname>
+        <initializer>{
+        &quot;if&quot;, &quot;else&quot;, &quot;switch&quot;, &quot;case&quot;, &quot;default&quot;, &quot;break&quot;, &quot;int&quot;, &quot;float&quot;, &quot;char&quot;, &quot;double&quot;, &quot;long&quot;, &quot;for&quot;, &quot;while&quot;,
+        &quot;do&quot;, &quot;void&quot;, &quot;goto&quot;, &quot;auto&quot;, &quot;signed&quot;, &quot;const&quot;, &quot;extern&quot;, &quot;register&quot;, &quot;unsigned&quot;, &quot;return&quot;, &quot;continue&quot;, &quot;enum&quot;,
+        &quot;sizeof&quot;, &quot;struct&quot;, &quot;typedef&quot;, &quot;union&quot;, &quot;volatile&quot;, &quot;NULL&quot;
+    }</initializer>
+        <briefdescription>
+<para>List of reserved words. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/SymbolGenVisitor.h" line="83" column="17" bodyfile="include/SymbolGenVisitor.h" bodystart="83" bodyend="87"/>
+      </memberdef>
+      <memberdef kind="variable" id="class_symbol_gen_visitor_1ac3f6d81892433b961f8ef668c90f6a26" prot="public" static="no" mutable="no">
+        <type>bool</type>
+        <definition>bool SymbolGenVisitor::inExpr</definition>
+        <argsstring></argsstring>
+        <name>inExpr</name>
+        <qualifiedname>SymbolGenVisitor::inExpr</qualifiedname>
+        <initializer>=false</initializer>
+        <briefdescription>
+<para>Flag indicating if inside an expression. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/SymbolGenVisitor.h" line="120" column="10" bodyfile="include/SymbolGenVisitor.h" bodystart="120" bodyend="-1"/>
+      </memberdef>
+    </sectiondef>
+    <sectiondef kind="public-func">
+      <memberdef kind="function" id="class_symbol_gen_visitor_1a62587a2bfcf3713f52ac44db2a91781d" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type></type>
+        <definition>SymbolGenVisitor::SymbolGenVisitor</definition>
+        <argsstring>()</argsstring>
+        <name>SymbolGenVisitor</name>
+        <qualifiedname>SymbolGenVisitor::SymbolGenVisitor</qualifiedname>
+        <briefdescription>
+<para>Constructor for <ref refid="class_symbol_gen_visitor" kindref="compound">SymbolGenVisitor</ref> class. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/SymbolGenVisitor.h" line="35" column="5" bodyfile="include/SymbolGenVisitor.h" bodystart="35" bodyend="35"/>
+      </memberdef>
+      <memberdef kind="function" id="class_symbol_gen_visitor_1a9a8e95782bbd532ef411967ab02390a3" prot="public" static="no" const="no" explicit="no" inline="no" virt="virtual">
+        <type>antlrcpp::Any</type>
+        <definition>antlrcpp::Any SymbolGenVisitor::visitProg</definition>
+        <argsstring>(ifccParser::ProgContext *ctx) override</argsstring>
+        <name>visitProg</name>
+        <qualifiedname>SymbolGenVisitor::visitProg</qualifiedname>
+        <param>
+          <type>ifccParser::ProgContext *</type>
+          <declname>ctx</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/SymbolGenVisitor.h" line="38" column="27" bodyfile="src/SymbolGenVisitor.cpp" bodystart="4" bodyend="12"/>
+      </memberdef>
+      <memberdef kind="function" id="class_symbol_gen_visitor_1aed28e708ebcee2c272aa774c4efa1bf6" prot="public" static="no" const="no" explicit="no" inline="no" virt="virtual">
+        <type>antlrcpp::Any</type>
+        <definition>antlrcpp::Any SymbolGenVisitor::visitBlock</definition>
+        <argsstring>(ifccParser::BlockContext *ctx) override</argsstring>
+        <name>visitBlock</name>
+        <qualifiedname>SymbolGenVisitor::visitBlock</qualifiedname>
+        <param>
+          <type>ifccParser::BlockContext *</type>
+          <declname>ctx</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/SymbolGenVisitor.h" line="39" column="27" bodyfile="src/SymbolGenVisitor.cpp" bodystart="14" bodyend="23"/>
+      </memberdef>
+      <memberdef kind="function" id="class_symbol_gen_visitor_1a27e7def074fcc48aaeb7349fb3a047e0" prot="public" static="no" const="no" explicit="no" inline="no" virt="virtual">
+        <type>antlrcpp::Any</type>
+        <definition>antlrcpp::Any SymbolGenVisitor::visitDeclare_stmt</definition>
+        <argsstring>(ifccParser::Declare_stmtContext *ctx) override</argsstring>
+        <name>visitDeclare_stmt</name>
+        <qualifiedname>SymbolGenVisitor::visitDeclare_stmt</qualifiedname>
+        <param>
+          <type>ifccParser::Declare_stmtContext *</type>
+          <declname>ctx</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/SymbolGenVisitor.h" line="40" column="27" bodyfile="src/SymbolGenVisitor.cpp" bodystart="63" bodyend="125"/>
+      </memberdef>
+      <memberdef kind="function" id="class_symbol_gen_visitor_1a1abd68707bd03605bd17edebc52338e7" prot="public" static="no" const="no" explicit="no" inline="no" virt="virtual">
+        <type>antlrcpp::Any</type>
+        <definition>antlrcpp::Any SymbolGenVisitor::visitAssignment_equal</definition>
+        <argsstring>(ifccParser::Assignment_equalContext *ctx) override</argsstring>
+        <name>visitAssignment_equal</name>
+        <qualifiedname>SymbolGenVisitor::visitAssignment_equal</qualifiedname>
+        <param>
+          <type>ifccParser::Assignment_equalContext *</type>
+          <declname>ctx</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/SymbolGenVisitor.h" line="41" column="27" bodyfile="src/SymbolGenVisitor.cpp" bodystart="236" bodyend="264"/>
+      </memberdef>
+      <memberdef kind="function" id="class_symbol_gen_visitor_1af448ed65031a5858172ae84fb2579832" prot="public" static="no" const="no" explicit="no" inline="no" virt="virtual">
+        <type>antlrcpp::Any</type>
+        <definition>antlrcpp::Any SymbolGenVisitor::visitAssignment_add</definition>
+        <argsstring>(ifccParser::Assignment_addContext *ctx) override</argsstring>
+        <name>visitAssignment_add</name>
+        <qualifiedname>SymbolGenVisitor::visitAssignment_add</qualifiedname>
+        <param>
+          <type>ifccParser::Assignment_addContext *</type>
+          <declname>ctx</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/SymbolGenVisitor.h" line="42" column="27" bodyfile="src/SymbolGenVisitor.cpp" bodystart="356" bodyend="359"/>
+      </memberdef>
+      <memberdef kind="function" id="class_symbol_gen_visitor_1a5062acc098dff32ff01e2df0c352cdff" prot="public" static="no" const="no" explicit="no" inline="no" virt="virtual">
+        <type>antlrcpp::Any</type>
+        <definition>antlrcpp::Any SymbolGenVisitor::visitAssignment_mult</definition>
+        <argsstring>(ifccParser::Assignment_multContext *ctx) override</argsstring>
+        <name>visitAssignment_mult</name>
+        <qualifiedname>SymbolGenVisitor::visitAssignment_mult</qualifiedname>
+        <param>
+          <type>ifccParser::Assignment_multContext *</type>
+          <declname>ctx</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/SymbolGenVisitor.h" line="43" column="27" bodyfile="src/SymbolGenVisitor.cpp" bodystart="361" bodyend="364"/>
+      </memberdef>
+      <memberdef kind="function" id="class_symbol_gen_visitor_1a988552420b54109b62bd01d445f57ffe" prot="public" static="no" const="no" explicit="no" inline="no" virt="virtual">
+        <type>antlrcpp::Any</type>
+        <definition>antlrcpp::Any SymbolGenVisitor::visitPre_incrementation</definition>
+        <argsstring>(ifccParser::Pre_incrementationContext *ctx) override</argsstring>
+        <name>visitPre_incrementation</name>
+        <qualifiedname>SymbolGenVisitor::visitPre_incrementation</qualifiedname>
+        <param>
+          <type>ifccParser::Pre_incrementationContext *</type>
+          <declname>ctx</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/SymbolGenVisitor.h" line="44" column="27" bodyfile="src/SymbolGenVisitor.cpp" bodystart="366" bodyend="370"/>
+      </memberdef>
+      <memberdef kind="function" id="class_symbol_gen_visitor_1ac5b4fe308d6b8578998c1e241fd917dd" prot="public" static="no" const="no" explicit="no" inline="no" virt="virtual">
+        <type>antlrcpp::Any</type>
+        <definition>antlrcpp::Any SymbolGenVisitor::visitPost_incrementation</definition>
+        <argsstring>(ifccParser::Post_incrementationContext *ctx) override</argsstring>
+        <name>visitPost_incrementation</name>
+        <qualifiedname>SymbolGenVisitor::visitPost_incrementation</qualifiedname>
+        <param>
+          <type>ifccParser::Post_incrementationContext *</type>
+          <declname>ctx</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/SymbolGenVisitor.h" line="45" column="27" bodyfile="src/SymbolGenVisitor.cpp" bodystart="372" bodyend="381"/>
+      </memberdef>
+      <memberdef kind="function" id="class_symbol_gen_visitor_1a8d4015069dde7b7833743be6ac5948d9" prot="public" static="no" const="no" explicit="no" inline="no" virt="virtual">
+        <type>antlrcpp::Any</type>
+        <definition>antlrcpp::Any SymbolGenVisitor::visitSelection_if</definition>
+        <argsstring>(ifccParser::Selection_ifContext *ctx) override</argsstring>
+        <name>visitSelection_if</name>
+        <qualifiedname>SymbolGenVisitor::visitSelection_if</qualifiedname>
+        <param>
+          <type>ifccParser::Selection_ifContext *</type>
+          <declname>ctx</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/SymbolGenVisitor.h" line="46" column="27" bodyfile="src/SymbolGenVisitor.cpp" bodystart="266" bodyend="273"/>
+      </memberdef>
+      <memberdef kind="function" id="class_symbol_gen_visitor_1ab65184d1ecc04d2327bf081a6cbd3abb" prot="public" static="no" const="no" explicit="no" inline="no" virt="virtual">
+        <type>antlrcpp::Any</type>
+        <definition>antlrcpp::Any SymbolGenVisitor::visitIteration_while</definition>
+        <argsstring>(ifccParser::Iteration_whileContext *ctx) override</argsstring>
+        <name>visitIteration_while</name>
+        <qualifiedname>SymbolGenVisitor::visitIteration_while</qualifiedname>
+        <param>
+          <type>ifccParser::Iteration_whileContext *</type>
+          <declname>ctx</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/SymbolGenVisitor.h" line="47" column="27" bodyfile="src/SymbolGenVisitor.cpp" bodystart="275" bodyend="279"/>
+      </memberdef>
+      <memberdef kind="function" id="class_symbol_gen_visitor_1a73a0394081b59ad5ab8b8dac62f3c889" prot="public" static="no" const="no" explicit="no" inline="no" virt="virtual">
+        <type>antlrcpp::Any</type>
+        <definition>antlrcpp::Any SymbolGenVisitor::visitLvalue</definition>
+        <argsstring>(ifccParser::LvalueContext *ctx) override</argsstring>
+        <name>visitLvalue</name>
+        <qualifiedname>SymbolGenVisitor::visitLvalue</qualifiedname>
+        <param>
+          <type>ifccParser::LvalueContext *</type>
+          <declname>ctx</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/SymbolGenVisitor.h" line="48" column="27" bodyfile="src/SymbolGenVisitor.cpp" bodystart="281" bodyend="288"/>
+      </memberdef>
+      <memberdef kind="function" id="class_symbol_gen_visitor_1a46b31f2d90095102500c7f48457d745c" prot="public" static="no" const="no" explicit="no" inline="no" virt="virtual">
+        <type>antlrcpp::Any</type>
+        <definition>antlrcpp::Any SymbolGenVisitor::visitExpr_atom</definition>
+        <argsstring>(ifccParser::Expr_atomContext *ctx) override</argsstring>
+        <name>visitExpr_atom</name>
+        <qualifiedname>SymbolGenVisitor::visitExpr_atom</qualifiedname>
+        <param>
+          <type>ifccParser::Expr_atomContext *</type>
+          <declname>ctx</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/SymbolGenVisitor.h" line="49" column="27" bodyfile="src/SymbolGenVisitor.cpp" bodystart="318" bodyend="334"/>
+      </memberdef>
+      <memberdef kind="function" id="class_symbol_gen_visitor_1a6ded1458532569d70c0b9031185189ea" prot="public" static="no" const="no" explicit="no" inline="no" virt="virtual">
+        <type>antlrcpp::Any</type>
+        <definition>antlrcpp::Any SymbolGenVisitor::visitExpr_mult</definition>
+        <argsstring>(ifccParser::Expr_multContext *ctx) override</argsstring>
+        <name>visitExpr_mult</name>
+        <qualifiedname>SymbolGenVisitor::visitExpr_mult</qualifiedname>
+        <param>
+          <type>ifccParser::Expr_multContext *</type>
+          <declname>ctx</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/SymbolGenVisitor.h" line="50" column="27" bodyfile="src/SymbolGenVisitor.cpp" bodystart="308" bodyend="316"/>
+      </memberdef>
+      <memberdef kind="function" id="class_symbol_gen_visitor_1a79768b277f70680c78fe807147293c40" prot="public" static="no" const="no" explicit="no" inline="no" virt="virtual">
+        <type>antlrcpp::Any</type>
+        <definition>antlrcpp::Any SymbolGenVisitor::visitExpr_and</definition>
+        <argsstring>(ifccParser::Expr_andContext *ctx) override</argsstring>
+        <name>visitExpr_and</name>
+        <qualifiedname>SymbolGenVisitor::visitExpr_and</qualifiedname>
+        <param>
+          <type>ifccParser::Expr_andContext *</type>
+          <declname>ctx</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/SymbolGenVisitor.h" line="51" column="27" bodyfile="src/SymbolGenVisitor.cpp" bodystart="390" bodyend="396"/>
+      </memberdef>
+      <memberdef kind="function" id="class_symbol_gen_visitor_1a990ad459fdb9259ec108d805e4871873" prot="public" static="no" const="no" explicit="no" inline="no" virt="virtual">
+        <type>antlrcpp::Any</type>
+        <definition>antlrcpp::Any SymbolGenVisitor::visitExpr_xor</definition>
+        <argsstring>(ifccParser::Expr_xorContext *ctx) override</argsstring>
+        <name>visitExpr_xor</name>
+        <qualifiedname>SymbolGenVisitor::visitExpr_xor</qualifiedname>
+        <param>
+          <type>ifccParser::Expr_xorContext *</type>
+          <declname>ctx</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/SymbolGenVisitor.h" line="52" column="27" bodyfile="src/SymbolGenVisitor.cpp" bodystart="398" bodyend="404"/>
+      </memberdef>
+      <memberdef kind="function" id="class_symbol_gen_visitor_1abfd977e16bf09b760d2f74615eb3ac2b" prot="public" static="no" const="no" explicit="no" inline="no" virt="virtual">
+        <type>antlrcpp::Any</type>
+        <definition>antlrcpp::Any SymbolGenVisitor::visitExpr_or</definition>
+        <argsstring>(ifccParser::Expr_orContext *ctx) override</argsstring>
+        <name>visitExpr_or</name>
+        <qualifiedname>SymbolGenVisitor::visitExpr_or</qualifiedname>
+        <param>
+          <type>ifccParser::Expr_orContext *</type>
+          <declname>ctx</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/SymbolGenVisitor.h" line="53" column="27" bodyfile="src/SymbolGenVisitor.cpp" bodystart="406" bodyend="412"/>
+      </memberdef>
+      <memberdef kind="function" id="class_symbol_gen_visitor_1aa4d6b2e663652becfb8e7bed74d88abc" prot="public" static="no" const="no" explicit="no" inline="no" virt="virtual">
+        <type>antlrcpp::Any</type>
+        <definition>antlrcpp::Any SymbolGenVisitor::visitExpr_unaire</definition>
+        <argsstring>(ifccParser::Expr_unaireContext *ctx) override</argsstring>
+        <name>visitExpr_unaire</name>
+        <qualifiedname>SymbolGenVisitor::visitExpr_unaire</qualifiedname>
+        <param>
+          <type>ifccParser::Expr_unaireContext *</type>
+          <declname>ctx</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/SymbolGenVisitor.h" line="54" column="27" bodyfile="src/SymbolGenVisitor.cpp" bodystart="431" bodyend="436"/>
+      </memberdef>
+      <memberdef kind="function" id="class_symbol_gen_visitor_1aaf884252a1552620e739af6c0aa6ca3c" prot="public" static="no" const="no" explicit="no" inline="no" virt="virtual">
+        <type>antlrcpp::Any</type>
+        <definition>antlrcpp::Any SymbolGenVisitor::visitExpr_relational</definition>
+        <argsstring>(ifccParser::Expr_relationalContext *ctx) override</argsstring>
+        <name>visitExpr_relational</name>
+        <qualifiedname>SymbolGenVisitor::visitExpr_relational</qualifiedname>
+        <param>
+          <type>ifccParser::Expr_relationalContext *</type>
+          <declname>ctx</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/SymbolGenVisitor.h" line="55" column="27" bodyfile="src/SymbolGenVisitor.cpp" bodystart="290" bodyend="297"/>
+      </memberdef>
+      <memberdef kind="function" id="class_symbol_gen_visitor_1aed0b914f9860751b05c3de8bf10b448a" prot="public" static="no" const="no" explicit="no" inline="no" virt="virtual">
+        <type>antlrcpp::Any</type>
+        <definition>antlrcpp::Any SymbolGenVisitor::visitExpr_equality</definition>
+        <argsstring>(ifccParser::Expr_equalityContext *ctx) override</argsstring>
+        <name>visitExpr_equality</name>
+        <qualifiedname>SymbolGenVisitor::visitExpr_equality</qualifiedname>
+        <param>
+          <type>ifccParser::Expr_equalityContext *</type>
+          <declname>ctx</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/SymbolGenVisitor.h" line="56" column="27" bodyfile="src/SymbolGenVisitor.cpp" bodystart="299" bodyend="306"/>
+      </memberdef>
+      <memberdef kind="function" id="class_symbol_gen_visitor_1a95656fe25c24c12abe47ba610d06e878" prot="public" static="no" const="no" explicit="no" inline="no" virt="virtual">
+        <type>antlrcpp::Any</type>
+        <definition>antlrcpp::Any SymbolGenVisitor::visitExpr_add</definition>
+        <argsstring>(ifccParser::Expr_addContext *ctx) override</argsstring>
+        <name>visitExpr_add</name>
+        <qualifiedname>SymbolGenVisitor::visitExpr_add</qualifiedname>
+        <param>
+          <type>ifccParser::Expr_addContext *</type>
+          <declname>ctx</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/SymbolGenVisitor.h" line="57" column="27" bodyfile="src/SymbolGenVisitor.cpp" bodystart="336" bodyend="344"/>
+      </memberdef>
+      <memberdef kind="function" id="class_symbol_gen_visitor_1a02a42a4a4dfb6efa44b25aa083a74abf" prot="public" static="no" const="no" explicit="no" inline="no" virt="virtual">
+        <type>antlrcpp::Any</type>
+        <definition>antlrcpp::Any SymbolGenVisitor::visitExpr_function</definition>
+        <argsstring>(ifccParser::Expr_functionContext *ctx) override</argsstring>
+        <name>visitExpr_function</name>
+        <qualifiedname>SymbolGenVisitor::visitExpr_function</qualifiedname>
+        <param>
+          <type>ifccParser::Expr_functionContext *</type>
+          <declname>ctx</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/SymbolGenVisitor.h" line="58" column="27" bodyfile="src/SymbolGenVisitor.cpp" bodystart="383" bodyend="389"/>
+      </memberdef>
+      <memberdef kind="function" id="class_symbol_gen_visitor_1a2aed2fd0eea723849d88ae0098be956f" prot="public" static="no" const="no" explicit="no" inline="no" virt="virtual">
+        <type>antlrcpp::Any</type>
+        <definition>antlrcpp::Any SymbolGenVisitor::visitExpr_parenthesis</definition>
+        <argsstring>(ifccParser::Expr_parenthesisContext *ctx) override</argsstring>
+        <name>visitExpr_parenthesis</name>
+        <qualifiedname>SymbolGenVisitor::visitExpr_parenthesis</qualifiedname>
+        <param>
+          <type>ifccParser::Expr_parenthesisContext *</type>
+          <declname>ctx</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/SymbolGenVisitor.h" line="59" column="27" bodyfile="src/SymbolGenVisitor.cpp" bodystart="465" bodyend="471"/>
+      </memberdef>
+      <memberdef kind="function" id="class_symbol_gen_visitor_1afac330c7572d54dcab2c271ef9ff9721" prot="public" static="no" const="no" explicit="no" inline="no" virt="virtual">
+        <type>antlrcpp::Any</type>
+        <definition>antlrcpp::Any SymbolGenVisitor::visitFunction_call</definition>
+        <argsstring>(ifccParser::Function_callContext *ctx) override</argsstring>
+        <name>visitFunction_call</name>
+        <qualifiedname>SymbolGenVisitor::visitFunction_call</qualifiedname>
+        <param>
+          <type>ifccParser::Function_callContext *</type>
+          <declname>ctx</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/SymbolGenVisitor.h" line="60" column="27" bodyfile="src/SymbolGenVisitor.cpp" bodystart="25" bodyend="36"/>
+      </memberdef>
+      <memberdef kind="function" id="class_symbol_gen_visitor_1ac2e8005312e270407fb1218d7a31f2fa" prot="public" static="no" const="no" explicit="no" inline="no" virt="virtual">
+        <type>antlrcpp::Any</type>
+        <definition>antlrcpp::Any SymbolGenVisitor::visitExpr_assignment</definition>
+        <argsstring>(ifccParser::Expr_assignmentContext *ctx) override</argsstring>
+        <name>visitExpr_assignment</name>
+        <qualifiedname>SymbolGenVisitor::visitExpr_assignment</qualifiedname>
+        <param>
+          <type>ifccParser::Expr_assignmentContext *</type>
+          <declname>ctx</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/SymbolGenVisitor.h" line="61" column="27" bodyfile="src/SymbolGenVisitor.cpp" bodystart="346" bodyend="354"/>
+      </memberdef>
+      <memberdef kind="function" id="class_symbol_gen_visitor_1a41511111b07dc3877967cb119b0ed089" prot="public" static="no" const="no" explicit="no" inline="no" virt="virtual">
+        <type>antlrcpp::Any</type>
+        <definition>antlrcpp::Any SymbolGenVisitor::visitDeclare_only_stmt</definition>
+        <argsstring>(ifccParser::Declare_only_stmtContext *ctx) override</argsstring>
+        <name>visitDeclare_only_stmt</name>
+        <qualifiedname>SymbolGenVisitor::visitDeclare_only_stmt</qualifiedname>
+        <param>
+          <type>ifccParser::Declare_only_stmtContext *</type>
+          <declname>ctx</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/SymbolGenVisitor.h" line="62" column="27" bodyfile="src/SymbolGenVisitor.cpp" bodystart="43" bodyend="61"/>
+      </memberdef>
+      <memberdef kind="function" id="class_symbol_gen_visitor_1a68fe727231c3c96c03fd4ae52679a419" prot="public" static="no" const="no" explicit="no" inline="no" virt="virtual">
+        <type>antlrcpp::Any</type>
+        <definition>antlrcpp::Any SymbolGenVisitor::visitExpr_lazy_and</definition>
+        <argsstring>(ifccParser::Expr_lazy_andContext *ctx) override</argsstring>
+        <name>visitExpr_lazy_and</name>
+        <qualifiedname>SymbolGenVisitor::visitExpr_lazy_and</qualifiedname>
+        <param>
+          <type>ifccParser::Expr_lazy_andContext *</type>
+          <declname>ctx</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/SymbolGenVisitor.h" line="63" column="27" bodyfile="src/SymbolGenVisitor.cpp" bodystart="414" bodyend="421"/>
+      </memberdef>
+      <memberdef kind="function" id="class_symbol_gen_visitor_1a1b9e608a80f3fa10f5a0714da5e6fed5" prot="public" static="no" const="no" explicit="no" inline="no" virt="virtual">
+        <type>antlrcpp::Any</type>
+        <definition>antlrcpp::Any SymbolGenVisitor::visitExpr_lazy_or</definition>
+        <argsstring>(ifccParser::Expr_lazy_orContext *ctx) override</argsstring>
+        <name>visitExpr_lazy_or</name>
+        <qualifiedname>SymbolGenVisitor::visitExpr_lazy_or</qualifiedname>
+        <param>
+          <type>ifccParser::Expr_lazy_orContext *</type>
+          <declname>ctx</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/SymbolGenVisitor.h" line="64" column="27" bodyfile="src/SymbolGenVisitor.cpp" bodystart="423" bodyend="429"/>
+      </memberdef>
+      <memberdef kind="function" id="class_symbol_gen_visitor_1a934375c2af9226e511c25ded8f08838a" prot="public" static="no" const="no" explicit="no" inline="no" virt="virtual">
+        <type>antlrcpp::Any</type>
+        <definition>antlrcpp::Any SymbolGenVisitor::visitFunction_def</definition>
+        <argsstring>(ifccParser::Function_defContext *ctx) override</argsstring>
+        <name>visitFunction_def</name>
+        <qualifiedname>SymbolGenVisitor::visitFunction_def</qualifiedname>
+        <param>
+          <type>ifccParser::Function_defContext *</type>
+          <declname>ctx</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/SymbolGenVisitor.h" line="65" column="27" bodyfile="src/SymbolGenVisitor.cpp" bodystart="38" bodyend="41"/>
+      </memberdef>
+      <memberdef kind="function" id="class_symbol_gen_visitor_1a634496cc94fd4024195482473c68f83b" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>std::string</type>
+        <definition>std::string SymbolGenVisitor::get_unique_var_name</definition>
+        <argsstring>(std::string varname)</argsstring>
+        <name>get_unique_var_name</name>
+        <qualifiedname>SymbolGenVisitor::get_unique_var_name</qualifiedname>
+        <param>
+          <type>std::string</type>
+          <declname>varname</declname>
+        </param>
+        <briefdescription>
+<para>Generate a unique variable name. </para>
+        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>varname</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The variable name to make unique. </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="return"><para>A unique variable name. </para>
+</simplesect>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/SymbolGenVisitor.h" line="73" column="17" bodyfile="src/SymbolGenVisitor.cpp" bodystart="472" bodyend="481"/>
+      </memberdef>
+      <memberdef kind="function" id="class_symbol_gen_visitor_1a3e098dada334943a05a0622e5e917816" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int SymbolGenVisitor::check_exist_in_current_block</definition>
+        <argsstring>(std::string varname)</argsstring>
+        <name>check_exist_in_current_block</name>
+        <qualifiedname>SymbolGenVisitor::check_exist_in_current_block</qualifiedname>
+        <param>
+          <type>std::string</type>
+          <declname>varname</declname>
+        </param>
+        <briefdescription>
+<para>Check if a variable exists in the current block. </para>
+        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>varname</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The variable name to check. </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="return"><para>GOOD if the variable exists, UNDECLARED otherwise. (see <ref refid="_error_8h" kindref="compound">Error.h</ref> to match values) </para>
+</simplesect>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/SymbolGenVisitor.h" line="95" column="9" bodyfile="src/SymbolGenVisitor.cpp" bodystart="438" bodyend="443"/>
+      </memberdef>
+      <memberdef kind="function" id="class_symbol_gen_visitor_1a4b065ef073f7fb14adfc9e6084fff625" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int SymbolGenVisitor::check_exist_in_current_or_parent_block</definition>
+        <argsstring>(std::string varname)</argsstring>
+        <name>check_exist_in_current_or_parent_block</name>
+        <qualifiedname>SymbolGenVisitor::check_exist_in_current_or_parent_block</qualifiedname>
+        <param>
+          <type>std::string</type>
+          <declname>varname</declname>
+        </param>
+        <briefdescription>
+<para>Check if a variable exists in the current or parent block. </para>
+        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>varname</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The variable name to check. </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="return"><para>GOOD if the variable exists, UNDECLARED otherwise. (see <ref refid="_error_8h" kindref="compound">Error.h</ref> to match values) </para>
+</simplesect>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/SymbolGenVisitor.h" line="103" column="9" bodyfile="src/SymbolGenVisitor.cpp" bodystart="445" bodyend="454"/>
+      </memberdef>
+      <memberdef kind="function" id="class_symbol_gen_visitor_1a8aba7d34e0b52690f0f069aa21846581" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>std::string</type>
+        <definition>std::string SymbolGenVisitor::get_new_tmp_varname</definition>
+        <argsstring>()</argsstring>
+        <name>get_new_tmp_varname</name>
+        <qualifiedname>SymbolGenVisitor::get_new_tmp_varname</qualifiedname>
+        <briefdescription>
+<para>Generate a new temporary variable name. </para>
+        </briefdescription>
+        <detaileddescription>
+<para><simplesect kind="return"><para>A new temporary variable name. </para>
+</simplesect>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/SymbolGenVisitor.h" line="110" column="17" bodyfile="src/SymbolGenVisitor.cpp" bodystart="456" bodyend="459"/>
+      </memberdef>
+      <memberdef kind="function" id="class_symbol_gen_visitor_1adefd08d6d84c0f7e0e82662dd07366ae" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>std::string</type>
+        <definition>std::string SymbolGenVisitor::create_unique_var_name</definition>
+        <argsstring>(std::string name)</argsstring>
+        <name>create_unique_var_name</name>
+        <qualifiedname>SymbolGenVisitor::create_unique_var_name</qualifiedname>
+        <param>
+          <type>std::string</type>
+          <declname>name</declname>
+        </param>
+        <briefdescription>
+<para>Create a unique variable name. </para>
+        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>name</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The base name for the variable. </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="return"><para>A unique variable name. </para>
+</simplesect>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/SymbolGenVisitor.h" line="118" column="17" bodyfile="src/SymbolGenVisitor.cpp" bodystart="461" bodyend="463"/>
+      </memberdef>
+    </sectiondef>
+    <briefdescription>
+<para>Visitor class for generating symbols. </para>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <inheritancegraph>
+      <node id="1">
+        <label>SymbolGenVisitor</label>
+        <link refid="class_symbol_gen_visitor"/>
+        <childnode refid="2" relation="public-inheritance">
+        </childnode>
+      </node>
+      <node id="2">
+        <label>ifccBaseVisitor</label>
+      </node>
+    </inheritancegraph>
+    <collaborationgraph>
+      <node id="1">
+        <label>SymbolGenVisitor</label>
+        <link refid="class_symbol_gen_visitor"/>
+        <childnode refid="2" relation="public-inheritance">
+        </childnode>
+      </node>
+      <node id="2">
+        <label>ifccBaseVisitor</label>
+      </node>
+    </collaborationgraph>
+    <location file="include/SymbolGenVisitor.h" line="30" column="1" bodyfile="include/SymbolGenVisitor.h" bodystart="30" bodyend="121"/>
+    <listofallmembers>
+      <member refid="class_symbol_gen_visitor_1a1ea8a5fc10d9c12dd766e7857a0cef8c" prot="public" virt="non-virtual"><scope>SymbolGenVisitor</scope><name>blocks</name></member>
+      <member refid="class_symbol_gen_visitor_1a3e098dada334943a05a0622e5e917816" prot="public" virt="non-virtual"><scope>SymbolGenVisitor</scope><name>check_exist_in_current_block</name></member>
+      <member refid="class_symbol_gen_visitor_1a4b065ef073f7fb14adfc9e6084fff625" prot="public" virt="non-virtual"><scope>SymbolGenVisitor</scope><name>check_exist_in_current_or_parent_block</name></member>
+      <member refid="class_symbol_gen_visitor_1adefd08d6d84c0f7e0e82662dd07366ae" prot="public" virt="non-virtual"><scope>SymbolGenVisitor</scope><name>create_unique_var_name</name></member>
+      <member refid="class_symbol_gen_visitor_1ab040a4dfc3af1f7f059355508dfd1668" prot="public" virt="non-virtual"><scope>SymbolGenVisitor</scope><name>current_block</name></member>
+      <member refid="class_symbol_gen_visitor_1a8ce1344a310f9164cd18f17936d8b7e8" prot="public" virt="non-virtual"><scope>SymbolGenVisitor</scope><name>currentFunction</name></member>
+      <member refid="class_symbol_gen_visitor_1a9972343676d78ccabacf4dcb93a273b1" prot="public" virt="non-virtual"><scope>SymbolGenVisitor</scope><name>declaration_mode</name></member>
+      <member refid="class_symbol_gen_visitor_1a8aba7d34e0b52690f0f069aa21846581" prot="public" virt="non-virtual"><scope>SymbolGenVisitor</scope><name>get_new_tmp_varname</name></member>
+      <member refid="class_symbol_gen_visitor_1a634496cc94fd4024195482473c68f83b" prot="public" virt="non-virtual"><scope>SymbolGenVisitor</scope><name>get_unique_var_name</name></member>
+      <member refid="class_symbol_gen_visitor_1ac3f6d81892433b961f8ef668c90f6a26" prot="public" virt="non-virtual"><scope>SymbolGenVisitor</scope><name>inExpr</name></member>
+      <member refid="class_symbol_gen_visitor_1a5bb1757ba7c57b93b117660ec4c1e2a3" prot="public" virt="non-virtual"><scope>SymbolGenVisitor</scope><name>memory_offset</name></member>
+      <member refid="class_symbol_gen_visitor_1a6bcf0e30a81fd43b7309b511ba4c7719" prot="public" virt="non-virtual"><scope>SymbolGenVisitor</scope><name>reserved_word</name></member>
+      <member refid="class_symbol_gen_visitor_1a62587a2bfcf3713f52ac44db2a91781d" prot="public" virt="non-virtual"><scope>SymbolGenVisitor</scope><name>SymbolGenVisitor</name></member>
+      <member refid="class_symbol_gen_visitor_1a6e64627695cc7eebb5d6d1012645c167" prot="public" virt="non-virtual"><scope>SymbolGenVisitor</scope><name>tmp_block_index</name></member>
+      <member refid="class_symbol_gen_visitor_1a95edb7574c517b0eabbd094d7f560b1d" prot="public" virt="non-virtual"><scope>SymbolGenVisitor</scope><name>tmp_index</name></member>
+      <member refid="class_symbol_gen_visitor_1adc9b1ed0de92feff8d9fe64c69e46cee" prot="public" virt="non-virtual"><scope>SymbolGenVisitor</scope><name>variables</name></member>
+      <member refid="class_symbol_gen_visitor_1af448ed65031a5858172ae84fb2579832" prot="public" virt="virtual"><scope>SymbolGenVisitor</scope><name>visitAssignment_add</name></member>
+      <member refid="class_symbol_gen_visitor_1a1abd68707bd03605bd17edebc52338e7" prot="public" virt="virtual"><scope>SymbolGenVisitor</scope><name>visitAssignment_equal</name></member>
+      <member refid="class_symbol_gen_visitor_1a5062acc098dff32ff01e2df0c352cdff" prot="public" virt="virtual"><scope>SymbolGenVisitor</scope><name>visitAssignment_mult</name></member>
+      <member refid="class_symbol_gen_visitor_1aed28e708ebcee2c272aa774c4efa1bf6" prot="public" virt="virtual"><scope>SymbolGenVisitor</scope><name>visitBlock</name></member>
+      <member refid="class_symbol_gen_visitor_1a41511111b07dc3877967cb119b0ed089" prot="public" virt="virtual"><scope>SymbolGenVisitor</scope><name>visitDeclare_only_stmt</name></member>
+      <member refid="class_symbol_gen_visitor_1a27e7def074fcc48aaeb7349fb3a047e0" prot="public" virt="virtual"><scope>SymbolGenVisitor</scope><name>visitDeclare_stmt</name></member>
+      <member refid="class_symbol_gen_visitor_1a95656fe25c24c12abe47ba610d06e878" prot="public" virt="virtual"><scope>SymbolGenVisitor</scope><name>visitExpr_add</name></member>
+      <member refid="class_symbol_gen_visitor_1a79768b277f70680c78fe807147293c40" prot="public" virt="virtual"><scope>SymbolGenVisitor</scope><name>visitExpr_and</name></member>
+      <member refid="class_symbol_gen_visitor_1ac2e8005312e270407fb1218d7a31f2fa" prot="public" virt="virtual"><scope>SymbolGenVisitor</scope><name>visitExpr_assignment</name></member>
+      <member refid="class_symbol_gen_visitor_1a46b31f2d90095102500c7f48457d745c" prot="public" virt="virtual"><scope>SymbolGenVisitor</scope><name>visitExpr_atom</name></member>
+      <member refid="class_symbol_gen_visitor_1aed0b914f9860751b05c3de8bf10b448a" prot="public" virt="virtual"><scope>SymbolGenVisitor</scope><name>visitExpr_equality</name></member>
+      <member refid="class_symbol_gen_visitor_1a02a42a4a4dfb6efa44b25aa083a74abf" prot="public" virt="virtual"><scope>SymbolGenVisitor</scope><name>visitExpr_function</name></member>
+      <member refid="class_symbol_gen_visitor_1a68fe727231c3c96c03fd4ae52679a419" prot="public" virt="virtual"><scope>SymbolGenVisitor</scope><name>visitExpr_lazy_and</name></member>
+      <member refid="class_symbol_gen_visitor_1a1b9e608a80f3fa10f5a0714da5e6fed5" prot="public" virt="virtual"><scope>SymbolGenVisitor</scope><name>visitExpr_lazy_or</name></member>
+      <member refid="class_symbol_gen_visitor_1a6ded1458532569d70c0b9031185189ea" prot="public" virt="virtual"><scope>SymbolGenVisitor</scope><name>visitExpr_mult</name></member>
+      <member refid="class_symbol_gen_visitor_1abfd977e16bf09b760d2f74615eb3ac2b" prot="public" virt="virtual"><scope>SymbolGenVisitor</scope><name>visitExpr_or</name></member>
+      <member refid="class_symbol_gen_visitor_1a2aed2fd0eea723849d88ae0098be956f" prot="public" virt="virtual"><scope>SymbolGenVisitor</scope><name>visitExpr_parenthesis</name></member>
+      <member refid="class_symbol_gen_visitor_1aaf884252a1552620e739af6c0aa6ca3c" prot="public" virt="virtual"><scope>SymbolGenVisitor</scope><name>visitExpr_relational</name></member>
+      <member refid="class_symbol_gen_visitor_1aa4d6b2e663652becfb8e7bed74d88abc" prot="public" virt="virtual"><scope>SymbolGenVisitor</scope><name>visitExpr_unaire</name></member>
+      <member refid="class_symbol_gen_visitor_1a990ad459fdb9259ec108d805e4871873" prot="public" virt="virtual"><scope>SymbolGenVisitor</scope><name>visitExpr_xor</name></member>
+      <member refid="class_symbol_gen_visitor_1afac330c7572d54dcab2c271ef9ff9721" prot="public" virt="virtual"><scope>SymbolGenVisitor</scope><name>visitFunction_call</name></member>
+      <member refid="class_symbol_gen_visitor_1a934375c2af9226e511c25ded8f08838a" prot="public" virt="virtual"><scope>SymbolGenVisitor</scope><name>visitFunction_def</name></member>
+      <member refid="class_symbol_gen_visitor_1ab65184d1ecc04d2327bf081a6cbd3abb" prot="public" virt="virtual"><scope>SymbolGenVisitor</scope><name>visitIteration_while</name></member>
+      <member refid="class_symbol_gen_visitor_1a73a0394081b59ad5ab8b8dac62f3c889" prot="public" virt="virtual"><scope>SymbolGenVisitor</scope><name>visitLvalue</name></member>
+      <member refid="class_symbol_gen_visitor_1ac5b4fe308d6b8578998c1e241fd917dd" prot="public" virt="virtual"><scope>SymbolGenVisitor</scope><name>visitPost_incrementation</name></member>
+      <member refid="class_symbol_gen_visitor_1a988552420b54109b62bd01d445f57ffe" prot="public" virt="virtual"><scope>SymbolGenVisitor</scope><name>visitPre_incrementation</name></member>
+      <member refid="class_symbol_gen_visitor_1a9a8e95782bbd532ef411967ab02390a3" prot="public" virt="virtual"><scope>SymbolGenVisitor</scope><name>visitProg</name></member>
+      <member refid="class_symbol_gen_visitor_1a8d4015069dde7b7833743be6ac5948d9" prot="public" virt="virtual"><scope>SymbolGenVisitor</scope><name>visitSelection_if</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

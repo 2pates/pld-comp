@@ -1,0 +1,352 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.9.8" xml:lang="en-US">
+  <compounddef id="class_basic_block" kind="class" language="C++" prot="public">
+    <compoundname>BasicBlock</compoundname>
+    <includes refid="_i_r_8h" local="no">IR.h</includes>
+    <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="class_basic_block_1ad7dfb0ec10a03ab548f308461e8701e7" prot="public" static="no" mutable="no">
+        <type><ref refid="class_basic_block" kindref="compound">BasicBlock</ref> *</type>
+        <definition>BasicBlock* BasicBlock::exit_true</definition>
+        <argsstring></argsstring>
+        <name>exit_true</name>
+        <qualifiedname>BasicBlock::exit_true</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Pointer to the next basic block, true branch. If nullptr, return from procedure. </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/IR.h" line="146" column="16" bodyfile="include/IR.h" bodystart="146" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="class_basic_block_1a8fa2b8fbdf5275fb15a7eac08e0ed0ea" prot="public" static="no" mutable="no">
+        <type><ref refid="class_basic_block" kindref="compound">BasicBlock</ref> *</type>
+        <definition>BasicBlock* BasicBlock::exit_false</definition>
+        <argsstring></argsstring>
+        <name>exit_false</name>
+        <qualifiedname>BasicBlock::exit_false</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Pointer to the next basic block, false branch. If nullptr, the basic block ends with an unconditional jump. </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/IR.h" line="147" column="16" bodyfile="include/IR.h" bodystart="147" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="class_basic_block_1a204455a067b3f3ad4c5652664a763a57" prot="public" static="no" mutable="no">
+        <type><ref refid="class_c_f_g" kindref="compound">CFG</ref> *</type>
+        <definition>CFG* BasicBlock::cfg</definition>
+        <argsstring></argsstring>
+        <name>cfg</name>
+        <qualifiedname>BasicBlock::cfg</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Pointer to the <ref refid="class_c_f_g" kindref="compound">CFG</ref> where this block belongs. </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/IR.h" line="148" column="9" bodyfile="include/IR.h" bodystart="148" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="class_basic_block_1a7664c936791e5ea79f3a80208e97729d" prot="public" static="no" mutable="no">
+        <type>std::string</type>
+        <definition>std::string BasicBlock::label</definition>
+        <argsstring></argsstring>
+        <name>label</name>
+        <qualifiedname>BasicBlock::label</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Label of the BB, also will be the label in the generated code. </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/IR.h" line="149" column="17" bodyfile="include/IR.h" bodystart="149" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="class_basic_block_1ae9dbbddf1830a5990ea08191534e156f" prot="public" static="no" mutable="no">
+        <type>std::vector&lt; <ref refid="class_i_r_instr" kindref="compound">IRInstr</ref> * &gt;</type>
+        <definition>std::vector&lt;IRInstr*&gt; BasicBlock::instrs</definition>
+        <argsstring></argsstring>
+        <name>instrs</name>
+        <qualifiedname>BasicBlock::instrs</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>The instructions themselves. </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/IR.h" line="150" column="17" bodyfile="include/IR.h" bodystart="150" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="class_basic_block_1ad1ee14abf738e696a394eaac94e1be3b" prot="public" static="no" mutable="no">
+        <type>std::string</type>
+        <definition>std::string BasicBlock::test_var_name</definition>
+        <argsstring></argsstring>
+        <name>test_var_name</name>
+        <qualifiedname>BasicBlock::test_var_name</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>When generating IR code for an if(expr) or while(expr) etc., store here the name of the variable that holds the value of expr. </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/IR.h" line="151" column="17" bodyfile="include/IR.h" bodystart="151" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="class_basic_block_1a56f93f7cf7e44f587f7f95e13fd0638d" prot="public" static="no" mutable="no">
+        <type><ref refid="class_basic_block" kindref="compound">BasicBlock</ref> *</type>
+        <definition>BasicBlock* BasicBlock::parent_test</definition>
+        <argsstring></argsstring>
+        <name>parent_test</name>
+        <qualifiedname>BasicBlock::parent_test</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Test block in case we are in a loop: used for &quot;continue&quot; statement. </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/IR.h" line="152" column="16" bodyfile="include/IR.h" bodystart="152" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="class_basic_block_1a2dd6db9ea1a22c54fa304f37633e2e7f" prot="public" static="no" mutable="no">
+        <type><ref refid="class_basic_block" kindref="compound">BasicBlock</ref> *</type>
+        <definition>BasicBlock* BasicBlock::next_block</definition>
+        <argsstring></argsstring>
+        <name>next_block</name>
+        <qualifiedname>BasicBlock::next_block</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Pointer to the next basic block if we are in a branch. </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/IR.h" line="153" column="16" bodyfile="include/IR.h" bodystart="153" bodyend="-1"/>
+      </memberdef>
+    </sectiondef>
+    <sectiondef kind="public-func">
+      <memberdef kind="function" id="class_basic_block_1a49128a2bf3f52d52be599f94c1e04f8b" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>BasicBlock::BasicBlock</definition>
+        <argsstring>(CFG *cfg, std::string entry_label, BasicBlock *parent_test=nullptr, BasicBlock *next_block=nullptr)</argsstring>
+        <name>BasicBlock</name>
+        <qualifiedname>BasicBlock::BasicBlock</qualifiedname>
+        <param>
+          <type><ref refid="class_c_f_g" kindref="compound">CFG</ref> *</type>
+          <declname>cfg</declname>
+        </param>
+        <param>
+          <type>std::string</type>
+          <declname>entry_label</declname>
+        </param>
+        <param>
+          <type><ref refid="class_basic_block" kindref="compound">BasicBlock</ref> *</type>
+          <declname>parent_test</declname>
+          <defval>nullptr</defval>
+        </param>
+        <param>
+          <type><ref refid="class_basic_block" kindref="compound">BasicBlock</ref> *</type>
+          <declname>next_block</declname>
+          <defval>nullptr</defval>
+        </param>
+        <briefdescription>
+<para>Constructor for <ref refid="class_basic_block" kindref="compound">BasicBlock</ref> class. </para>
+        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>cfg</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Pointer to the Control Flow Graph. </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>entry_label</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Label of the basic block. </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>parent_test</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Pointer to the parent test block (used for &quot;continue&quot; statement). </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>next_block</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Pointer to the next basic block. </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/IR.h" line="127" column="5" bodyfile="src/IR.cpp" bodystart="436" bodyend="439"/>
+      </memberdef>
+      <memberdef kind="function" id="class_basic_block_1a70bf56c96183546e831baf37708b0c3c" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void BasicBlock::gen_asm</definition>
+        <argsstring>(std::ostream &amp;o, Target target)</argsstring>
+        <name>gen_asm</name>
+        <qualifiedname>BasicBlock::gen_asm</qualifiedname>
+        <param>
+          <type>std::ostream &amp;</type>
+          <declname>o</declname>
+        </param>
+        <param>
+          <type><ref refid="_i_r_8h_1a31488d29805a596498c0234ae392d35d" kindref="member">Target</ref></type>
+          <declname>target</declname>
+        </param>
+        <briefdescription>
+<para>Generate x86 assembly code for this basic block. </para>
+        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>o</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Output stream to write the assembly code. </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>target</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Target architecture. </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/IR.h" line="135" column="10" bodyfile="src/IR.cpp" bodystart="441" bodyend="463"/>
+      </memberdef>
+      <memberdef kind="function" id="class_basic_block_1a8ab08d90dc0171eb26e4852ee1f43ed4" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void BasicBlock::add_IRInstr</definition>
+        <argsstring>(IRInstr::Operation op, Type t, std::vector&lt; std::string &gt; params)</argsstring>
+        <name>add_IRInstr</name>
+        <qualifiedname>BasicBlock::add_IRInstr</qualifiedname>
+        <param>
+          <type><ref refid="class_i_r_instr_1a4e228546957ed6096a45f48d7cfc7f15" kindref="member">IRInstr::Operation</ref></type>
+          <declname>op</declname>
+        </param>
+        <param>
+          <type><ref refid="_type_8h_1a1d1cfd8ffb84e947f82999c682b666a7" kindref="member">Type</ref></type>
+          <declname>t</declname>
+        </param>
+        <param>
+          <type>std::vector&lt; std::string &gt;</type>
+          <declname>params</declname>
+        </param>
+        <briefdescription>
+<para>Add an IR instruction to this basic block. </para>
+        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>op</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Operation type. </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>t</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Type of the operands. </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>params</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Vector of instruction parameters. </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/IR.h" line="144" column="10" bodyfile="src/IR.cpp" bodystart="465" bodyend="468"/>
+      </memberdef>
+    </sectiondef>
+    <briefdescription>
+<para>The class for a basic block. </para>
+    </briefdescription>
+    <detaileddescription>
+<para>A few important comments:<itemizedlist>
+<listitem><para><ref refid="class_i_r_instr" kindref="compound">IRInstr</ref> has no jump instructions.</para>
+</listitem><listitem><para>cmp_* instructions behave as arithmetic two-operand instructions (add or multiply), returning a boolean value (as an int).</para>
+</listitem></itemizedlist>
+</para>
+<para>Assembly jumps are generated as follows:<itemizedlist>
+<listitem><para><ref refid="class_basic_block_1a70bf56c96183546e831baf37708b0c3c" kindref="member">BasicBlock::gen_asm()</ref> first calls <ref refid="class_i_r_instr_1a7b48035fa80c3125e6192ef24dd0cebf" kindref="member">IRInstr::gen_asm()</ref> on all its instructions, and then<itemizedlist>
+<listitem><para>if exit_true is nullptr, the epilogue is generated.</para>
+</listitem><listitem><para>else if exit_false is nullptr, an unconditional jump to the exit_true branch is generated.</para>
+</listitem><listitem><para>else (we have two successors, hence a branch), an instruction comparing the value of test_var_name to true is generated, followed by a conditional branch to the exit_false branch, followed by an unconditional branch to the exit_true branch.</para>
+</listitem></itemizedlist>
+</para>
+</listitem></itemizedlist>
+</para>
+<para>The attribute test_var_name itself is defined when converting the if, while, etc. of the AST to IR.</para>
+<para>Possible optimization:<itemizedlist>
+<listitem><para>A cmp_* comparison instruction, if it is the last instruction of its block, generates an actual assembly comparison followed by a conditional jump to the exit_false branch. </para>
+</listitem></itemizedlist>
+</para>
+    </detaileddescription>
+    <collaborationgraph>
+      <node id="1">
+        <label>BasicBlock</label>
+        <link refid="class_basic_block"/>
+        <childnode refid="1" relation="usage">
+          <edgelabel>exit_false</edgelabel>
+          <edgelabel>exit_true</edgelabel>
+          <edgelabel>next_block</edgelabel>
+          <edgelabel>parent_test</edgelabel>
+        </childnode>
+        <childnode refid="2" relation="usage">
+          <edgelabel>cfg</edgelabel>
+        </childnode>
+      </node>
+      <node id="2">
+        <label>CFG</label>
+        <link refid="class_c_f_g"/>
+        <childnode refid="1" relation="usage">
+          <edgelabel>current_bb</edgelabel>
+        </childnode>
+      </node>
+    </collaborationgraph>
+    <location file="include/IR.h" line="117" column="1" bodyfile="include/IR.h" bodystart="117" bodyend="155"/>
+    <listofallmembers>
+      <member refid="class_basic_block_1a8ab08d90dc0171eb26e4852ee1f43ed4" prot="public" virt="non-virtual"><scope>BasicBlock</scope><name>add_IRInstr</name></member>
+      <member refid="class_basic_block_1a49128a2bf3f52d52be599f94c1e04f8b" prot="public" virt="non-virtual"><scope>BasicBlock</scope><name>BasicBlock</name></member>
+      <member refid="class_basic_block_1a204455a067b3f3ad4c5652664a763a57" prot="public" virt="non-virtual"><scope>BasicBlock</scope><name>cfg</name></member>
+      <member refid="class_basic_block_1a8fa2b8fbdf5275fb15a7eac08e0ed0ea" prot="public" virt="non-virtual"><scope>BasicBlock</scope><name>exit_false</name></member>
+      <member refid="class_basic_block_1ad7dfb0ec10a03ab548f308461e8701e7" prot="public" virt="non-virtual"><scope>BasicBlock</scope><name>exit_true</name></member>
+      <member refid="class_basic_block_1a70bf56c96183546e831baf37708b0c3c" prot="public" virt="non-virtual"><scope>BasicBlock</scope><name>gen_asm</name></member>
+      <member refid="class_basic_block_1ae9dbbddf1830a5990ea08191534e156f" prot="public" virt="non-virtual"><scope>BasicBlock</scope><name>instrs</name></member>
+      <member refid="class_basic_block_1a7664c936791e5ea79f3a80208e97729d" prot="public" virt="non-virtual"><scope>BasicBlock</scope><name>label</name></member>
+      <member refid="class_basic_block_1a2dd6db9ea1a22c54fa304f37633e2e7f" prot="public" virt="non-virtual"><scope>BasicBlock</scope><name>next_block</name></member>
+      <member refid="class_basic_block_1a56f93f7cf7e44f587f7f95e13fd0638d" prot="public" virt="non-virtual"><scope>BasicBlock</scope><name>parent_test</name></member>
+      <member refid="class_basic_block_1ad1ee14abf738e696a394eaac94e1be3b" prot="public" virt="non-virtual"><scope>BasicBlock</scope><name>test_var_name</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

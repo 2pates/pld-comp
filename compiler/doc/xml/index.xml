@@ -1,0 +1,229 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygenindex xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="index.xsd" version="1.9.8" xml:lang="en-US">
+  <compound refid="class_basic_block" kind="class"><name>BasicBlock</name>
+    <member refid="class_basic_block_1ad7dfb0ec10a03ab548f308461e8701e7" kind="variable"><name>exit_true</name></member>
+    <member refid="class_basic_block_1a8fa2b8fbdf5275fb15a7eac08e0ed0ea" kind="variable"><name>exit_false</name></member>
+    <member refid="class_basic_block_1a204455a067b3f3ad4c5652664a763a57" kind="variable"><name>cfg</name></member>
+    <member refid="class_basic_block_1a7664c936791e5ea79f3a80208e97729d" kind="variable"><name>label</name></member>
+    <member refid="class_basic_block_1ae9dbbddf1830a5990ea08191534e156f" kind="variable"><name>instrs</name></member>
+    <member refid="class_basic_block_1ad1ee14abf738e696a394eaac94e1be3b" kind="variable"><name>test_var_name</name></member>
+    <member refid="class_basic_block_1a56f93f7cf7e44f587f7f95e13fd0638d" kind="variable"><name>parent_test</name></member>
+    <member refid="class_basic_block_1a2dd6db9ea1a22c54fa304f37633e2e7f" kind="variable"><name>next_block</name></member>
+    <member refid="class_basic_block_1a49128a2bf3f52d52be599f94c1e04f8b" kind="function"><name>BasicBlock</name></member>
+    <member refid="class_basic_block_1a70bf56c96183546e831baf37708b0c3c" kind="function"><name>gen_asm</name></member>
+    <member refid="class_basic_block_1a8ab08d90dc0171eb26e4852ee1f43ed4" kind="function"><name>add_IRInstr</name></member>
+  </compound>
+  <compound refid="class_c_f_g" kind="class"><name>CFG</name>
+    <member refid="class_c_f_g_1a4f559d9ecf81b3aad288b5870dbddd85" kind="friend"><name>CodeGenVisitor</name></member>
+    <member refid="class_c_f_g_1a37b50f8c106bb96c1ba23bba6bddacb7" kind="variable"><name>current_bb</name></member>
+    <member refid="class_c_f_g_1a558f42a78f48bffc592823e909d7be21" kind="variable"><name>memoryUse</name></member>
+    <member refid="class_c_f_g_1abed88166f764cd6553e2e1a7c34df807" kind="variable"><name>variables</name></member>
+    <member refid="class_c_f_g_1acf2416350f1f21a45b401d4577065717" kind="variable"><name>entry_block_label</name></member>
+    <member refid="class_c_f_g_1afecab2ba5b16c25579c003999604c234" kind="variable"><name>nextBBnumber</name></member>
+    <member refid="class_c_f_g_1a5838a3d36080ba1ee9bc5bb2e6f41319" kind="variable"><name>bbs</name></member>
+    <member refid="class_c_f_g_1a5201761ebbc062a6dcab154699e1b4a6" kind="function"><name>CFG</name></member>
+    <member refid="class_c_f_g_1aad1ed5a4e961c34bf396b1baae2daf52" kind="function"><name>add_bb</name></member>
+    <member refid="class_c_f_g_1a9e4ade9eea4546ab7e16654f9ec2e1d1" kind="function"><name>gen_asm</name></member>
+    <member refid="class_c_f_g_1ac9aecf24dee8f6e226efffc59dfa75b4" kind="function"><name>IR_reg_to_asm</name></member>
+    <member refid="class_c_f_g_1a768f5fac78b57d9e485cac271ffed392" kind="function"><name>gen_asm_prologue</name></member>
+    <member refid="class_c_f_g_1a6761f195cadec709615b0c12e28fa90a" kind="function"><name>gen_asm_epilogue</name></member>
+    <member refid="class_c_f_g_1a293fbab6cf25a645ae766cd5b0e12c29" kind="function"><name>add_to_symbol_table</name></member>
+    <member refid="class_c_f_g_1a926d7f4fbe2b13789f8c3edf6a23aa57" kind="function"><name>get_var_info</name></member>
+    <member refid="class_c_f_g_1affb68a8d7b21dff67e4aa3244e8338e1" kind="function"><name>new_BB_name</name></member>
+  </compound>
+  <compound refid="class_code_gen_visitor" kind="class"><name>CodeGenVisitor</name>
+    <member refid="class_code_gen_visitor_1a08d9a8e9c43a599e44f9a32cde8442ce" kind="variable"><name>current_block</name></member>
+    <member refid="class_code_gen_visitor_1a13b42fcc6507c743cf7acd6ddd17e0a9" kind="variable"><name>tmp_block_index</name></member>
+    <member refid="class_code_gen_visitor_1a4ad1ccabeeb96263592b12424614db01" kind="variable"><name>blocks</name></member>
+    <member refid="class_code_gen_visitor_1aac0c3060638d933fa2c12030901d7ce4" kind="variable"><name>tmp_index</name></member>
+    <member refid="class_code_gen_visitor_1adfdbda3eb128c2a4b8672a465b5a2401" kind="variable"><name>cfg</name></member>
+    <member refid="class_code_gen_visitor_1a21198465a38edfecbd555aff3465fc17" kind="variable"><name>variables</name></member>
+    <member refid="class_code_gen_visitor_1acbfe3399c13acf10119a85d07c616bef" kind="variable"><name>declaration_mode</name></member>
+    <member refid="class_code_gen_visitor_1aedd8ca449d0fcb9ad98cf70570b1df69" kind="variable"><name>inmain</name></member>
+    <member refid="class_code_gen_visitor_1a7f5fd27c39b8889315e39371ba72c576" kind="variable"><name>varInFunctionDef</name></member>
+    <member refid="class_code_gen_visitor_1af299368eb940efc08348ec18d4090714" kind="variable"><name>currentFunction</name></member>
+    <member refid="class_code_gen_visitor_1a3da9fec0416c8f3dd3a660d78675540d" kind="function"><name>CodeGenVisitor</name></member>
+    <member refid="class_code_gen_visitor_1a79e751e8d4921afd9f0cdb7a46a633ef" kind="function"><name>visitProg</name></member>
+    <member refid="class_code_gen_visitor_1aa50dc2e13585695cec162a628a7fc81a" kind="function"><name>visitBlock</name></member>
+    <member refid="class_code_gen_visitor_1a05fbadb4b0c52448404a940175a8bafc" kind="function"><name>visitInstruction</name></member>
+    <member refid="class_code_gen_visitor_1ab4530a6f6a0014236189ed626a59d06d" kind="function"><name>visitReturn_stmt</name></member>
+    <member refid="class_code_gen_visitor_1af60a97f4db03bd1b4071ab59d4c73191" kind="function"><name>visitDeclare_stmt</name></member>
+    <member refid="class_code_gen_visitor_1a0d65c8190d7c5ef96cc62eee1ef9cb4b" kind="function"><name>visitDeclare_only_stmt</name></member>
+    <member refid="class_code_gen_visitor_1a8ebce0dbad02f5120a45868481cc6a8c" kind="function"><name>visitAssignment_equal</name></member>
+    <member refid="class_code_gen_visitor_1ae5a02646fcf0faf213e063500ccfa58d" kind="function"><name>visitAssignment_add</name></member>
+    <member refid="class_code_gen_visitor_1a70ff0f907f57d4c6a9dfec0d6516c027" kind="function"><name>visitAssignment_mult</name></member>
+    <member refid="class_code_gen_visitor_1a43c4d0216e00a9b3ab566b64d222e74f" kind="function"><name>visitPre_incrementation</name></member>
+    <member refid="class_code_gen_visitor_1af95fa24385733a6187c2ee2a544189dd" kind="function"><name>visitPost_incrementation</name></member>
+    <member refid="class_code_gen_visitor_1af0ce976cf720243de430b4f7e6e6b92d" kind="function"><name>visitRvalue</name></member>
+    <member refid="class_code_gen_visitor_1a0a868d6e169c106d91ac383d99654e01" kind="function"><name>visitExpr_parenthesis</name></member>
+    <member refid="class_code_gen_visitor_1a8e2ba50a028a20c5c9589569596d9704" kind="function"><name>visitExpr_function</name></member>
+    <member refid="class_code_gen_visitor_1a64b1795897fadbf44432bf98680f5cdb" kind="function"><name>visitExpr_unaire</name></member>
+    <member refid="class_code_gen_visitor_1ac69cc4eab0ee49fc0bdfbb208ce95953" kind="function"><name>visitExpr_mult</name></member>
+    <member refid="class_code_gen_visitor_1a19260411b818b2199080f3253f864ad3" kind="function"><name>visitExpr_add</name></member>
+    <member refid="class_code_gen_visitor_1a8cb0d5f4716e485f951dd31591fd6a95" kind="function"><name>visitExpr_relational</name></member>
+    <member refid="class_code_gen_visitor_1affc381d8b90ee716eb9f7adf13befb04" kind="function"><name>visitExpr_equality</name></member>
+    <member refid="class_code_gen_visitor_1a8feb86fa301537bd9c443316c5ccdf74" kind="function"><name>visitExpr_and</name></member>
+    <member refid="class_code_gen_visitor_1aeb747269630b2e410b029467e53fe740" kind="function"><name>visitExpr_xor</name></member>
+    <member refid="class_code_gen_visitor_1a19f025270284d847831c828333720536" kind="function"><name>visitExpr_or</name></member>
+    <member refid="class_code_gen_visitor_1af8f24da24f53d81a7ee34036f79a8502" kind="function"><name>visitExpr_lazy_and</name></member>
+    <member refid="class_code_gen_visitor_1a43223c10b55671117f2960d8e0093d3f" kind="function"><name>visitExpr_lazy_or</name></member>
+    <member refid="class_code_gen_visitor_1a90b7babc65eaafcbd322274e63eddb02" kind="function"><name>visitExpr_atom</name></member>
+    <member refid="class_code_gen_visitor_1a2db3b149111e48f5bbe448b031b754a7" kind="function"><name>visitFunction_call</name></member>
+    <member refid="class_code_gen_visitor_1a982a446a408c3963656e71dd3b6b539f" kind="function"><name>visitFunction_def</name></member>
+    <member refid="class_code_gen_visitor_1aa0dc6648bb343eeb1df460b0bc675486" kind="function"><name>visitSelection_if</name></member>
+    <member refid="class_code_gen_visitor_1a8a214cfa5a8871c0a2771652da991107" kind="function"><name>visitIteration_while</name></member>
+    <member refid="class_code_gen_visitor_1a08174ad1083d84ce09e79480f21cbbc1" kind="function"><name>visitExpr_assignment</name></member>
+    <member refid="class_code_gen_visitor_1a3358ebdb058ec06c14f87fd53a2b9c27" kind="function"><name>visitJump_break</name></member>
+    <member refid="class_code_gen_visitor_1afdd17571d07c7297abb263d43032165c" kind="function"><name>visitJump_continue</name></member>
+    <member refid="class_code_gen_visitor_1af3c6251e81299cebb86514e587e07ab5" kind="function"><name>get_unique_var_name</name></member>
+  </compound>
+  <compound refid="class_i_r_instr" kind="class"><name>IRInstr</name>
+    <member refid="class_i_r_instr_1a4e228546957ed6096a45f48d7cfc7f15" kind="enum"><name>Operation</name></member>
+    <member refid="class_i_r_instr_1a4e228546957ed6096a45f48d7cfc7f15aca434b8ea2289b300adffe4d7177464b" kind="enumvalue"><name>ldconst</name></member>
+    <member refid="class_i_r_instr_1a4e228546957ed6096a45f48d7cfc7f15ae1a39a175e0db60521741b775fcd77ec" kind="enumvalue"><name>copy</name></member>
+    <member refid="class_i_r_instr_1a4e228546957ed6096a45f48d7cfc7f15aa9b607646606d67933e8b00e8834e7c1" kind="enumvalue"><name>cmp_const</name></member>
+    <member refid="class_i_r_instr_1a4e228546957ed6096a45f48d7cfc7f15a5ea0d6cae2d2b73ce167042d2584aca8" kind="enumvalue"><name>add</name></member>
+    <member refid="class_i_r_instr_1a4e228546957ed6096a45f48d7cfc7f15a6d6002b509969432274fe621bee4fa81" kind="enumvalue"><name>add_const</name></member>
+    <member refid="class_i_r_instr_1a4e228546957ed6096a45f48d7cfc7f15aa55951c56d52ea1ca49066e420be99c0" kind="enumvalue"><name>sub</name></member>
+    <member refid="class_i_r_instr_1a4e228546957ed6096a45f48d7cfc7f15a246d3a2e1505ba85e0c2b232d46793f6" kind="enumvalue"><name>sub_const</name></member>
+    <member refid="class_i_r_instr_1a4e228546957ed6096a45f48d7cfc7f15a6636565bd433d10de6878d80f0b75546" kind="enumvalue"><name>mul</name></member>
+    <member refid="class_i_r_instr_1a4e228546957ed6096a45f48d7cfc7f15a57a9112e2a510637354fe62dc5364454" kind="enumvalue"><name>div</name></member>
+    <member refid="class_i_r_instr_1a4e228546957ed6096a45f48d7cfc7f15a789b6016c462f6c6e5b1671107cd7d08" kind="enumvalue"><name>mod</name></member>
+    <member refid="class_i_r_instr_1a4e228546957ed6096a45f48d7cfc7f15a5ab1bfcb25f200319a570ae4d9967785" kind="enumvalue"><name>call</name></member>
+    <member refid="class_i_r_instr_1a4e228546957ed6096a45f48d7cfc7f15acce36d79a13e3cd29a613b23e61e7313" kind="enumvalue"><name>cmp_eq</name></member>
+    <member refid="class_i_r_instr_1a4e228546957ed6096a45f48d7cfc7f15a45a3acfb454fc68c35403e9c7c6dde54" kind="enumvalue"><name>cmp_ne</name></member>
+    <member refid="class_i_r_instr_1a4e228546957ed6096a45f48d7cfc7f15abec19d69dcb94e11691886175a6d1473" kind="enumvalue"><name>cmp_lt</name></member>
+    <member refid="class_i_r_instr_1a4e228546957ed6096a45f48d7cfc7f15a5105f7cb37d60048d2ffd2bc8261ec1d" kind="enumvalue"><name>cmp_le</name></member>
+    <member refid="class_i_r_instr_1a4e228546957ed6096a45f48d7cfc7f15a3d7c9a9592555029b0c37d7763f4b0e8" kind="enumvalue"><name>cmp_gt</name></member>
+    <member refid="class_i_r_instr_1a4e228546957ed6096a45f48d7cfc7f15a8094d29a10a1104909942c5ab8bd8839" kind="enumvalue"><name>cmp_ge</name></member>
+    <member refid="class_i_r_instr_1a4e228546957ed6096a45f48d7cfc7f15adb082da0a7e054ba5118444bef248f0f" kind="enumvalue"><name>copyIn</name></member>
+    <member refid="class_i_r_instr_1a4e228546957ed6096a45f48d7cfc7f15a0164ea8315f2834f64794e426315679d" kind="enumvalue"><name>ret</name></member>
+    <member refid="class_i_r_instr_1a4e228546957ed6096a45f48d7cfc7f15ad1c9200d728ee94d0e9cff990133d31b" kind="enumvalue"><name>copyOut</name></member>
+    <member refid="class_i_r_instr_1a4e228546957ed6096a45f48d7cfc7f15a04d7257064ccde262f241be53e8ea6b6" kind="enumvalue"><name>bitwise_and</name></member>
+    <member refid="class_i_r_instr_1a4e228546957ed6096a45f48d7cfc7f15a2a1ca2cc4e800428bfde5f59d88653e6" kind="enumvalue"><name>bitwise_or</name></member>
+    <member refid="class_i_r_instr_1a4e228546957ed6096a45f48d7cfc7f15a307d81b7bf9ef660d656b084e90ef1e1" kind="enumvalue"><name>bitwise_xor</name></member>
+    <member refid="class_i_r_instr_1a4e228546957ed6096a45f48d7cfc7f15ab9ae7307714241dd91a0e5cad0a9345a" kind="enumvalue"><name>bitwise_not</name></member>
+    <member refid="class_i_r_instr_1a4e228546957ed6096a45f48d7cfc7f15a6317d64127aa707de4e9c8258f4be689" kind="enumvalue"><name>neg</name></member>
+    <member refid="class_i_r_instr_1a4e228546957ed6096a45f48d7cfc7f15a3bc40e9a2d509d46ecc344df94767012" kind="enumvalue"><name>jump</name></member>
+    <member refid="class_i_r_instr_1a4e228546957ed6096a45f48d7cfc7f15a4ad192fa5de350fb2fa084cd0948d15d" kind="enumvalue"><name>l_not</name></member>
+    <member refid="class_i_r_instr_1a4e228546957ed6096a45f48d7cfc7f15a080a2cd351bac2a442b25ab2ec726062" kind="enumvalue"><name>lazy_and</name></member>
+    <member refid="class_i_r_instr_1a4e228546957ed6096a45f48d7cfc7f15add139171ca8c943386b69b1efb3228a5" kind="enumvalue"><name>lazy_or</name></member>
+    <member refid="class_i_r_instr_1a4e228546957ed6096a45f48d7cfc7f15a32be33a33681269493d74199aa34ff3a" kind="enumvalue"><name>startfct</name></member>
+    <member refid="class_i_r_instr_1ae1a18b0b16301d3791af64e053017e10" kind="variable"><name>repList</name></member>
+    <member refid="class_i_r_instr_1a0bf0264847ab1c69e99495f1456e3adf" kind="variable"><name>bb</name></member>
+    <member refid="class_i_r_instr_1aa245c38629c572258e4b1e86febb5da6" kind="variable"><name>op</name></member>
+    <member refid="class_i_r_instr_1a449e6b5f75d186ce7975dbb72c416a6b" kind="variable"><name>t</name></member>
+    <member refid="class_i_r_instr_1afdf5e53969593927505c20e6acf19158" kind="variable"><name>params</name></member>
+    <member refid="class_i_r_instr_1a597d177c58ca8d836be819ef1520ebda" kind="function"><name>IRInstr</name></member>
+    <member refid="class_i_r_instr_1a7b48035fa80c3125e6192ef24dd0cebf" kind="function"><name>gen_asm</name></member>
+  </compound>
+  <compound refid="class_symbol_gen_visitor" kind="class"><name>SymbolGenVisitor</name>
+    <member refid="class_symbol_gen_visitor_1a8ce1344a310f9164cd18f17936d8b7e8" kind="variable"><name>currentFunction</name></member>
+    <member refid="class_symbol_gen_visitor_1a1ea8a5fc10d9c12dd766e7857a0cef8c" kind="variable"><name>blocks</name></member>
+    <member refid="class_symbol_gen_visitor_1ab040a4dfc3af1f7f059355508dfd1668" kind="variable"><name>current_block</name></member>
+    <member refid="class_symbol_gen_visitor_1a6e64627695cc7eebb5d6d1012645c167" kind="variable"><name>tmp_block_index</name></member>
+    <member refid="class_symbol_gen_visitor_1adc9b1ed0de92feff8d9fe64c69e46cee" kind="variable"><name>variables</name></member>
+    <member refid="class_symbol_gen_visitor_1a5bb1757ba7c57b93b117660ec4c1e2a3" kind="variable"><name>memory_offset</name></member>
+    <member refid="class_symbol_gen_visitor_1a95edb7574c517b0eabbd094d7f560b1d" kind="variable"><name>tmp_index</name></member>
+    <member refid="class_symbol_gen_visitor_1a9972343676d78ccabacf4dcb93a273b1" kind="variable"><name>declaration_mode</name></member>
+    <member refid="class_symbol_gen_visitor_1a6bcf0e30a81fd43b7309b511ba4c7719" kind="variable"><name>reserved_word</name></member>
+    <member refid="class_symbol_gen_visitor_1ac3f6d81892433b961f8ef668c90f6a26" kind="variable"><name>inExpr</name></member>
+    <member refid="class_symbol_gen_visitor_1a62587a2bfcf3713f52ac44db2a91781d" kind="function"><name>SymbolGenVisitor</name></member>
+    <member refid="class_symbol_gen_visitor_1a9a8e95782bbd532ef411967ab02390a3" kind="function"><name>visitProg</name></member>
+    <member refid="class_symbol_gen_visitor_1aed28e708ebcee2c272aa774c4efa1bf6" kind="function"><name>visitBlock</name></member>
+    <member refid="class_symbol_gen_visitor_1a27e7def074fcc48aaeb7349fb3a047e0" kind="function"><name>visitDeclare_stmt</name></member>
+    <member refid="class_symbol_gen_visitor_1a1abd68707bd03605bd17edebc52338e7" kind="function"><name>visitAssignment_equal</name></member>
+    <member refid="class_symbol_gen_visitor_1af448ed65031a5858172ae84fb2579832" kind="function"><name>visitAssignment_add</name></member>
+    <member refid="class_symbol_gen_visitor_1a5062acc098dff32ff01e2df0c352cdff" kind="function"><name>visitAssignment_mult</name></member>
+    <member refid="class_symbol_gen_visitor_1a988552420b54109b62bd01d445f57ffe" kind="function"><name>visitPre_incrementation</name></member>
+    <member refid="class_symbol_gen_visitor_1ac5b4fe308d6b8578998c1e241fd917dd" kind="function"><name>visitPost_incrementation</name></member>
+    <member refid="class_symbol_gen_visitor_1a8d4015069dde7b7833743be6ac5948d9" kind="function"><name>visitSelection_if</name></member>
+    <member refid="class_symbol_gen_visitor_1ab65184d1ecc04d2327bf081a6cbd3abb" kind="function"><name>visitIteration_while</name></member>
+    <member refid="class_symbol_gen_visitor_1a73a0394081b59ad5ab8b8dac62f3c889" kind="function"><name>visitLvalue</name></member>
+    <member refid="class_symbol_gen_visitor_1a46b31f2d90095102500c7f48457d745c" kind="function"><name>visitExpr_atom</name></member>
+    <member refid="class_symbol_gen_visitor_1a6ded1458532569d70c0b9031185189ea" kind="function"><name>visitExpr_mult</name></member>
+    <member refid="class_symbol_gen_visitor_1a79768b277f70680c78fe807147293c40" kind="function"><name>visitExpr_and</name></member>
+    <member refid="class_symbol_gen_visitor_1a990ad459fdb9259ec108d805e4871873" kind="function"><name>visitExpr_xor</name></member>
+    <member refid="class_symbol_gen_visitor_1abfd977e16bf09b760d2f74615eb3ac2b" kind="function"><name>visitExpr_or</name></member>
+    <member refid="class_symbol_gen_visitor_1aa4d6b2e663652becfb8e7bed74d88abc" kind="function"><name>visitExpr_unaire</name></member>
+    <member refid="class_symbol_gen_visitor_1aaf884252a1552620e739af6c0aa6ca3c" kind="function"><name>visitExpr_relational</name></member>
+    <member refid="class_symbol_gen_visitor_1aed0b914f9860751b05c3de8bf10b448a" kind="function"><name>visitExpr_equality</name></member>
+    <member refid="class_symbol_gen_visitor_1a95656fe25c24c12abe47ba610d06e878" kind="function"><name>visitExpr_add</name></member>
+    <member refid="class_symbol_gen_visitor_1a02a42a4a4dfb6efa44b25aa083a74abf" kind="function"><name>visitExpr_function</name></member>
+    <member refid="class_symbol_gen_visitor_1a2aed2fd0eea723849d88ae0098be956f" kind="function"><name>visitExpr_parenthesis</name></member>
+    <member refid="class_symbol_gen_visitor_1afac330c7572d54dcab2c271ef9ff9721" kind="function"><name>visitFunction_call</name></member>
+    <member refid="class_symbol_gen_visitor_1ac2e8005312e270407fb1218d7a31f2fa" kind="function"><name>visitExpr_assignment</name></member>
+    <member refid="class_symbol_gen_visitor_1a41511111b07dc3877967cb119b0ed089" kind="function"><name>visitDeclare_only_stmt</name></member>
+    <member refid="class_symbol_gen_visitor_1a68fe727231c3c96c03fd4ae52679a419" kind="function"><name>visitExpr_lazy_and</name></member>
+    <member refid="class_symbol_gen_visitor_1a1b9e608a80f3fa10f5a0714da5e6fed5" kind="function"><name>visitExpr_lazy_or</name></member>
+    <member refid="class_symbol_gen_visitor_1a934375c2af9226e511c25ded8f08838a" kind="function"><name>visitFunction_def</name></member>
+    <member refid="class_symbol_gen_visitor_1a634496cc94fd4024195482473c68f83b" kind="function"><name>get_unique_var_name</name></member>
+    <member refid="class_symbol_gen_visitor_1a3e098dada334943a05a0622e5e917816" kind="function"><name>check_exist_in_current_block</name></member>
+    <member refid="class_symbol_gen_visitor_1a4b065ef073f7fb14adfc9e6084fff625" kind="function"><name>check_exist_in_current_or_parent_block</name></member>
+    <member refid="class_symbol_gen_visitor_1a8aba7d34e0b52690f0f069aa21846581" kind="function"><name>get_new_tmp_varname</name></member>
+    <member refid="class_symbol_gen_visitor_1adefd08d6d84c0f7e0e82662dd07366ae" kind="function"><name>create_unique_var_name</name></member>
+  </compound>
+  <compound refid="class_variable_info" kind="class"><name>VariableInfo</name>
+    <member refid="class_variable_info_1aac07859b2fdcae95d4e4ef1e6800c53f" kind="variable"><name>address</name></member>
+    <member refid="class_variable_info_1ad01b414010bdec1b180b7b3d67cdba79" kind="variable"><name>size</name></member>
+    <member refid="class_variable_info_1a3dfeca5f4482248852435af8dad40355" kind="variable"><name>defined</name></member>
+    <member refid="class_variable_info_1abde46b2a7c3878b51e1ea2f105535e9c" kind="variable"><name>used</name></member>
+    <member refid="class_variable_info_1a4ef028f283e2ba4637856450c8d4ba92" kind="function"><name>VariableInfo</name></member>
+    <member refid="class_variable_info_1a3c7fb1dd5e7fb43b3f7f7e025774ebb4" kind="function"><name>VariableInfo</name></member>
+    <member refid="class_variable_info_1ad89a10fdc1537a98785d0c488dc93c6c" kind="function"><name>VariableInfo</name></member>
+  </compound>
+  <compound refid="namespaceantlr4" kind="namespace"><name>antlr4</name>
+  </compound>
+  <compound refid="namespacestd" kind="namespace"><name>std</name>
+  </compound>
+  <compound refid="_code_gen_visitor_8h" kind="file"><name>CodeGenVisitor.h</name>
+  </compound>
+  <compound refid="_error_8h" kind="file"><name>Error.h</name>
+    <member refid="_error_8h_1ad5f256033fce9a93a4bf0dd3ef8fa206" kind="define"><name>debug</name></member>
+    <member refid="_error_8h_1a70d424fbd5a26d1cb39a8756db10bf2c" kind="define"><name>error</name></member>
+    <member refid="_error_8h_1a4adf7c6105c54a1608753548236d1387" kind="define"><name>GOOD</name></member>
+    <member refid="_error_8h_1ac3d6c1c963c9219568a7190f93e82fdc" kind="define"><name>UNDECLARED</name></member>
+    <member refid="_error_8h_1a2dc3870be25a19efa2940150507aaf71" kind="define"><name>UNDEFINED</name></member>
+    <member refid="_error_8h_1a872e23aae5f693fb817ef8b3c52374ed" kind="define"><name>DOUBLE_DECLARATION</name></member>
+    <member refid="_error_8h_1aa3ff176dff916a44c635d78830c38d28" kind="define"><name>RESERVED_KEY_WORD</name></member>
+    <member refid="_error_8h_1af64a2dd6c262c41c7de3e3a27b561cbb" kind="define"><name>VOID_VARIABLE</name></member>
+    <member refid="_error_8h_1a5a0ff716101085fa28ca0d833811a238" kind="define"><name>UNUSED_VARIABLE</name></member>
+    <member refid="_error_8h_1adaad15d8a1852d256c64c32560a549d3" kind="define"><name>PROGRAMER_ERROR</name></member>
+    <member refid="_error_8h_1aacd73dc97dc12367a46422653dfaa0dc" kind="define"><name>NOT_IMPLEMENTED_YET</name></member>
+  </compound>
+  <compound refid="_i_r_8h" kind="file"><name>IR.h</name>
+    <member refid="_i_r_8h_1a31488d29805a596498c0234ae392d35d" kind="enum"><name>Target</name></member>
+    <member refid="_i_r_8h_1a31488d29805a596498c0234ae392d35da89dc77cd0bb26f687e5d9deb08687cda" kind="enumvalue"><name>x86</name></member>
+  </compound>
+  <compound refid="_symbol_gen_visitor_8h" kind="file"><name>SymbolGenVisitor.h</name>
+  </compound>
+  <compound refid="_type_8h" kind="file"><name>Type.h</name>
+    <member refid="_type_8h_1a1d1cfd8ffb84e947f82999c682b666a7" kind="enum"><name>Type</name></member>
+    <member refid="_type_8h_1a1d1cfd8ffb84e947f82999c682b666a7ac1081c62db14e24ef35a1c3c36cba2e7" kind="enumvalue"><name>INT32</name></member>
+    <member refid="_type_8h_1a1d1cfd8ffb84e947f82999c682b666a7a1cdc95bf52b0d254884d692a3dd177d6" kind="enumvalue"><name>CHAR8</name></member>
+    <member refid="_type_8h_1a1d1cfd8ffb84e947f82999c682b666a7aad7dce162b42b3d0968ffa57fad43512" kind="enumvalue"><name>POINTER</name></member>
+  </compound>
+  <compound refid="_code_gen_visitor_8cpp" kind="file"><name>CodeGenVisitor.cpp</name>
+  </compound>
+  <compound refid="_code_gen_visitor_expr_8cpp" kind="file"><name>CodeGenVisitorExpr.cpp</name>
+    <member refid="_code_gen_visitor_expr_8cpp_1ad5f256033fce9a93a4bf0dd3ef8fa206" kind="define"><name>debug</name></member>
+  </compound>
+  <compound refid="_i_r_8cpp" kind="file"><name>IR.cpp</name>
+    <member refid="_i_r_8cpp_1a0f1024227b87421e16f8219beee48044" kind="function"><name>size_to_letter</name></member>
+  </compound>
+  <compound refid="main_8cpp" kind="file"><name>main.cpp</name>
+    <member refid="main_8cpp_1a8b3937110c04eb1e952d79abbfe1eb16" kind="function"><name>main</name></member>
+  </compound>
+  <compound refid="_symbol_gen_visitor_8cpp" kind="file"><name>SymbolGenVisitor.cpp</name>
+  </compound>
+  <compound refid="compiler_2_r_e_a_d_m_e_8md" kind="file"><name>README.md</name>
+  </compound>
+  <compound refid="_r_e_a_d_m_e_8md" kind="file"><name>README.md</name>
+  </compound>
+  <compound refid="dir_d44c64559bbebec7f509842c48db8b23" kind="dir"><name>include</name>
+  </compound>
+  <compound refid="dir_68267d1309a1af8e8297ef4c3efbcdba" kind="dir"><name>src</name>
+  </compound>
+  <compound refid="indexpage" kind="page"><name>index</name>
+  </compound>
+</doxygenindex>
