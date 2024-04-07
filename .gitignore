@@ -10,6 +10,10 @@ antlr
 tests/test-output.txt
 tests/output.txt
 
+# generated documentation
+compiler/doc/html
+compiler/doc/xml
+
 # code editor
 .vscode
 
