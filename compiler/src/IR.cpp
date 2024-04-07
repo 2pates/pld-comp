@@ -314,6 +314,7 @@ void IRInstr::gen_asm(ostream& o, Target target) {
                 if (location.compare("main") == 0) {
                     o << "	leave" << endl;
                 } else {
+                    o << "addq	$" << (-(bb->cfg->memoryUse) / 16 + 2) * 16 << ", %rsp" << endl; // Set up potential function call
                     o << "	popq %rbp" << endl;
                 }
                 o << "	ret" << endl;
@@ -425,6 +426,8 @@ void IRInstr::gen_asm(ostream& o, Target target) {
         }
         case startfct: {
             o << "	pushq	%rbp" << endl;
+            o << "movq	%rsp, %rbp" << endl;                                  // Set up a new base pointer
+            o << "subq	$" << (-(bb->cfg->memoryUse) / 16 + 2) * 16 << ", %rsp" << endl; // Set up potential function call
             break;
         }
         default: {
