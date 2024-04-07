@@ -47,10 +47,11 @@ int main(int argn, const char** argv) {
 
     SymbolGenVisitor s;
     s.visit(tree);
-    for (auto& var: s.variables) {
-        if(var.first[0]!='#' && var.second.used==false){
-            cerr<<var.first<<endl;
-            exit(1);
+    for (auto& var : s.variables) {
+        if (var.first[0] != '#' && var.second.used == false) {
+            string name = var.first.substr(0, var.first.find('#'));
+            error("Variable '" + name + "' declared but not used");
+            exit(UNUSED_VARIABLE);
         }
     }
     CFG cfg(s.variables, "entry_point");
