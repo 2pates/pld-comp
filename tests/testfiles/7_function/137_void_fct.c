@@ -10,5 +10,5 @@ int main() {
 }
 
 void g(char i) {
-    i-=7;
+    putchar(i);
 }
