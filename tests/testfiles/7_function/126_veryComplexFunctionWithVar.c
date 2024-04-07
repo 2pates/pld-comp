@@ -6,6 +6,7 @@ int main() {
     int z;
     z = 2;
     int q = 7;
+    // z = g(z++, q) + f();
     z = g(z, q) + f();
     int pop = 3;
     z = z + h(1, 3, 5, z, q, pop);

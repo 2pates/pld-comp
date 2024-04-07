@@ -25,6 +25,7 @@ int main(){
                 }
             }
             // printf("\r\n");
+            putchar(10); // newline
         }
 
         for(int i = 0; i<tronc ; i++){
@@ -33,11 +34,15 @@ int main(){
                 // printf("\033[0;34m|");
                 putchar('U');
             // printf("\r\n");
+            putchar(10); // newline
         }
         // // sleep
         // usleep(200000); // 200ms
         // // clear
         // system("clear");
+        putchar(10); // newline
+        putchar(10); // newline
+        putchar(10); // newline
 
         i++;
         if (i == 2) i=0;

@@ -1,4 +1,4 @@
 int main() {
     char a = 'd';
-    return 0;
+    return a-'a';
 }
