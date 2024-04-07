@@ -187,7 +187,7 @@ for jobname in jobs:
     os.chdir(jobname)
     
     ## Reference compiler = GCC
-    gccstatus=command("gcc -S -Werror -o asm-gcc.s input.c", "gcc-compile.txt")
+    gccstatus=command("gcc -S -Wall -Werror -o asm-gcc.s input.c", "gcc-compile.txt")
     if gccstatus == 0:
         # test-case is a valid program. we should run it
         gccstatus=command("gcc -o exe-gcc asm-gcc.s", "gcc-link.txt")

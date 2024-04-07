@@ -12,12 +12,13 @@
 
 class VariableInfo {
 public:
-    VariableInfo() { defined = false; }
-    VariableInfo(long int address_, int size_) : address(address_), size(size_), defined(true) {}
-    VariableInfo(long int address_, int size_, bool defined_) : address(address_), size(size_), defined(defined_) {}
+    VariableInfo() { defined = false; used=false; }
+    VariableInfo(long int address_, int size_) : address(address_), size(size_), defined(true), used(false) {}
+    VariableInfo(long int address_, int size_, bool defined_) : address(address_), size(size_), defined(defined_), used(false) {}
     long int address; // relative address of the pointer
     int size;         // size of the variable in octets
     bool defined;
+    bool used;
 };
 
 class SymbolGenVisitor : public ifccBaseVisitor {
@@ -53,6 +54,7 @@ public:
     virtual antlrcpp::Any visitExpr_lazy_and(ifccParser::Expr_lazy_andContext* ctx) override;
     virtual antlrcpp::Any visitExpr_lazy_or(ifccParser::Expr_lazy_orContext* ctx) override;
     virtual antlrcpp::Any visitFunction_def(ifccParser::Function_defContext* ctx) override;
+    std::string get_unique_var_name(std::string varname);
 
     std::string currentFunction = "";
     std::unordered_map<int, int> blocks; // id current block, id parent block
@@ -75,6 +77,7 @@ public:
     int check_exist_in_current_or_parent_block(std::string varname);
     std::string get_new_tmp_varname();
     std::string create_unique_var_name(std::string name);
+    bool inExpr=false;
 };
 
 #endif
