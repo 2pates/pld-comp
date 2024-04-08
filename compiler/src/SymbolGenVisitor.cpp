@@ -326,7 +326,12 @@ antlrcpp::Any SymbolGenVisitor::visitExpr_atom(ifccParser::Expr_atomContext* ctx
         memory_offset -= 8;
         variables.insert({get_new_tmp_varname(), VariableInfo(memory_offset, 8)});
     } else if (ctx->VARNAME() != nullptr) {
-        variables.at(get_unique_var_name(ctx->VARNAME()->getText())).used=true;
+        if(variables.count(get_unique_var_name(ctx->VARNAME()->getText()))!=0){
+            variables.at(get_unique_var_name(ctx->VARNAME()->getText())).used=true;
+        }
+        else{
+            exit(UNDECLARED);
+        }
     } else {
         return PROGRAMER_ERROR;
     }
