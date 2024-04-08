@@ -2,9 +2,12 @@
 int isPrime(int num);
 void computePrimes(int m);
 void printNumber(int number);
+int readNumber();
+
 // simple programm for computing the n first prime numbers
 int main() {
     int n = 10;
+    n = readNumber();
     computePrimes(n);
     return 0;
 }
@@ -46,4 +49,18 @@ void printNumber(int x) {
     if (x / 10 != 0)
         printNumber(x / 10);
     putchar(x % 10 + '0');
+}
+
+// Function to read an integer using getchar
+int readNumber() {
+    int num = 0;
+    int ch;
+
+    // Read digits and form the integer
+    ch = getchar();
+    while (ch >= '0' && ch <= '9') {
+        num = num * 10 + (ch - '0');
+        ch = getchar(); // Move to the next character
+    }
+    return num;
 }
