@@ -2,11 +2,9 @@
 
 int g(char i);
 
-int main() {
-    return g('g');
-}
+int main() { return g('g'); }
 
 int g(char i) {
-    int x = i-'a';
+    int x = i - 'a';
     return x;
 }

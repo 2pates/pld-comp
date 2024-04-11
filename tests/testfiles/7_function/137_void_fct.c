@@ -9,6 +9,4 @@ int main() {
     return b;
 }
 
-void g(char i) {
-    putchar(i);
-}
+void g(char i) { putchar(i); }

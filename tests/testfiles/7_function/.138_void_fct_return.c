@@ -10,6 +10,6 @@ int main() {
 }
 
 void g(char i) {
-    i-=7;
+    i -= 7;
     return i;
 }

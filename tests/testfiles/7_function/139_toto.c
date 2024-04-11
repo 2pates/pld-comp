@@ -2,14 +2,14 @@
 
 void toto();
 
-int main(){
+int main() {
     toto();
     return 0;
 }
 
 void toto() {
-    int x=1;
-    int y=2;
-    int z=3;
+    int x = 1;
+    int y = 2;
+    int z = 3;
     putchar('a');
 }

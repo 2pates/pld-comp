@@ -1,7 +1,6 @@
 #include <stdio.h>
 int f();
-main
-int main() {
+main int main() {
     int z;
     z = 2;
     f();

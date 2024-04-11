@@ -1,9 +1,7 @@
 #include <stdio.h>
 
-
-int main()
-{
-	int i, num, j=1;
+int main() {
+    int i, num, j = 1;
     putchar('N');
     putchar('o');
     putchar('m');
@@ -12,18 +10,18 @@ int main()
     putchar('e');
     putchar(':');
     putchar(' ');
-	// getchar(num);
+    // getchar(num);
     num = 12;
     putchar('1');
     putchar('2');
     // putchar('\n');
 
-    i=1;
-	while (i<num+1) {{
-		j=j*i;
+    i = 1;
+    while (i < num + 1) {
         {
-            i++;
+            j = j * i;
+            { i++; }
         }
-    }}
+    }
     return j;
 }

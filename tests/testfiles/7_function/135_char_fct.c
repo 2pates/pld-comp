@@ -8,4 +8,4 @@ int main() {
     return b;
 }
 
-char f(int i) { return 'a'+i; }
+char f(int i) { return 'a' + i; }
