@@ -426,7 +426,7 @@ void IRInstr::gen_asm(ostream& o, Target target) {
         }
         case startfct: {
             o << "	pushq	%rbp" << endl;
-            o << "movq	%rsp, %rbp" << endl;                                  // Set up a new base pointer
+            o << "movq	%rsp, %rbp" << endl;                                             // Set up a new base pointer
             o << "subq	$" << (-(bb->cfg->memoryUse) / 16 + 2) * 16 << ", %rsp" << endl; // Set up potential function call
             break;
         }
@@ -436,7 +436,8 @@ void IRInstr::gen_asm(ostream& o, Target target) {
     }
 }
 
-BasicBlock::BasicBlock(CFG* cfg, string entry_label, BasicBlock * parent_test, BasicBlock* next_block) : cfg(cfg), label(entry_label), parent_test(parent_test), next_block(next_block) {
+BasicBlock::BasicBlock(CFG* cfg, string entry_label, BasicBlock* parent_test, BasicBlock* next_block)
+    : cfg(cfg), label(entry_label), parent_test(parent_test), next_block(next_block) {
     exit_false = nullptr;
     exit_true = nullptr;
 }
@@ -492,7 +493,7 @@ void CFG::gen_asm_prologue(ostream& o, Target target) {
         o << "pushq	%rbp" << endl;                                        // Save the old base pointer
         o << "movq	%rsp, %rbp" << endl;                                  // Set up a new base pointer
         o << "subq	$" << (-memoryUse / 16 + 2) * 16 << ", %rsp" << endl; // Set up potential function call
-        o << "jmp	" << entry_block_label << endl;                           // Jump to entry block
+        o << "jmp	" << entry_block_label << endl;                       // Jump to entry block
     }
 }
 

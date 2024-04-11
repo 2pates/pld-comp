@@ -15,7 +15,10 @@
  */
 class VariableInfo {
 public:
-    VariableInfo() { defined = false; used=false; }
+    VariableInfo() {
+        defined = false;
+        used = false;
+    }
     VariableInfo(long int address_, int size_) : address(address_), size(size_), defined(true), used(false) {}
     VariableInfo(long int address_, int size_, bool defined_) : address(address_), size(size_), defined(defined_), used(false) {}
     long int address; ///< Relative address of the pointer.
@@ -66,29 +69,29 @@ public:
 
     /**
      * @brief Generate a unique variable name.
-     * 
+     *
      * @param varname The variable name to make unique.
      * @return A unique variable name.
      */
     std::string get_unique_var_name(std::string varname);
 
-    std::string currentFunction = ""; ///< Name of the current function.
-    std::unordered_map<int, int> blocks; ///< Mapping of block IDs to their parent block IDs.
-    int current_block; ///< ID of the current block.
-    int tmp_block_index; ///< Index for temporary block IDs.
+    std::string currentFunction = "";                        ///< Name of the current function.
+    std::unordered_map<int, int> blocks;                     ///< Mapping of block IDs to their parent block IDs.
+    int current_block;                                       ///< ID of the current block.
+    int tmp_block_index;                                     ///< Index for temporary block IDs.
     std::unordered_map<std::string, VariableInfo> variables; ///< Mapping of variable names to their information.
-    long int memory_offset; ///< Memory offset for variable addresses.
-    int tmp_index; ///< Index for temporary variable names.
-    bool declaration_mode = false; ///< Flag indicating if in declaration mode.
-    std::vector<std::string> reserved_word{ ///< List of reserved words.
-        "if", "else", "switch", "case", "default", "break", "int", "float", "char", "double", "long", "for", "while",
-        "do", "void", "goto", "auto", "signed", "const", "extern", "register", "unsigned", "return", "continue", "enum",
-        "sizeof", "struct", "typedef", "union", "volatile", "NULL"
-    };
+    long int memory_offset;                                  ///< Memory offset for variable addresses.
+    int tmp_index;                                           ///< Index for temporary variable names.
+    bool declaration_mode = false;                           ///< Flag indicating if in declaration mode.
+    std::vector<std::string> reserved_word{                  ///< List of reserved words.
+                                           "if",   "else",   "switch", "case",    "default",  "break",    "int",    "float",
+                                           "char", "double", "long",   "for",     "while",    "do",       "void",   "goto",
+                                           "auto", "signed", "const",  "extern",  "register", "unsigned", "return", "continue",
+                                           "enum", "sizeof", "struct", "typedef", "union",    "volatile", "NULL"};
 
     /**
      * @brief Check if a variable exists in the current block.
-     * 
+     *
      * @param varname The variable name to check.
      * @return GOOD if the variable exists, UNDECLARED otherwise. (see Error.h to match values)
      */
@@ -96,7 +99,7 @@ public:
 
     /**
      * @brief Check if a variable exists in the current or parent block.
-     * 
+     *
      * @param varname The variable name to check.
      * @return GOOD if the variable exists, UNDECLARED otherwise. (see Error.h to match values)
      */
@@ -104,20 +107,20 @@ public:
 
     /**
      * @brief Generate a new temporary variable name.
-     * 
+     *
      * @return A new temporary variable name.
      */
     std::string get_new_tmp_varname();
 
     /**
      * @brief Create a unique variable name.
-     * 
+     *
      * @param name The base name for the variable.
      * @return A unique variable name.
      */
     std::string create_unique_var_name(std::string name);
-    
-    bool inExpr=false; ///< Flag indicating if inside an expression.
+
+    bool inExpr = false; ///< Flag indicating if inside an expression.
 };
 
 #endif

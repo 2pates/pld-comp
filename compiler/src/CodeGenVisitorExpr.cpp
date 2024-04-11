@@ -143,10 +143,9 @@ antlrcpp::Any CodeGenVisitor::visitExpr_lazy_and(ifccParser::Expr_lazy_andContex
     std::string l_var_name = visit(ctx->expr().at(0));
     std::string r_var_name = visit(ctx->expr().at(1));
 
-    BasicBlock * nextBB = new BasicBlock(cfg, cfg->new_BB_name(), cfg->current_bb->parent_test, cfg->current_bb->next_block);
+    BasicBlock* nextBB = new BasicBlock(cfg, cfg->new_BB_name(), cfg->current_bb->parent_test, cfg->current_bb->next_block);
     cfg->add_bb(nextBB);
     nextBB->exit_true = cfg->current_bb->next_block;
-    
 
     BasicBlock* rightBB = new BasicBlock(cfg, cfg->new_BB_name());
     cfg->add_bb(rightBB);
@@ -175,7 +174,7 @@ antlrcpp::Any CodeGenVisitor::visitExpr_lazy_or(ifccParser::Expr_lazy_orContext*
     std::string l_var_name = visit(ctx->expr().at(0));
     std::string r_var_name = visit(ctx->expr().at(1));
 
-    BasicBlock * nextBB = new BasicBlock(cfg, cfg->new_BB_name(), cfg->current_bb->parent_test, cfg->current_bb->next_block);
+    BasicBlock* nextBB = new BasicBlock(cfg, cfg->new_BB_name(), cfg->current_bb->parent_test, cfg->current_bb->next_block);
     cfg->add_bb(nextBB);
     nextBB->exit_true = cfg->current_bb->next_block;
 

@@ -236,8 +236,8 @@ antlrcpp::Any SymbolGenVisitor::visitDeclare_stmt(ifccParser::Declare_stmtContex
 antlrcpp::Any SymbolGenVisitor::visitAssignment_equal(ifccParser::Assignment_equalContext* ctx) {
     std::string name = ctx->lvalue()->VARNAME()->getText();
     std::string unique_name = create_unique_var_name(name);
-    if(inExpr){
-        variables.at(get_unique_var_name(ctx->lvalue()->VARNAME()->getText())).used=true;
+    if (inExpr) {
+        variables.at(get_unique_var_name(ctx->lvalue()->VARNAME()->getText())).used = true;
     }
     debug("Affectation " + unique_name);
     if (declaration_mode) {
@@ -266,7 +266,7 @@ antlrcpp::Any SymbolGenVisitor::visitAssignment_equal(ifccParser::Assignment_equ
 antlrcpp::Any SymbolGenVisitor::visitSelection_if(ifccParser::Selection_ifContext* ctx) {
     this->visit(ctx->expr());
     this->visit(ctx->statement()[0]);
-    if (ctx->statement().size()>=2 && ctx->statement()[1] != nullptr) {
+    if (ctx->statement().size() >= 2 && ctx->statement()[1] != nullptr) {
         this->visit(ctx->statement()[1]);
     }
     return 0;
@@ -326,10 +326,9 @@ antlrcpp::Any SymbolGenVisitor::visitExpr_atom(ifccParser::Expr_atomContext* ctx
         memory_offset -= 8;
         variables.insert({get_new_tmp_varname(), VariableInfo(memory_offset, 8)});
     } else if (ctx->VARNAME() != nullptr) {
-        if(variables.count(get_unique_var_name(ctx->VARNAME()->getText()))!=0){
-            variables.at(get_unique_var_name(ctx->VARNAME()->getText())).used=true;
-        }
-        else{
+        if (variables.count(get_unique_var_name(ctx->VARNAME()->getText())) != 0) {
+            variables.at(get_unique_var_name(ctx->VARNAME()->getText())).used = true;
+        } else {
             exit(UNDECLARED);
         }
     } else {
@@ -351,9 +350,9 @@ antlrcpp::Any SymbolGenVisitor::visitExpr_add(ifccParser::Expr_addContext* ctx) 
 antlrcpp::Any SymbolGenVisitor::visitExpr_assignment(ifccParser::Expr_assignmentContext* ctx) {
     bool prev_declaration_mode = declaration_mode;
     declaration_mode = false;
-    inExpr=true;
+    inExpr = true;
     visit(ctx->assignment_stmt());
-    inExpr=false;
+    inExpr = false;
     declaration_mode = prev_declaration_mode;
     return GOOD;
 }
@@ -369,7 +368,7 @@ antlrcpp::Any SymbolGenVisitor::visitAssignment_mult(ifccParser::Assignment_mult
 }
 
 antlrcpp::Any SymbolGenVisitor::visitPre_incrementation(ifccParser::Pre_incrementationContext* ctx) {
-    variables.at(get_unique_var_name(ctx->lvalue()->VARNAME()->getText())).used=true;
+    variables.at(get_unique_var_name(ctx->lvalue()->VARNAME()->getText())).used = true;
     visit(ctx->lvalue());
     return GOOD;
 }
@@ -379,7 +378,7 @@ antlrcpp::Any SymbolGenVisitor::visitPost_incrementation(ifccParser::Post_increm
     tmp_index++;
     variables.insert({"#tmp" + std::to_string(tmp_index), VariableInfo(memory_offset, 4)});
     debug("Inserted #tmp" + std::to_string(tmp_index) + " (address " + std::to_string(memory_offset) + ")");
-    variables.at(get_unique_var_name(ctx->lvalue()->VARNAME()->getText())).used=true;
+    variables.at(get_unique_var_name(ctx->lvalue()->VARNAME()->getText())).used = true;
     visit(ctx->lvalue());
 
     return GOOD;

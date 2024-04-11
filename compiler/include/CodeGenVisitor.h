@@ -14,7 +14,7 @@ class CodeGenVisitor : public ifccBaseVisitor {
 public:
     /**
      * @brief Constructor for CodeGenVisitor class.
-     * 
+     *
      * @param cfg_ Pointer to the Control Flow Graph.
      * @param blocks_ Mapping of block IDs to their parent block IDs.
      */
@@ -59,21 +59,21 @@ public:
 
     /**
      * @brief Generate a unique variable name.
-     * 
+     *
      * @param varname The variable name to make unique.
      * @return A unique variable name.
      */
     std::string get_unique_var_name(std::string varname);
 
-    int current_block; ///< ID of the current block.
-    int tmp_block_index; ///< Index for temporary block IDs.
+    int current_block;                   ///< ID of the current block.
+    int tmp_block_index;                 ///< Index for temporary block IDs.
     std::unordered_map<int, int> blocks; ///< Mapping of block IDs to their parent block IDs.
 
-    int tmp_index; ///< Index for temporary variable names.
-    CFG* cfg; ///< Pointer to the Control Flow Graph.
+    int tmp_index;                                            ///< Index for temporary variable names.
+    CFG* cfg;                                                 ///< Pointer to the Control Flow Graph.
     std::unordered_map<std::string, VariableInfo>& variables; ///< Mapping of variable names to their information.
-    bool declaration_mode; ///< Flag indicating if in declaration mode.
-    bool inmain = false; ///< Flag indicating if inside main function.
-    int varInFunctionDef = 0; ///< Number of variables in a function definition.
-    std::string currentFunction = ""; ///< Name of the current function.
+    bool declaration_mode;                                    ///< Flag indicating if in declaration mode.
+    bool inmain = false;                                      ///< Flag indicating if inside main function.
+    int varInFunctionDef = 0;                                 ///< Number of variables in a function definition.
+    std::string currentFunction = "";                         ///< Name of the current function.
 };

@@ -28,49 +28,49 @@ public:
      * @brief The operation types for IR instructions.
      */
     typedef enum {
-        ldconst,        /**< Load a constant value into a register. */
-        copy,           /**< Copy the value from one register to another. */
-        cmp_const,      /**< Compare a register value with a constant. */
-        add,            /**< Add two register values. */
-        add_const,      /**< Add a constant value to a register value. */
-        sub,            /**< Subtract one register value from another. */
-        sub_const,      /**< Subtract a constant value from a register value. */
-        mul,            /**< Multiply two register values. */
-        div,            /**< Divide one register value by another. */
-        mod,            /**< Get the modulus of one register value by another. */
-        call,           /**< Call a function. */
-        cmp_eq,         /**< Compare two register values for equality. */
-        cmp_ne,         /**< Compare two register values for inequality. */
-        cmp_lt,         /**< Compare two register values: less than. */
-        cmp_le,         /**< Compare two register values: less than or equal. */
-        cmp_gt,         /**< Compare two register values: greater than. */
-        cmp_ge,         /**< Compare two register values: greater than or equal. */
-        copyIn,         /**< Copy value into a register from memory. */
-        ret,            /**< Return from function. */
-        copyOut,        /**< Copy value out from register to memory. */
-        bitwise_and,    /**< Perform bitwise AND operation. */
-        bitwise_or,     /**< Perform bitwise OR operation. */
-        bitwise_xor,    /**< Perform bitwise XOR operation. */
-        bitwise_not,    /**< Perform bitwise NOT operation. */
-        neg,            /**< Negate a register value. */
-        jump,           /**< Jump to another instruction. */
-        l_not,          /**< Perform logical NOT operation. */
-        lazy_and,       /**< Perform lazy AND operation. */
-        lazy_or,        /**< Perform lazy OR operation. */
-        startfct        /**< Start of a function. */
+        ldconst,     /**< Load a constant value into a register. */
+        copy,        /**< Copy the value from one register to another. */
+        cmp_const,   /**< Compare a register value with a constant. */
+        add,         /**< Add two register values. */
+        add_const,   /**< Add a constant value to a register value. */
+        sub,         /**< Subtract one register value from another. */
+        sub_const,   /**< Subtract a constant value from a register value. */
+        mul,         /**< Multiply two register values. */
+        div,         /**< Divide one register value by another. */
+        mod,         /**< Get the modulus of one register value by another. */
+        call,        /**< Call a function. */
+        cmp_eq,      /**< Compare two register values for equality. */
+        cmp_ne,      /**< Compare two register values for inequality. */
+        cmp_lt,      /**< Compare two register values: less than. */
+        cmp_le,      /**< Compare two register values: less than or equal. */
+        cmp_gt,      /**< Compare two register values: greater than. */
+        cmp_ge,      /**< Compare two register values: greater than or equal. */
+        copyIn,      /**< Copy value into a register from memory. */
+        ret,         /**< Return from function. */
+        copyOut,     /**< Copy value out from register to memory. */
+        bitwise_and, /**< Perform bitwise AND operation. */
+        bitwise_or,  /**< Perform bitwise OR operation. */
+        bitwise_xor, /**< Perform bitwise XOR operation. */
+        bitwise_not, /**< Perform bitwise NOT operation. */
+        neg,         /**< Negate a register value. */
+        jump,        /**< Jump to another instruction. */
+        l_not,       /**< Perform logical NOT operation. */
+        lazy_and,    /**< Perform lazy AND operation. */
+        lazy_or,     /**< Perform lazy OR operation. */
+        startfct     /**< Start of a function. */
     } Operation;
 
     /**
-    * @brief Array representing register names used in x86 assembly.
-    * 
-    * The array contains the names of the registers used in x86 assembly instructions.
-    * These registers are commonly used in the IR instructions for code generation.
-    */
+     * @brief Array representing register names used in x86 assembly.
+     *
+     * The array contains the names of the registers used in x86 assembly instructions.
+     * These registers are commonly used in the IR instructions for code generation.
+     */
     string repList[7] = {"%edi", "%esi", "%edx", "%ecx", "%r8d", "%r9d", "%eax"};
 
     /**
      * @brief Constructor for IRInstr class.
-     * 
+     *
      * @param bb_ Pointer to the BasicBlock to which this instruction belongs.
      * @param op Operation type.
      * @param t Type of the operands.
@@ -80,16 +80,16 @@ public:
 
     /**
      * @brief Generate x86 assembly code for this IR instruction.
-     * 
+     *
      * @param o Output stream to write the assembly code.
      * @param target Target architecture.
      */
     void gen_asm(std::ostream& o, Target target);
 
 private:
-    BasicBlock* bb; /**< The BasicBlock this instruction belongs to, providing a pointer to the CFG. */
-    Operation op;   /**< Operation type. */
-    Type t;         /**< Type of the operands. */
+    BasicBlock* bb;                  /**< The BasicBlock this instruction belongs to, providing a pointer to the CFG. */
+    Operation op;                    /**< Operation type. */
+    Type t;                          /**< Type of the operands. */
     std::vector<std::string> params; /**< Vector of instruction parameters. */
 };
 
@@ -118,7 +118,7 @@ class BasicBlock {
 public:
     /**
      * @brief Constructor for BasicBlock class.
-     * 
+     *
      * @param cfg Pointer to the Control Flow Graph.
      * @param entry_label Label of the basic block.
      * @param parent_test Pointer to the parent test block (used for "continue" statement).
@@ -128,7 +128,7 @@ public:
 
     /**
      * @brief Generate x86 assembly code for this basic block.
-     * 
+     *
      * @param o Output stream to write the assembly code.
      * @param target Target architecture.
      */
@@ -136,7 +136,7 @@ public:
 
     /**
      * @brief Add an IR instruction to this basic block.
-     * 
+     *
      * @param op Operation type.
      * @param t Type of the operands.
      * @param params Vector of instruction parameters.
@@ -144,19 +144,21 @@ public:
     void add_IRInstr(IRInstr::Operation op, Type t, std::vector<std::string> params);
 
     BasicBlock* exit_true; /**< Pointer to the next basic block, true branch. If nullptr, return from procedure. */
-    BasicBlock* exit_false; /**< Pointer to the next basic block, false branch. If nullptr, the basic block ends with an unconditional jump. */
-    CFG* cfg; /**< Pointer to the CFG where this block belongs. */
+    BasicBlock*
+        exit_false;    /**< Pointer to the next basic block, false branch. If nullptr, the basic block ends with an unconditional jump. */
+    CFG* cfg;          /**< Pointer to the CFG where this block belongs. */
     std::string label; /**< Label of the BB, also will be the label in the generated code. */
     std::vector<IRInstr*> instrs; /**< The instructions themselves. */
-    std::string test_var_name; /**< When generating IR code for an if(expr) or while(expr) etc., store here the name of the variable that holds the value of expr. */
-    BasicBlock* parent_test; /**< Test block in case we are in a loop: used for "continue" statement. */
-    BasicBlock* next_block; /**< Pointer to the next basic block if we are in a branch. */
+    std::string test_var_name;    /**< When generating IR code for an if(expr) or while(expr) etc., store here the name of the variable that
+                                     holds the value of expr. */
+    BasicBlock* parent_test;      /**< Test block in case we are in a loop: used for "continue" statement. */
+    BasicBlock* next_block;       /**< Pointer to the next basic block if we are in a branch. */
 protected:
 };
 
 /**
  * @brief The class for the control flow graph, also includes the symbol table.
- * 
+ *
  * A few important comments:
  * - The entry block is the one with the same label as the AST function name.
  *   (it could be the first of bbs, or it could be defined by an attribute value)
@@ -169,7 +171,7 @@ class CFG {
 public:
     /**
      * @brief Constructor for CFG class.
-     * 
+     *
      * @param variables_ Reference to the symbol table (variables).
      * @param entry_block_label_ Label of the entry block.
      */
@@ -177,14 +179,14 @@ public:
 
     /**
      * @brief Add a basic block to the CFG.
-     * 
+     *
      * @param bb Pointer to the basic block to add.
      */
     void add_bb(BasicBlock* bb);
 
     /**
      * @brief Generate x86 assembly code for the CFG.
-     * 
+     *
      * @param o Output stream to write the assembly code.
      * @param target Target architecture.
      */
@@ -192,7 +194,7 @@ public:
 
     /**
      * @brief Convert IR register or input variable to assembly format.
-     * 
+     *
      * @param reg IR register or input variable.
      * @return Assembly format of the register or input variable.
      */
@@ -200,7 +202,7 @@ public:
 
     /**
      * @brief Generate the prologue of the function in assembly.
-     * 
+     *
      * @param o Output stream to write the assembly code.
      * @param target Target architecture.
      */
@@ -208,7 +210,7 @@ public:
 
     /**
      * @brief Generate the epilogue of the function in assembly.
-     * 
+     *
      * @param o Output stream to write the assembly code.
      * @param target Target architecture.
      */
@@ -216,7 +218,7 @@ public:
 
     /**
      * @brief Add a variable to the symbol table.
-     * 
+     *
      * @param name Name of the variable.
      * @param t Information about the variable.
      */
@@ -224,7 +226,7 @@ public:
 
     /**
      * @brief Get information about a variable from the symbol table.
-     * 
+     *
      * @param name Name of the variable.
      * @return Information about the variable.
      */
@@ -232,18 +234,18 @@ public:
 
     /**
      * @brief Generate a new basic block name.
-     * 
+     *
      * @return New basic block name.
      */
     std::string new_BB_name();
 
     BasicBlock* current_bb; /**< Pointer to the current basic block. */
-    int memoryUse; /**< Memory usage of the CFG. */
+    int memoryUse;          /**< Memory usage of the CFG. */
 
 protected:
     std::unordered_map<std::string, VariableInfo>& variables; /**< Reference to the symbol table (variables). */
-    std::string entry_block_label; /**< Label of the entry block. */
-    int nextBBnumber; /**< Just for naming. */
+    std::string entry_block_label;                            /**< Label of the entry block. */
+    int nextBBnumber;                                         /**< Just for naming. */
 
     std::vector<BasicBlock*> bbs; /**< All the basic blocks of this CFG. */
 };
