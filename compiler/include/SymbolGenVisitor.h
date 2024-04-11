@@ -11,7 +11,7 @@
 #include "Error.h"
 
 /**
- * @brief Class representing information about a variable.
+ * @brief Class representing information about a variable. It gives temporary and permenant variables adresses and checks for variable declaration and use errors.
  */
 class VariableInfo {
 public:
