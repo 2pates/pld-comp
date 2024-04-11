@@ -64,13 +64,17 @@ antlrcpp::Any CodeGenVisitor::visitFunction_call(ifccParser::Function_callContex
         cfg->current_bb->add_IRInstr(IRInstr::Operation::copyOut, Type::INT32, {"6", tmp_var_name_return});
         return tmp_var_name_return;
     }
+    std::string VarName[6];
     for (long unsigned int i = 0; i < ctx->expr().size(); i++) {
         if (i >= 6) {
             std::cerr << "to many var" << std::endl;
             exit(1);
         }
         std::string var_name = visit(ctx->expr()[i]);
-        cfg->current_bb->add_IRInstr(IRInstr::Operation::copyIn, Type::INT32, {var_name, std::to_string(i)});
+        VarName[i]=var_name;
+    }
+    for (long unsigned int i = 0; i < ctx->expr().size(); i++) {
+        cfg->current_bb->add_IRInstr(IRInstr::Operation::copyIn, Type::INT32, {VarName[i], std::to_string(i)});
     }
     cfg->current_bb->add_IRInstr(IRInstr::Operation::call, Type::INT32, {"function_" + s});
     tmp_index++;
