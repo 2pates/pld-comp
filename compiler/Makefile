@@ -91,6 +91,7 @@ gui: ## graphical interface
 clean: ## clean repository
 	rm -rf build generated
 	rm -f build/ifcc
+	rm -rf doc/html* doc/xml*
 	@make -s -C ../tests clean
 
 
@@ -115,6 +116,10 @@ verify: ## check a specific compilation
 check:
 	@make -s -C ../tests check
 
+zip:
+	@make -s clean
+	cd .. && zip -r H4332.zip ./ -x ".*"
+
 
 .PHONY:doc
 doc : ## generate developper documention with doxygen
@@ -124,5 +129,4 @@ doc : ## generate developper documention with doxygen
 	@doxygen doc/image.doxy > /dev/null
 	@echo "open documentation"
 	@firefox doc/html/index.html &
-
 
