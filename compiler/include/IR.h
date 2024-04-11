@@ -20,7 +20,7 @@ class CFG;
 typedef enum { x86 } Target;
 
 /**
- * @brief The class for one 3-address instruction.
+ * @brief The class for one 3-address instruction. It creates the assembly instructions.
  */
 class IRInstr {
 public:

@@ -8,7 +8,7 @@
 #include <string.h>
 
 /**
- * @brief Visitor class for generating code.
+ * @brief Visitor class for generating code. Has two cpp one for expr and one for the rest, just for readability. Creates IRInst that are turned into code by IR.
  */
 class CodeGenVisitor : public ifccBaseVisitor {
 public:
