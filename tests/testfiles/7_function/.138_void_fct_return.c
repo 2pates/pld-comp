@@ -1,5 +1,5 @@
 #include <stdio.h>
-
+/*Un test pour une feature non implémenté*/
 void g(char i);
 
 int main() {
