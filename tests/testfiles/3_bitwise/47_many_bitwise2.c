@@ -5,5 +5,5 @@ int main() {
     c = 13;
     d = ~b;
     e = 0;
-    return a | b & c & (d | ~e);
+    return a | ((b & c) & (d | ~e));
 }

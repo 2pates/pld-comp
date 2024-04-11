@@ -4,5 +4,5 @@ int main() {
     b = 8;
     c = 13;
     d = 7;
-    return a & b | c & d;
+    return (a & b) | (c & d);
 }
