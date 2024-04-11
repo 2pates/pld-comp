@@ -36,7 +36,7 @@ OBJECTS=build/ifccBaseVisitor.o \
 	build/SymbolGenVisitor.o \
 	build/IR.o
 
-ifcc: $(OBJECTS) ## compilation
+ifcc: $(OBJECTS) ## compile the ifcc compiler
 	@mkdir -p build
 	$(CC) $(LDFLAGS) build/*.o $(ANTLRLIB) -o build/ifcc
 
@@ -88,7 +88,7 @@ gui: ## graphical interface
 
 ##########################################
 # delete all machine-generated files
-clean: ## clean repo
+clean: ## clean repository
 	rm -rf build generated
 	rm -f build/ifcc
 	@make -s -C ../tests clean
@@ -96,7 +96,7 @@ clean: ## clean repo
 
 ##########################################
 # tests and verifications
-tests: ## start all tests with python
+test: ## start all tests with python
 	@make -s -C ../tests clean
 	@make -s -C ../tests all
 
@@ -117,12 +117,12 @@ check:
 
 
 .PHONY:doc
-doc : ## génère la documentation avec doxygen
-	@echo "suppression de la documentation"
+doc : ## generate developper documention with doxygen
+	@echo "delete current documentation"
 	@rm -rf doc/html* doc/xml*
-	@echo "génération de la nouvelle documentation"
+	@echo "generate new documentation"
 	@doxygen doc/image.doxy > /dev/null
-	@echo "ouverture de la doc"
+	@echo "open documentation"
 	@firefox doc/html/index.html &
 
 
