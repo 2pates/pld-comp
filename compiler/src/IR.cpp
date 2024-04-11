@@ -19,29 +19,6 @@ string size_to_letter(int size) {
     }
 }
 
-/*
-ldconst : valeur_constante, variable_destination
-copy : variable_source, variable_destination
-cmp_const : variable_source ,constante, variable_destination
-add : variable_membre_gauche, variable_membre_droite, variable_destination
-sub : variable_membre_gauche, variable_membre_droite, variable_destination
-mul : variable_membre_gauche, variable_membre_droite, variable_destination
-l_not : variable_initiale, varibale_destination
-cmp_eq : variable_membre_gauche, variable_membre_droite, variable_destination
-cmp_ne : variable_membre_gauche, variable_membre_droite, variable_destination
-cmp_lt : variable_membre_gauche, variable_membre_droite, variable_destination
-cmp_le : variable_membre_gauche, variable_membre_droite, variable_destination
-cmp_gt : variable_membre_gauche, variable_membre_droite, variable_destination
-cmp_ge : variable_membre_gauche, variable_membre_droite, variable_destination
-ret : variable
-bitwise_and : variable_membre_gauche, variable_membre_droite, variable_destination
-bitwise_or : variable_membre_gauche, variable_membre_droite, variable_destination
-bitwise_xor : variable_membre_gauche, variable_membre_droite, variable_destination
-bitwise_not : variable, variable_destination
-lazy_and : variable_membre_gauche, variable_membre_droite, variable_destination
-lazy_or : variable_membre_gauche, variable_membre_droite, variable_destination
-neg : variable, variable_destination
-*/
 void IRInstr::gen_asm(ostream& o, Target target) {
     switch (op) {
         case ldconst: {
