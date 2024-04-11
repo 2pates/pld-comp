@@ -71,7 +71,7 @@ antlrcpp::Any CodeGenVisitor::visitFunction_call(ifccParser::Function_callContex
             exit(1);
         }
         std::string var_name = visit(ctx->expr()[i]);
-        VarName[i]=var_name;
+        VarName[i] = var_name;
     }
     for (long unsigned int i = 0; i < ctx->expr().size(); i++) {
         cfg->current_bb->add_IRInstr(IRInstr::Operation::copyIn, Type::INT32, {VarName[i], std::to_string(i)});
@@ -304,7 +304,7 @@ antlrcpp::Any CodeGenVisitor::visitIteration_while(ifccParser::Iteration_whileCo
     cfg->current_bb = testBlock;
     string testVarName = visit(ctx->expr());
     evalBlock->test_var_name = testVarName;
-    BasicBlock* thenBB = new BasicBlock(cfg, cfg->new_BB_name() + "THEN", testBlock, nextBB);
+    BasicBlock* thenBB = new BasicBlock(cfg, cfg->new_BB_name() + "THEN", testBlock, testBlock);
     cfg->add_bb(thenBB);
     // After then block, jump to nextBB, might be overwritten during visit(ctx->instruction(0))
     thenBB->exit_true = testBlock;
